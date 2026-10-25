@@ -1,0 +1,127 @@
+{
+ "label": "c8g-large-cool",
+ "env": {
+  "cv2_version": "5.1.0-dev",
+  "cv2_file": "/opt/cool/python_3.12/site-packages/cv2/__init__.py",
+  "build": [
+   "Version control:               unknown",
+   "CPU/HW features:",
+   "Baseline:                    SVE NEON FP16 NEON_DOTPROD NEON_FP16 NEON_BF16",
+   "Dispatched code generation:",
+   "C++ Compiler:                /usr/bin/c++  (ver 13.3.0)",
+   "C Compiler:                  /usr/bin/cc",
+   "Parallel framework:            pthreads",
+   "Custom HAL:                  YES (carotene (ver 0.0.1) KleidiCV (ver 0.7.0))"
+  ],
+  "threads": 2,
+  "python": "3.12.3",
+  "machine": "aarch64",
+  "processor": "aarch64",
+  "instance_type": "c8g.large",
+  "ami_id": "ami-033e481a24f94c8cb",
+  "product_codes": "aajkmdd4qo3r7yhqg61a7aah9"
+ },
+ "ops_ms": {
+  "cvtColor_bgr2gray_1080p": 0.34,
+  "resize_area_4k_to_1080p": 17.696,
+  "remap_ortho_600x600": 0.414,
+  "warpPerspective_1080p": 4.039,
+  "gaussianBlur_s6_600": 2.654,
+  "sobel_600": 0.197,
+  "matchTemplate_31_in_55_x100": 6.971,
+  "dis_flow_600": 16.514,
+  "phaseCorrelate_600": 7.118,
+  "findHomography_usac_1000": 0.41,
+  "laplacian_1080p": 1.627
+ },
+ "pipeline": {
+  "station": "stations/vgc1.yaml",
+  "clip": "clips/bench_vgc1.json",
+  "repeat": 5,
+  "median_total_s": 38.88,
+  "median_stages_s": {
+   "load": 0.628,
+   "stabilize": 9.772,
+   "orthorectify": 0.098,
+   "diagnose": 0.329,
+   "coarse_motion": 0.596,
+   "lspiv": 13.699,
+   "stiv": 12.912
+  },
+  "runs": [
+   {
+    "total_s": 41.95,
+    "stages": {
+     "load": 0.868,
+     "stabilize": 10.793,
+     "orthorectify": 0.11,
+     "diagnose": 0.528,
+     "coarse_motion": 0.737,
+     "lspiv": 13.929,
+     "stiv": 12.927
+    },
+    "decision": "PUBLISH",
+    "q": 1.3029
+   },
+   {
+    "total_s": 39.0,
+    "stages": {
+     "load": 0.628,
+     "stabilize": 10.001,
+     "orthorectify": 0.098,
+     "diagnose": 0.349,
+     "coarse_motion": 0.625,
+     "lspiv": 13.683,
+     "stiv": 12.903
+    },
+    "decision": "PUBLISH",
+    "q": 1.3029
+   },
+   {
+    "total_s": 38.66,
+    "stages": {
+     "load": 0.624,
+     "stabilize": 9.742,
+     "orthorectify": 0.098,
+     "diagnose": 0.325,
+     "coarse_motion": 0.596,
+     "lspiv": 13.699,
+     "stiv": 12.882
+    },
+    "decision": "PUBLISH",
+    "q": 1.3029
+   },
+   {
+    "total_s": 38.67,
+    "stages": {
+     "load": 0.625,
+     "stabilize": 9.742,
+     "orthorectify": 0.097,
+     "diagnose": 0.329,
+     "coarse_motion": 0.595,
+     "lspiv": 13.689,
+     "stiv": 12.912
+    },
+    "decision": "PUBLISH",
+    "q": 1.3029
+   },
+   {
+    "total_s": 38.88,
+    "stages": {
+     "load": 0.643,
+     "stabilize": 9.772,
+     "orthorectify": 0.098,
+     "diagnose": 0.324,
+     "coarse_motion": 0.596,
+     "lspiv": 13.732,
+     "stiv": 12.995
+    },
+    "decision": "PUBLISH",
+    "q": 1.3029
+   }
+  ]
+ },
+ "clips_per_hour": 92.6,
+ "usd_per_1000_gaugings": 0.969,
+ "usd_per_hour": 0.08976
+}
