@@ -175,7 +175,13 @@ def step_check_pose(ctx: Context) -> dict:
 
 def step_stabilize(ctx: Context, keyframe_every: int = 25, max_motion_px: float = 80.0) -> dict:
     t0 = time.time()
-    ctx.stab = stabilize(ctx.frames, _static_mask(ctx), _matcher(ctx), keyframe_every=keyframe_every,
+    mask = _static_mask(ctx)
+    if mask is None:
+        # No surveyed static scenery: the station is declared a fixed mount and frames are used as recorded.
+        ctx.stab = StabResult(ctx.frames, [np.eye(3)] * len(ctx.frames), float("nan"), 0.0, 1.0, "none", 0,
+                              ["no_static_scenery_defined", "static_camera"])
+        return ctx.stab.summary()
+    ctx.stab = stabilize(ctx.frames, mask, _matcher(ctx), keyframe_every=keyframe_every,
                          max_motion_px=max_motion_px)
     if "stabilization_rejected" not in ctx.stab.notes:
         ctx.frames = ctx.stab.frames
