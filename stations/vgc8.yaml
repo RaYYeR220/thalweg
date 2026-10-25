@@ -1,0 +1,36 @@
+id: vgc8
+name: Vence (France), ground camera, small riffle
+grp:
+- {X: 0.0, Y: -3.31, Z: 0.0, i: 433, j: 772}
+- {X: 3.6, Y: -4.0, Z: 0.0, i: 1651, j: 820}
+- {X: 3.55, Y: 0.0, Z: 0.0, i: 1250, j: 253}
+- {X: 0.0, Y: 0.0, Z: 0.0, i: 433, j: 261}
+transect:
+- [2.2, -0.4, 0.05]
+- [2.2, -0.45, -0.25]
+- [2.2, -0.6, -0.25]
+- [2.2, -0.85, -0.24]
+- [2.2, -1.1, -0.33]
+- [2.2, -1.35, -0.43]
+- [2.2, -1.6, -0.33]
+- [2.2, -1.85, -0.4]
+- [2.2, -2.1, -0.34]
+- [2.2, -2.35, -0.3]
+- [2.2, -2.6, -0.17]
+- [2.2, -2.85, -0.34]
+- [2.2, -3.1, -0.36]
+- [2.2, -3.35, -0.36]
+- [2.2, -3.6, -0.14]
+- [2.2, -3.9, 0.05]
+image_size: [1920, 1080]
+alpha: 0.85
+alpha_source: default
+static_mask:
+- [[0, 0], [1920, 0], [1920, 190], [0, 210]]
+- [[0, 860], [1920, 900], [1920, 1080], [0, 1080]]
+flow_hint_deg: 0.0
+ortho_extent: [-0.3, -4.3, 3.9, 0.3]
+ortho_res_m: 0.008
+thresholds: {source: none}
+notes: Bank-end transect points at z=0 in the survey; set 5 cm above the water surface so the waterline is bracketed.
+sources: {dataset: "Video Globe Challenge 2020 (doi:10.57745/KVNIHX), Video_8", license: etalab-2.0}
