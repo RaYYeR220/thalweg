@@ -17,6 +17,8 @@ export interface WorkerStackProps extends StackProps {
   readonly rootDevice?: string;
   /** Grant aws-marketplace:RegisterUsage/MeterUsage, for AMIs that meter from the instance. */
   readonly marketplaceMetering?: boolean;
+  /** Root volume size; must be at least the AMI snapshot size (60 GB for COOL v3). */
+  readonly rootGb?: number;
 }
 
 /**
@@ -130,7 +132,7 @@ export class WorkerStack extends Stack {
       blockDevices: [
         {
           deviceName: props.rootDevice ?? '/dev/sda1',
-          volume: ec2.BlockDeviceVolume.ebs(40, { volumeType: ec2.EbsDeviceVolumeType.GP3, encrypted: true, deleteOnTermination: true }),
+          volume: ec2.BlockDeviceVolume.ebs(props.rootGb ?? 64, { volumeType: ec2.EbsDeviceVolumeType.GP3, encrypted: true, deleteOnTermination: true }),
         },
       ],
       ssmSessionPermissions: false,
