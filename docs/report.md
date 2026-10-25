@@ -103,7 +103,16 @@ Vectors pass a score threshold, a speed bound, a direction gate and the normalis
 - **No peeking.** Station configs for 2–7 were built from survey inputs only, without opening any results. Only `eval/` reads the answer key.
 - **Logging.** Every run is appended to `eval/runs.jsonl`.
 
-<!--BENCH_TABLE-->
+| Video | Reference (m³/s, ±U) | Experts: median abs. error | Autopilot (rank) | LLM agent (rank) |
+|---|---|---|---|---|
+| 2 · West Normanby (AU), drone | 107.945 ±6% | 16.2% (n=17) | +17.9% (12/18) | +25.7% (14/18) |
+| 3 · Séran (FR), 3D bank camera | 55.16 ±6% | 22.4% (n=18) | -7.0% (5/19) | -1.6% (1/19) |
+| 4 · Russell River (AU), drone | 139 ±15% | 10.5% (n=22) | *escalated*, est. +1.1% (3/23) | *escalated*, est. -42.5% (21/23) |
+| 5 · Storåne (NO), hand-held | 19.7 ±5% | 13.4% (n=23) | +23.1% (22/24) | +27.8% (24/24) |
+| 6 · Groin (FR), 3D bank camera | 53.74 ±9% | 17.7% (n=17) | +3.2% (5/18) | +3.2% (5/18) |
+| 7 · Herbert River (AU), drone | 962.8 ±5% | 2.2% (n=15) | -14.3% (13/16) | -3.0% (9/16) |
+
+Rank = position among the experts plus our answer, by absolute error.
 
 **Reading the results.**
 - **Frozen autopilot (no LLM, no per-site tuning).** It published 5 of 6 held-out videos. It beat the median expert on 3 of 6 and beat 52% of the experts on average. Its mean absolute error on published gaugings was 13%.
@@ -113,7 +122,12 @@ Vectors pass a score threshold, a speed bound, a direction gate and the normalis
 ### 8.2 Refusal suite
 Real clips are corrupted in known ways, and each case has the decision the agent must reach. The cases cover night, glare, a frozen feed, still water, a moved camera, a level above the banks, hand-held shake, and clean controls.
 
-<!--REFUSAL_TABLE-->
+| Run | Correct decisions | Wrong publications |
+|---|---|---|
+| refusal-autopilot | 6/9 | 0 |
+| refusal-llm-sonnet | 6/9 | 0 |
+| refusal-autopilot-v1.1 | 9/9 | 0 |
+| refusal-llm-sonnet-v1.1 | 9/9 | 0 |
 
 The frozen build made **no wrong publications**. It still missed three expected decisions:
 - a dark clip was escalated as a "moved camera";

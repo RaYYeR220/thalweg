@@ -1,0 +1,628 @@
+{
+ "run_id": "r-20261025232016-2bb7ad",
+ "station_id": "vgc4",
+ "clip": "DJI_0083.MP4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "ESCALATE",
+  "reasons": [
+   "The bed is visible (static_ratio 5.3). The first STIV (158 m\u00b3/s) and LSPIV (163 m\u00b3/s) runs agree within 3%, but both have valid_frac of only about 0.36, below the policy's 0.5 minimum, so publishing was denied. The wide-window STIV rerun reached full coverage by accepting noisy tree-bank vectors and gave 104 m\u00b3/s, which disagrees. The wet channel is about 40% of the transect, so I can't tell which number to trust. A person should review the transect and decide how to mask the bank stations."
+  ],
+  "method": null,
+  "basis": null,
+  "q": {
+   "q": 104.3963,
+   "q_lo": 89.5011,
+   "q_hi": 119.2914,
+   "area": 83.9671,
+   "wetted_width": 39.82,
+   "coverage": 1.0,
+   "alpha": 0.91,
+   "level": 4.2,
+   "method": "stiv",
+   "v_mean": 1.2433,
+   "uncertainty": {
+    "alpha": 0.0549,
+    "velocity": 0.1316,
+    "interpolation": 0.0,
+    "level": 0.0047,
+    "total_95": 0.1427
+   },
+   "published": false
+  },
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 4096,
+    "height": 2160,
+    "fps": 29.97002997002997,
+    "frames": 645,
+    "duration_s": 21.5215,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 271
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 300,
+    "dt_s": 0.03337,
+    "duration_s": 9.98,
+    "warnings": [
+     "downscaled_x0.469"
+    ],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 6923
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": false,
+    "reason": "no_reference_frame"
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue+lk",
+    "residual_px_p95": 0.293,
+    "motion_px_p95": 5.447,
+    "inlier_ratio_min": 0.88,
+    "keyframes": 13,
+    "notes": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 15596
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.05,
+    "ortho_shape": [
+     430,
+     920
+    ],
+    "water_px": 322482,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 82
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 3.1363,
+    "static_texture": 16.6203,
+    "static_ratio": 5.2994,
+    "tracer_density": 1.8568,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0015,
+    "blur_var": 958.5012,
+    "contrast": 125.0,
+    "water_px": 322482,
+    "frames": 300,
+    "flags": [
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 773
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 1.676,
+    "speed_p90_px": 15.849,
+    "direction_deg": 77.8179,
+    "coherence": 0.3745,
+    "speed_p50_ms": 2.5115,
+    "speed_p90_ms": 23.7498,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 63,
+     "search_px": 29,
+     "shift_px": [
+      2.3,
+      -10.8
+     ],
+     "step_px": 31,
+     "vmax_ms": 8.0,
+     "flow_deg": 77.8,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1476
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "static_ratio 5.3 flags bed_visible; STIV with highpass is robust to static texture.",
+    "background": "highpass:3",
+    "window": 16,
+    "line_m": 8
+   },
+   "reason": "static_ratio 5.3 flags bed_visible; STIV with highpass is robust to static texture.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 21,
+    "valid_frac": 0.35,
+    "speed_p50": 2.43,
+    "speed_p90": 2.819,
+    "score_mean": 0.877,
+    "direction_deg": 77.8,
+    "rejected": {
+     "low_score": 39
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.03336666666666677,
+     "vmax_ms": 8.0,
+     "background": "highpass:3",
+     "res_m": 0.05,
+     "line_m": 8,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 18690
+  },
+  {
+   "i": 8,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Cross-check with the suggested coarse-motion parameters, using highpass to reduce static texture.",
+    "background": "highpass:3",
+    "ia_px": 63,
+    "search_px": 29,
+    "pair_step": 1
+   },
+   "reason": "Cross-check with the suggested coarse-motion parameters, using highpass to reduce static texture.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 244,
+    "valid": 89,
+    "valid_frac": 0.365,
+    "speed_p50": 2.397,
+    "speed_p90": 2.567,
+    "score_mean": 0.761,
+    "direction_deg": 90.1,
+    "rejected": {
+     "search_edge": 0,
+     "low_score": 144,
+     "direction": 5,
+     "median_test": 6
+    },
+    "params": {
+     "ia_px": 63,
+     "search_px": 29,
+     "step_px": 31,
+     "pair_step": 1,
+     "dt_s": 0.03336666666666677,
+     "shift_px": [
+      2,
+      -11
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.05
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 8816
+  },
+  {
+   "i": 9,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "STIV gives coherent mid-channel vectors."
+   },
+   "reason": "STIV gives coherent mid-channel vectors.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 158.2204,
+    "q_lo": 140.9368,
+    "q_hi": 175.5039,
+    "area": 83.9671,
+    "wetted_width": 39.82,
+    "coverage": 0.5366,
+    "alpha": 0.91,
+    "level": 4.2,
+    "method": "stiv",
+    "v_mean": 1.8843,
+    "uncertainty": {
+     "alpha": 0.0549,
+     "velocity": 0.0174,
+     "interpolation": 0.0927,
+     "level": 0.0047,
+     "total_95": 0.1092
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1
+  },
+  {
+   "i": 10,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "lspiv",
+    "reason": "LSPIV gives a coherent field in the channel with speeds matching STIV."
+   },
+   "reason": "LSPIV gives a coherent field in the channel with speeds matching STIV.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 163.0622,
+    "q_lo": 148.9296,
+    "q_hi": 177.1948,
+    "area": 83.9671,
+    "wetted_width": 39.82,
+    "coverage": 0.6679,
+    "alpha": 0.91,
+    "level": 4.2,
+    "method": "lspiv",
+    "v_mean": 1.942,
+    "uncertainty": {
+     "alpha": 0.0549,
+     "velocity": 0.0076,
+     "interpolation": 0.0664,
+     "level": 0.0047,
+     "total_95": 0.0867
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2
+  },
+  {
+   "i": 11,
+   "actor": "llm",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "lspiv",
+    "basis": "methods_agree",
+    "reason": "STIV (158.2 m\u00b3/s) and LSPIV (163.1 m\u00b3/s) agree within about 3%. LSPIV has coverage 0.67, which meets the 0.6 minimum."
+   },
+   "reason": "STIV (158.2 m\u00b3/s) and LSPIV (163.1 m\u00b3/s) agree within about 3%. LSPIV has coverage 0.67, which meets the 0.6 minimum.",
+   "verdict": {
+    "allowed": false,
+    "reasons": [
+     "valid_vectors_low:lspiv:0.36"
+    ]
+   },
+   "ok": null,
+   "summary": null,
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 12,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Valid fraction 0.36 is below 0.5, so I'm retrying with a smaller IA and the median background for more valid vectors.",
+    "ia_px": 41,
+    "search_px": 20,
+    "pair_step": 2,
+    "background": "median"
+   },
+   "reason": "Valid fraction 0.36 is below 0.5, so I'm retrying with a smaller IA and the median background for more valid vectors.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 241,
+    "valid": 71,
+    "valid_frac": 0.295,
+    "speed_p50": 2.202,
+    "speed_p90": 2.325,
+    "score_mean": 0.718,
+    "direction_deg": 89.1,
+    "rejected": {
+     "search_edge": 116,
+     "low_score": 54
+    },
+    "params": {
+     "ia_px": 41,
+     "search_px": 20,
+     "step_px": 31,
+     "pair_step": 2,
+     "dt_s": 0.03336666666666677,
+     "shift_px": [
+      5,
+      -22
+     ],
+     "background": "median",
+     "pairs": 150,
+     "res_m": 0.05
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 6118
+  },
+  {
+   "i": 13,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "STIV valid fraction was 0.35 and the bed is visible. I'm retrying with a longer window and line to recover more stations.",
+    "background": "highpass:5",
+    "window": 32,
+    "line_m": 12
+   },
+   "reason": "STIV valid fraction was 0.35 and the bed is visible. I'm retrying with a longer window and line to recover more stations.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 58,
+    "valid_frac": 0.967,
+    "speed_p50": 1.535,
+    "speed_p90": 2.795,
+    "score_mean": 0.605,
+    "direction_deg": 77.8,
+    "rejected": {
+     "low_score": 2
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.03336666666666677,
+     "vmax_ms": 8.0,
+     "background": "highpass:5",
+     "res_m": 0.05,
+     "line_m": 12,
+     "window": 32
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 12548
+  },
+  {
+   "i": 14,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "Check the new STIV discharge. The bank vectors are noisy, so the result may be contaminated."
+   },
+   "reason": "Check the new STIV discharge. The bank vectors are noisy, so the result may be contaminated.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 104.3963,
+    "q_lo": 89.5011,
+    "q_hi": 119.2914,
+    "area": 83.9671,
+    "wetted_width": 39.82,
+    "coverage": 1.0,
+    "alpha": 0.91,
+    "level": 4.2,
+    "method": "stiv",
+    "v_mean": 1.2433,
+    "uncertainty": {
+     "alpha": 0.0549,
+     "velocity": 0.1316,
+     "interpolation": 0.0,
+     "level": 0.0047,
+     "total_95": 0.1427
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2
+  },
+  {
+   "i": 15,
+   "actor": "llm",
+   "tool": "escalate_to_hydrologist",
+   "args": {
+    "reason": "The bed is visible (static_ratio 5.3). The first STIV (158 m\u00b3/s) and LSPIV (163 m\u00b3/s) runs agree within 3%, but both have valid_frac of only about 0.36, below the policy's 0.5 minimum, so publishing was denied. The wide-window STIV rerun reached full coverage by accepting noisy tree-bank vectors and gave 104 m\u00b3/s, which disagrees. The wet channel is about 40% of the transect, so I can't tell which number to trust. A person should review the transect and decide how to mask the bank stations."
+   },
+   "reason": "The bed is visible (static_ratio 5.3). The first STIV (158 m\u00b3/s) and LSPIV (163 m\u00b3/s) runs agree within 3%, but both have valid_frac of only about 0.36, below the policy's 0.5 minimum, so publishing was denied. The wide-window STIV rerun reached full coverage by accepting noisy tree-bank vectors and gave 104 m\u00b3/s, which disagrees. The wet channel is about 40% of the transect, so I can't tell which number to trust. A person should review the transect and decide how to mask the bank stations.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "ESCALATE",
+    "reasons": [
+     "The bed is visible (static_ratio 5.3). The first STIV (158 m\u00b3/s) and LSPIV (163 m\u00b3/s) runs agree within 3%, but both have valid_frac of only about 0.36, below the policy's 0.5 minimum, so publishing was denied. The wide-window STIV rerun reached full coverage by accepting noisy tree-bank vectors and gave 104 m\u00b3/s, which disagrees. The wet channel is about 40% of the transect, so I can't tell which number to trust. A person should review the transect and decide how to mask the bank stations."
+    ],
+    "method": null,
+    "basis": null,
+    "q": null,
+    "recapture_spec": null,
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 6.44,
+  "stabilize": 15.597,
+  "orthorectify": 0.071,
+  "diagnose": 0.773,
+  "coarse_motion": 1.477,
+  "stiv": 29.326,
+  "lspiv": 14.919
+ },
+ "cost_usd": 0.14409,
+ "started": "2026-10-25T23:20:16.510358+00:00",
+ "ended": "2026-10-25T23:22:09.214926+00:00",
+ "notes": [
+  "working scale 0.469 of native 4096x2160"
+ ],
+ "estimates": {
+  "stiv": {
+   "q": 104.3963,
+   "q_lo": 89.5011,
+   "q_hi": 119.2914,
+   "coverage": 1.0
+  },
+  "lspiv": {
+   "q": 163.0622,
+   "q_lo": 148.9296,
+   "q_hi": 177.1948,
+   "coverage": 0.668
+  }
+ }
+}

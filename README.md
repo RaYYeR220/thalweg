@@ -49,7 +49,21 @@ Every run leaves a trace: each tool call, its arguments and stated reason, the p
 
 Videos 1 and 8 were used for development. The agent, policy and parameters were then frozen (`git tag eval-freeze`). Videos 2–7 (two ground cameras, one 3D-surveyed bank camera, one more ground camera and three drone flights over rivers in France, Norway and Australia) were scored once per brain. The scorer reads the reference discharges; the pipeline never does. Every run is appended to [`eval/runs.jsonl`](eval/runs.jsonl).
 
-<!--BENCH-->
+| Video | Reference (m³/s, ±U) | Experts: median abs. error | Autopilot (rank) | LLM agent (rank) |
+|---|---|---|---|---|
+| 2 · West Normanby (AU), drone | 107.945 ±6% | 16.2% (n=17) | +17.9% (12/18) | +25.7% (14/18) |
+| 3 · Séran (FR), 3D bank camera | 55.16 ±6% | 22.4% (n=18) | -7.0% (5/19) | -1.6% (1/19) |
+| 4 · Russell River (AU), drone | 139 ±15% | 10.5% (n=22) | *escalated*, est. +1.1% (3/23) | *escalated*, est. -42.5% (21/23) |
+| 5 · Storåne (NO), hand-held | 19.7 ±5% | 13.4% (n=23) | +23.1% (22/24) | +27.8% (24/24) |
+| 6 · Groin (FR), 3D bank camera | 53.74 ±9% | 17.7% (n=17) | +3.2% (5/18) | +3.2% (5/18) |
+| 7 · Herbert River (AU), drone | 962.8 ±5% | 2.2% (n=15) | -14.3% (13/16) | -3.0% (9/16) |
+
+Rank = position among the experts plus our answer, by absolute error (1 is best).
+
+- **Frozen autopilot, no LLM:** published 5/6, mean absolute error **13.1%** on the published gaugings, better than the median expert on 3/6 videos, ahead of 52% of the experts on average.
+- **Frozen LLM agent:** best of all 19 answers on video 3 (−1.6%), 3/5 published values inside the reference uncertainty, mean absolute error 12.3%.
+- **Both escalated video 4.** LSPIV and STIV disagreed and the diagnostics gave no basis to prefer one. The autopilot's unpublished estimate was +1.1%.
+- **v1.1 autopilot (not blind):** stabilization on every frame drops the published error to 9.5%, with drone video 2 at +5.1%, 3rd of 18. It also exposes the open hand-held issue on development video 8 (report §8.3).
 
 Full per-video results, including the experts' errors and our unpublished estimates: [`eval/results/benchmark.json`](eval/results/benchmark.json).
 
@@ -57,7 +71,12 @@ Full per-video results, including the experts' errors and our unpublished estima
 
 Real clips corrupted in known ways, each with the decision the agent must reach: night, glare, frozen feed, still water, camera moved, level above the banks, hand-held shake, and clean controls. The number that matters is **wrong publications: 0**, in every run. The first frozen run also exposed real robustness bugs. A dark frame was reported as a moved camera, and stabilization was rejected on hand-held footage. They were fixed in v1.1, and both versions are published.
 
-<!--REFUSAL-->
+| Run | Correct decisions | Wrong publications |
+|---|---|---|
+| refusal-autopilot | 6/9 | 0 |
+| refusal-llm-sonnet | 6/9 | 0 |
+| refusal-autopilot-v1.1 | 9/9 | 0 |
+| refusal-llm-sonnet-v1.1 | 9/9 | 0 |
 
 ### Performance: COOL on Graviton4
 

@@ -1,0 +1,416 @@
+[
+ {
+  "video": "vgc1",
+  "split": "dev",
+  "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "reasons": [
+   "static_ratio 1.30 flags a visible bed, which biases LSPIV low (Q 1.00 vs STIV 1.50 m\u00b3/s). STIV streaks are clean and parallel with score 0.67 and full coverage, so I'm publishing the STIV value of 1.50 m\u00b3/s."
+  ],
+  "q_published": 1.503,
+  "q_estimate": 1.503,
+  "estimates": {
+   "stiv": {
+    "q": 1.503,
+    "q_lo": 1.3936,
+    "q_hi": 1.6124,
+    "coverage": 1.0
+   },
+   "lspiv": {
+    "q": 0.9986,
+    "q_lo": 0.9322,
+    "q_hi": 1.065,
+    "coverage": 1.0
+   }
+  },
+  "q_ref": 1.26,
+  "u_ref": 0.124,
+  "published": {
+   "err_pct": 19.29,
+   "within_ref_u": false,
+   "expert_rank": 8,
+   "n_experts": 15,
+   "beats_share": 0.533
+  },
+  "estimate": {
+   "err_pct": 19.29,
+   "within_ref_u": false,
+   "expert_rank": 8,
+   "n_experts": 15,
+   "beats_share": 0.533
+  },
+  "expert_median_err_pct": 23.02,
+  "cost_usd": 0.0509,
+  "seconds": 61.2,
+  "run_id": "r-20261025231502-fbde10",
+  "git": "0ad52ec",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:16:20.445256+00:00"
+ },
+ {
+  "video": "vgc8",
+  "split": "dev",
+  "site": "Finsalbekken \u00e0 Ridabu",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV (1.06 m\u00b3/s) and STIV (1.13 m\u00b3/s) agree within about 6%, with full coverage and clean evidence."
+  ],
+  "q_published": 1.0934,
+  "q_estimate": 1.0934,
+  "estimates": {
+   "lspiv": {
+    "q": 1.0594,
+    "q_lo": 0.9863,
+    "q_hi": 1.1325,
+    "coverage": 1.0
+   },
+   "stiv": {
+    "q": 1.1274,
+    "q_lo": 1.0472,
+    "q_hi": 1.2076,
+    "coverage": 1.0
+   }
+  },
+  "q_ref": 0.636,
+  "u_ref": 0.05,
+  "published": {
+   "err_pct": 71.92,
+   "within_ref_u": false,
+   "expert_rank": 24,
+   "n_experts": 23,
+   "beats_share": 0.0
+  },
+  "estimate": {
+   "err_pct": 71.92,
+   "within_ref_u": false,
+   "expert_rank": 24,
+   "n_experts": 23,
+   "beats_share": 0.0
+  },
+  "expert_median_err_pct": 9.43,
+  "cost_usd": 0.0479,
+  "seconds": 51.8,
+  "run_id": "r-20261025231620-9ab9aa",
+  "git": "0ad52ec",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:17:28.799293+00:00"
+ },
+ {
+  "video": "vgc2",
+  "split": "test",
+  "site": "West Normanby (drone)",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "STIV gave 107.7 m\u00b3/s and LSPIV gave 119.3 m\u00b3/s, about 10% apart and within the 15% tolerance. Both have good coverage."
+  ],
+  "q_published": 113.4966,
+  "q_estimate": 113.4966,
+  "estimates": {
+   "stiv": {
+    "q": 107.6818,
+    "q_lo": 100.5467,
+    "q_hi": 114.8169,
+    "coverage": 0.976
+   },
+   "lspiv": {
+    "q": 119.3113,
+    "q_lo": 112.027,
+    "q_hi": 126.5957,
+    "coverage": 0.996
+   }
+  },
+  "q_ref": 107.945,
+  "u_ref": 0.055,
+  "published": {
+   "err_pct": 5.14,
+   "within_ref_u": true,
+   "expert_rank": 3,
+   "n_experts": 17,
+   "beats_share": 0.882
+  },
+  "estimate": {
+   "err_pct": 5.14,
+   "within_ref_u": true,
+   "expert_rank": 3,
+   "n_experts": 17,
+   "beats_share": 0.882
+  },
+  "expert_median_err_pct": 16.17,
+  "cost_usd": 0.0554,
+  "seconds": 63.6,
+  "run_id": "r-20261025231728-6ceea2",
+  "git": "44bc4a9",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:19:06.995316+00:00"
+ },
+ {
+  "video": "vgc3",
+  "split": "test",
+  "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "reasons": [
+   "The bed is visible (static_ratio 2.81), so correlation methods are biased low. STIV gives 51.7 m\u00b3/s and LSPIV gives 46.6 m\u00b3/s, a difference of about 10%."
+  ],
+  "q_published": 51.7198,
+  "q_estimate": 51.7198,
+  "estimates": {
+   "stiv": {
+    "q": 51.7198,
+    "q_lo": 48.314,
+    "q_hi": 55.1256,
+    "coverage": 1.0
+   },
+   "lspiv": {
+    "q": 46.5964,
+    "q_lo": 43.8265,
+    "q_hi": 49.3664,
+    "coverage": 0.995
+   }
+  },
+  "q_ref": 55.16,
+  "u_ref": 0.058,
+  "published": {
+   "err_pct": -6.24,
+   "within_ref_u": false,
+   "expert_rank": 5,
+   "n_experts": 18,
+   "beats_share": 0.778
+  },
+  "estimate": {
+   "err_pct": -6.24,
+   "within_ref_u": false,
+   "expert_rank": 5,
+   "n_experts": 18,
+   "beats_share": 0.778
+  },
+  "expert_median_err_pct": 24.51,
+  "cost_usd": 0.0499,
+  "seconds": 55.9,
+  "run_id": "r-20261025231907-cbdabc",
+  "git": "96601bf",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:20:16.498340+00:00"
+ },
+ {
+  "video": "vgc4",
+  "split": "test",
+  "site": "Russell River (drone)",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "ESCALATE",
+  "method": null,
+  "basis": null,
+  "reasons": [
+   "The bed is visible (static_ratio 5.3). The first STIV (158 m\u00b3/s) and LSPIV (163 m\u00b3/s) runs agree within 3%, but both have valid_frac of only about 0.36, below the policy's 0.5 minimum, so publishing was denied. The wide-window STIV rerun reached full coverage by accepting noisy tree-bank vectors and gave 104 m\u00b3/s, which disagrees. The wet channel is about 40% of the transect, so I can't tell which number to trust. A person should review the transect and decide how to mask the bank stations."
+  ],
+  "q_published": null,
+  "q_estimate": 104.3963,
+  "estimates": {
+   "stiv": {
+    "q": 104.3963,
+    "q_lo": 89.5011,
+    "q_hi": 119.2914,
+    "coverage": 1.0
+   },
+   "lspiv": {
+    "q": 163.0622,
+    "q_lo": 148.9296,
+    "q_hi": 177.1948,
+    "coverage": 0.668
+   }
+  },
+  "q_ref": 139.0,
+  "u_ref": 0.15,
+  "published": {
+   "err_pct": null,
+   "within_ref_u": null,
+   "expert_rank": null
+  },
+  "estimate": {
+   "err_pct": -24.89,
+   "within_ref_u": false,
+   "expert_rank": 20,
+   "n_experts": 22,
+   "beats_share": 0.136
+  },
+  "expert_median_err_pct": 11.95,
+  "cost_usd": 0.1441,
+  "seconds": 68.6,
+  "run_id": "r-20261025232016-2bb7ad",
+  "git": "96601bf",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:22:09.394432+00:00"
+ },
+ {
+  "video": "vgc5",
+  "split": "test",
+  "site": "Le Stor\u00e5ne \u00e0 Ruud",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "STIV (25.3 m\u00b3/s) and dense flow (24.1 m\u00b3/s) agree within 5% and match the coarse-motion speed of about 1.75 m/s. LSPIV (17.3 m\u00b3/s) is biased low, probably by static texture, so I excluded it."
+  ],
+  "q_published": 24.6802,
+  "q_estimate": 24.6802,
+  "estimates": {
+   "lspiv": {
+    "q": 17.3084,
+    "q_lo": 16.3837,
+    "q_hi": 18.2332,
+    "coverage": 1.0
+   },
+   "stiv": {
+    "q": 25.2771,
+    "q_lo": 23.8142,
+    "q_hi": 26.7401,
+    "coverage": 0.941
+   },
+   "dense_flow": {
+    "q": 24.0832,
+    "q_lo": 22.639,
+    "q_hi": 25.5275,
+    "coverage": 0.852
+   }
+  },
+  "q_ref": 19.7,
+  "u_ref": 0.053,
+  "published": {
+   "err_pct": 25.28,
+   "within_ref_u": false,
+   "expert_rank": 24,
+   "n_experts": 23,
+   "beats_share": 0.0
+  },
+  "estimate": {
+   "err_pct": 25.28,
+   "within_ref_u": false,
+   "expert_rank": 24,
+   "n_experts": 23,
+   "beats_share": 0.0
+  },
+  "expert_median_err_pct": 13.39,
+  "cost_usd": 0.0894,
+  "seconds": 57.0,
+  "run_id": "r-20261025232209-5f027e",
+  "git": "96601bf",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:23:33.605177+00:00"
+ },
+ {
+  "video": "vgc6",
+  "split": "test",
+  "site": "Le Groin \u00e0 Artemare (01)",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV (48.2 m\u00b3/s) and STIV (55.5 m\u00b3/s) differ by 14.1%, within the 15% tolerance. Both fields are coherent and coverage is near 100%."
+  ],
+  "q_published": 51.8234,
+  "q_estimate": 51.8234,
+  "estimates": {
+   "lspiv": {
+    "q": 48.1607,
+    "q_lo": 45.2111,
+    "q_hi": 51.1104,
+    "coverage": 0.995
+   },
+   "stiv": {
+    "q": 55.4861,
+    "q_lo": 52.0823,
+    "q_hi": 58.8898,
+    "coverage": 1.0
+   }
+  },
+  "q_ref": 53.74,
+  "u_ref": 0.0928,
+  "published": {
+   "err_pct": -3.57,
+   "within_ref_u": true,
+   "expert_rank": 6,
+   "n_experts": 17,
+   "beats_share": 0.706
+  },
+  "estimate": {
+   "err_pct": -3.57,
+   "within_ref_u": true,
+   "expert_rank": 6,
+   "n_experts": 17,
+   "beats_share": 0.706
+  },
+  "expert_median_err_pct": 17.7,
+  "cost_usd": 0.0687,
+  "seconds": 57.5,
+  "run_id": "r-20261025232333-bbb390",
+  "git": "96601bf",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:24:51.303440+00:00"
+ },
+ {
+  "video": "vgc7",
+  "split": "test",
+  "site": "Herbert River (drone)",
+  "brain": "llm",
+  "model": "claude-sonnet-5-5",
+  "decision": "PUBLISH",
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "reasons": [
+   "static_ratio 1.99 flags a visible bed. STIV has clean parallel streaks, 85% valid vectors and 92% coverage. LSPIV is incoherent and biased low."
+  ],
+  "q_published": 1454.8234,
+  "q_estimate": 1454.8234,
+  "estimates": {
+   "stiv": {
+    "q": 1454.8234,
+    "q_lo": 1137.4927,
+    "q_hi": 1772.1541,
+    "coverage": 0.916
+   }
+  },
+  "q_ref": 962.8,
+  "u_ref": 0.053,
+  "published": {
+   "err_pct": 51.1,
+   "within_ref_u": false,
+   "expert_rank": 16,
+   "n_experts": 15,
+   "beats_share": 0.0
+  },
+  "estimate": {
+   "err_pct": 51.1,
+   "within_ref_u": false,
+   "expert_rank": 16,
+   "n_experts": 15,
+   "beats_share": 0.0
+  },
+  "expert_median_err_pct": 2.16,
+  "cost_usd": 0.0509,
+  "seconds": 38.6,
+  "run_id": "r-20261025232451-c71f38",
+  "git": "96601bf",
+  "tag": "vgc-llm-sonnet-v1.1",
+  "time": "2026-10-25T23:25:47.257337+00:00"
+ }
+]

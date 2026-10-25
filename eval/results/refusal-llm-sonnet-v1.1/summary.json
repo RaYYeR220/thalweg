@@ -1,0 +1,178 @@
+{
+ "cases": 9,
+ "correct": 9,
+ "wrong_publishes": 0,
+ "rows": [
+  {
+   "case": "clean_vgc1",
+   "transform": "none",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "static_ratio 1.34 flags a visible bed; STIV has 100% valid vectors and clean parallel streaks, while LSPIV had only 7.5% valid vectors and is biased low."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.4237,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0493,
+   "time": "2026-10-25T23:08:44.672589+00:00"
+  },
+  {
+   "case": "clean_vgc8",
+   "transform": "none",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "LSPIV (1.05 m\u00b3/s) and STIV (1.11 m\u00b3/s) agree within about 5%, with full coverage and good scores."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.0804,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0481,
+   "time": "2026-10-25T23:09:46.430329+00:00"
+  },
+  {
+   "case": "handheld_shake_vgc8",
+   "transform": "shake",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "LSPIV gives 1.06 m\u00b3/s and STIV gives 1.14 m\u00b3/s, about 7% apart; coverage is full and the evidence images look coherent."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.0994,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0487,
+   "time": "2026-10-25T23:10:48.271445+00:00"
+  },
+  {
+   "case": "night_vgc1",
+   "transform": "night",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "Diagnostics flag too_dark (dark_frac 1.0), no_moving_tracers, blurred and low_contrast; the ortho image is nearly black, so no velocimetry would be reliable."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0137,
+   "time": "2026-10-25T23:11:09.375444+00:00"
+  },
+  {
+   "case": "glare_vgc8",
+   "transform": "glare",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "Diagnostics flag glare_frac=1.0, no_moving_tracers, blurred and low_contrast, and the ortho water region is saturated white, so no velocimetry is possible on this clip."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.014,
+   "time": "2026-10-25T23:11:36.489226+00:00"
+  },
+  {
+   "case": "frozen_feed_vgc1",
+   "transform": "frozen",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "The clip can't be measured. frozen_frac is 0.985 against a limit of 0.2, so almost all frames are duplicates. The diagnostics also flag no_moving_tracers, and static_ratio is 386 because the bed shows through clear water. Velocimetry on this footage would be unreliable."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0148,
+   "time": "2026-10-25T23:11:54.893186+00:00"
+  },
+  {
+   "case": "still_water_vgc8",
+   "transform": "still",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "More than half the frames are frozen duplicates (frozen_frac 0.544 against a limit of 0.2), the bed is visible with no tracers, and both STIV (0 of 60 valid) and LSPIV (1 of 248 valid) failed, so no reliable discharge can be computed."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.034,
+   "time": "2026-10-25T23:14:44.328151+00:00"
+  },
+  {
+   "case": "camera_moved_vgc1",
+   "transform": "moved",
+   "expected": [
+    "ESCALATE"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0,
+   "time": "2026-10-25T23:14:47.469761+00:00"
+  },
+  {
+   "case": "level_above_banks_vgc8",
+   "transform": "level",
+   "expected": [
+    "ESCALATE"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "perception_failed:orthorectify:planar_grp_level_mismatch"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet-v1.1",
+   "cost_usd": 0.0,
+   "time": "2026-10-25T23:15:01.996641+00:00"
+  }
+ ]
+}

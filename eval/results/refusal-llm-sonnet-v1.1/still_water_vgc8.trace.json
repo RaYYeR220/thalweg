@@ -1,0 +1,391 @@
+{
+ "run_id": "r-20261025231154-02d2ec",
+ "station_id": "vgc8",
+ "clip": "still_water_vgc8.mp4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "HOLD",
+  "reasons": [
+   "More than half the frames are frozen duplicates (frozen_frac 0.544 against a limit of 0.2), the bed is visible with no tracers, and both STIV (0 of 60 valid) and LSPIV (1 of 248 valid) failed, so no reliable discharge can be computed."
+  ],
+  "method": null,
+  "basis": null,
+  "q": null,
+  "recapture_spec": {
+   "duration_s": 30,
+   "fps": 30,
+   "when": "daylight"
+  },
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.01,
+    "frames": 240,
+    "duration_s": 7.997334221926025,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 3
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 240,
+    "dt_s": 0.03332,
+    "duration_s": 7.96,
+    "warnings": [],
+    "frozen_frac": 0.544
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1312
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": false,
+    "verified": true,
+    "shift_px_p95": 0.01,
+    "inliers": 230,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      1.0,
+      -0.0,
+      0.00605
+     ],
+     [
+      0.0,
+      1.0,
+      -0.01166
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1999
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 0.696,
+    "motion_px_p95": 0.042,
+    "inlier_ratio_min": 0.987,
+    "keyframes": 11,
+    "notes": [
+     "static_camera"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 8682
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.008,
+    "ortho_shape": [
+     575,
+     525
+    ],
+    "water_px": 136670,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 72
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 0.2765,
+    "static_texture": 18.5617,
+    "static_ratio": 67.143,
+    "tracer_density": 0.0,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0022,
+    "blur_var": 1064.5233,
+    "contrast": 87.0,
+    "water_px": 136670,
+    "frames": 240,
+    "flags": [
+     "no_moving_tracers",
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 719
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 0.6085,
+    "speed_p90_px": 11.146,
+    "direction_deg": -25.9753,
+    "coherence": 0.5173,
+    "speed_p50_ms": 0.1461,
+    "speed_p90_ms": 2.6759,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 45,
+     "search_px": 21,
+     "shift_px": [
+      7.0,
+      3.4
+     ],
+     "step_px": 22,
+     "vmax_ms": 8.0,
+     "flow_deg": -26.0,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1152
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "static_ratio 67 with bed visible; STIV with temporal high-pass is robust to static texture.",
+    "background": "highpass:3",
+    "window": 16,
+    "line_m": 6
+   },
+   "reason": "static_ratio 67 with bed visible; STIV with temporal high-pass is robust to static texture.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 0,
+    "valid_frac": 0.0,
+    "speed_p50": null,
+    "speed_p90": null,
+    "score_mean": null,
+    "direction_deg": null,
+    "rejected": {
+     "low_score": 60
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.033322225924691695,
+     "vmax_ms": 8.0,
+     "background": "highpass:3",
+     "res_m": 0.008,
+     "line_m": 6,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 142553
+  },
+  {
+   "i": 8,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Independent cross-check using the coarse-motion suggested parameters, with a high-pass to suppress static bed texture.",
+    "background": "highpass:3",
+    "ia_px": 45,
+    "search_px": 21,
+    "pair_step": 1
+   },
+   "reason": "Independent cross-check using the coarse-motion suggested parameters, with a high-pass to suppress static bed texture.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 248,
+    "valid": 1,
+    "valid_frac": 0.004,
+    "speed_p50": 0.018,
+    "speed_p90": 0.018,
+    "score_mean": 0.265,
+    "direction_deg": 96.5,
+    "rejected": {
+     "search_edge": 11,
+     "low_score": 235,
+     "direction": 1
+    },
+    "params": {
+     "ia_px": 45,
+     "search_px": 21,
+     "step_px": 22,
+     "pair_step": 1,
+     "dt_s": 0.033322225924691695,
+     "shift_px": [
+      7,
+      3
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.008
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 1576
+  },
+  {
+   "i": 9,
+   "actor": "llm",
+   "tool": "hold_and_request_recapture",
+   "args": {
+    "reason": "More than half the frames are frozen duplicates (frozen_frac 0.544 against a limit of 0.2), the bed is visible with no tracers, and both STIV (0 of 60 valid) and LSPIV (1 of 248 valid) failed, so no reliable discharge can be computed.",
+    "duration_s": 30,
+    "fps": 30,
+    "when": "daylight"
+   },
+   "reason": "More than half the frames are frozen duplicates (frozen_frac 0.544 against a limit of 0.2), the bed is visible with no tracers, and both STIV (0 of 60 valid) and LSPIV (1 of 248 valid) failed, so no reliable discharge can be computed.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "HOLD",
+    "reasons": [
+     "More than half the frames are frozen duplicates (frozen_frac 0.544 against a limit of 0.2), the bed is visible with no tracers, and both STIV (0 of 60 valid) and LSPIV (1 of 248 valid) failed, so no reliable discharge can be computed."
+    ],
+    "method": null,
+    "basis": null,
+    "q": null,
+    "recapture_spec": {
+     "duration_s": 30,
+     "fps": 30,
+     "when": "daylight"
+    },
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 0.816,
+  "pose": 1.985,
+  "stabilize": 8.682,
+  "orthorectify": 0.058,
+  "diagnose": 0.719,
+  "coarse_motion": 1.152,
+  "stiv": 141.711,
+  "lspiv": 1.572
+ },
+ "cost_usd": 0.03402,
+ "started": "2026-10-25T23:11:54.900596+00:00",
+ "ended": "2026-10-25T23:14:44.224362+00:00",
+ "notes": [],
+ "estimates": {}
+}
