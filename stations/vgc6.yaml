@@ -1,0 +1,53 @@
+id: vgc6
+name: Le Groin at Artemare (France), ground camera
+grp:
+- {X: 3.99, Y: 10.59, Z: 3.03, i: 1154.0, j: 456.0}
+- {X: 3.9, Y: 10.39, Z: 4.01, i: 1144.0, j: 359.0}
+- {X: 3.9, Y: 10.39, Z: 3.51, i: 1143.0, j: 406.0}
+- {X: 3.9, Y: 10.39, Z: 2.76, i: 1144.0, j: 481.0}
+- {X: 0.89, Y: 0.0, Z: 4.24, i: 190.0, j: 318.0}
+- {X: 0.97, Y: 0.97, Z: 4.27, i: 270.0, j: 316.0}
+- {X: 0.0, Y: 0.05, Z: 4.23, i: 222.0, j: 312.0}
+- {X: 0.7, Y: 1.16, Z: 4.41, i: 292.0, j: 301.0}
+- {X: 0.69, Y: 1.17, Z: 5.15, i: 289.0, j: 243.0}
+- {X: 0.64, Y: 1.54, Z: 4.4, i: 316.0, j: 301.0}
+- {X: 0.39, Y: 1.15, Z: 3.45, i: 299.0, j: 376.0}
+transect:
+- [1.0, -0.193, 4.075]
+- [1.0, -0.19, 4.075]
+- [1.0, 0.79, 4.075]
+- [1.0, 1.19, 1.293]
+- [1.0, 1.62, 0.666]
+- [1.0, 1.91, 0.62]
+- [1.0, 2.27, 0.59]
+- [1.0, 2.95, 0.377]
+- [1.0, 3.07, 0.07]
+- [1.0, 3.31, 0.06]
+- [1.0, 3.52, -0.055]
+- [1.0, 3.79, -0.396]
+- [1.0, 4.18, -0.556]
+- [1.0, 4.64, -0.66]
+- [1.0, 5.7, -0.719]
+- [1.0, 6.93, -0.722]
+- [1.0, 7.39, -0.715]
+- [1.0, 7.61, -0.523]
+- [1.0, 7.79, -0.479]
+- [1.0, 8.27, -0.199]
+- [1.0, 8.28, 0.066]
+- [1.0, 8.39, 0.134]
+- [1.0, 8.4, 0.171]
+- [1.0, 8.8, 1.293]
+- [1.0, 12.61, 3.459]
+image_size: [1280, 720]
+camera: {K: [[1190.0, 0.0, 640.0], [0.0, 1190.0, 360.0], [0.0, 0.0, 1.0]]}
+alpha: 0.85
+alpha_source: "default"
+static_mask:
+- [[0, 0], [540, 0], [520, 250], [420, 330], [330, 395], [240, 445], [195, 500], [185, 540], [90, 552], [0, 558]]
+- [[760, 0], [1280, 0], [1280, 500], [1200, 505], [1160, 480], [1160, 315], [1100, 300], [900, 270], [760, 230]]
+flow_hint_deg: 0.0
+ortho_extent: [-4.0, -1.0, 12.0, 13.0]
+ortho_res_m: 0.025
+thresholds: {source: none}
+notes: "3D GRPs (GRP.dat, 11 points: staff gauge and cabin railing of GRP_and_bathy.ods), clustered in two groups, so the focal length is not observable from them: pose by PnP with fixed intrinsics f = 1190 px (as fitted for vgc3, same day and frame size; also the RMSE minimum here), principal point at the image centre. Level 2.20 m from the clip name '220cm'; GRP Z is in the staff-gauge datum (survey point '2m echelle' at Z = 2.00 m), so the reading is the level. Transect = transect.dat at X = 1 (bank tops 4.075 / 3.459 m); the survey sheet's left-bank toe points (10.72 m, 1.67 m) would put the 2.20 m waterline ~0.9 m further out. Survey axes: X downstream (0 at the most upstream mark), Y from right to left bank."
+sources: {dataset: "Video Globe Challenge 2020 (doi:10.57745/KVNIHX), Video_6", license: etalab-2.0}

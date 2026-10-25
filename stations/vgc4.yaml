@@ -1,0 +1,55 @@
+id: vgc4
+name: Russell River (Australia), drone
+grp: []
+transect:
+- [33.06, 7.97, 4.25]
+- [33.16, 7.97, 4.2]
+- [34.09, 7.97, 3.961]
+- [37.79, 7.97, 3.554]
+- [39.59, 7.97, 3.304]
+- [40.49, 7.97, 2.964]
+- [42.29, 7.97, 1.588]
+- [42.69, 7.97, 1.388]
+- [43.69, 7.97, 1.348]
+- [44.69, 7.97, 1.348]
+- [45.69, 7.97, 1.388]
+- [46.69, 7.97, 1.538]
+- [47.69, 7.97, 1.468]
+- [48.69, 7.97, 1.308]
+- [49.69, 7.97, 1.348]
+- [50.69, 7.97, 1.368]
+- [51.69, 7.97, 1.318]
+- [52.69, 7.97, 1.308]
+- [53.69, 7.97, 1.338]
+- [54.69, 7.97, 1.288]
+- [55.69, 7.97, 1.288]
+- [56.69, 7.97, 1.298]
+- [57.69, 7.97, 1.318]
+- [58.69, 7.97, 1.388]
+- [59.69, 7.97, 1.438]
+- [60.69, 7.97, 1.468]
+- [61.69, 7.97, 1.518]
+- [61.99, 7.97, 1.588]
+- [63.49, 7.97, 1.786]
+- [65.89, 7.97, 1.805]
+- [67.59, 7.97, 1.742]
+- [68.39, 7.97, 1.883]
+- [70.79, 7.97, 3.233]
+- [71.89, 7.97, 3.714]
+- [72.98, 7.97, 4.2]
+- [73.08, 7.97, 4.25]
+image_size: [4096, 2160]
+scale_m_per_px: 0.025
+camera: {origin_px: [0.0, 2160.0]}
+alpha: 0.91
+alpha_source: "site note: Coefficient = 0.91"
+static_mask:
+- [[0, 775], [4096, 775], [4096, 1175], [0, 1175]]
+- [[0, 1215], [1580, 1215], [1670, 1700], [1750, 2160], [0, 2160]]
+- [[2370, 1215], [2950, 1215], [2950, 2160], [2270, 2160], [2300, 1700]]
+flow_hint_deg: 90.0
+ortho_extent: [30.0, 0.5, 76.0, 22.0]
+ortho_res_m: 0.05
+thresholds: {source: none}
+notes: "Nadir drone frame, Fudaa-LSPIV 'mise a l'echelle' mode: 0.025 m/px, origin at the bottom-left image corner, Y up. Transect = bathy.dat (Y = 7.97 m), which matches the transect figure of the site notes; bathy_shifted.dat (Y = 24.0) is only for a cropped ortho-image and is not used. Bank ends were at the level (4.2 m): one point added 0.1 m beyond each end, 5 cm above the level. Flow runs toward the bridge at image top (+Y), consistent with LB/RB in the notes figure."
+sources: {dataset: "Video Globe Challenge 2020 (doi:10.57745/KVNIHX), Video_4", license: etalab-2.0}

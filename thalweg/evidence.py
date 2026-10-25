@@ -43,10 +43,10 @@ def render_field(ortho0: np.ndarray, field, grid, transect=None, lines=None, max
     return cv.resize(img, None, fx=s, fy=s, interpolation=cv.INTER_AREA) if s < 1 else img
 
 
-def render_overlay(frame: np.ndarray, cam, station, level: float, max_px: int = 1100) -> np.ndarray:
+def render_overlay(frame: np.ndarray, cam, station, level: float, max_px: int = 1100, px_scale: float = 1.0) -> np.ndarray:
     img = _bgr(frame)
     for g in station.grp:
-        cv.circle(img, (int(g.i), int(g.j)), 9, (0, 0, 255), 2, cv.LINE_AA)
+        cv.circle(img, (int(g.i * px_scale), int(g.j * px_scale)), 9, (0, 0, 255), 2, cv.LINE_AA)
     if cam is not None and len(station.grp):
         proj = cam.project(np.array([[g.X, g.Y, g.Z] for g in station.grp]))
         for p in proj:

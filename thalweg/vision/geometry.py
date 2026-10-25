@@ -123,6 +123,21 @@ class CameraModel:
         pts, _ = cv.projectPoints(xyz, self.rvec, self.tvec, self.K, self.dist)
         return pts.reshape(-1, 2)
 
+    def rescaled(self, s: float) -> "CameraModel":
+        """The same camera seen in frames resized by factor `s` (pixel coordinates scale by s)."""
+        if s == 1.0:
+            return self
+        S = np.diag([s, s, 1.0])
+        size = (int(round(self.image_size[0] * s)), int(round(self.image_size[1] * s)))
+        m = CameraModel(kind=self.kind, image_size=size, plane_z=self.plane_z, dist=self.dist, rvec=self.rvec,
+                        tvec=self.tvec, reproj_rmse_px=self.reproj_rmse_px * s, reproj_max_px=self.reproj_max_px * s,
+                        any_level=self.any_level)
+        if self.kind == "planar":
+            m.H = S @ self.H
+        else:
+            m.K = S @ self.K
+        return m
+
     def check_level(self, level: float) -> None:
         if self.kind == "planar" and not self.any_level and abs(level - self.plane_z) > PLANE_TOL_M:
             raise GeometryError(

@@ -82,6 +82,7 @@ class Context:
     diag: Diagnostics | None = None
     coarse: CoarseMotion | None = None
     params: dict = field(default_factory=dict)
+    px_scale: float = 1.0  # working frames / station survey pixels
     fields: dict[str, VectorField] = field(default_factory=dict)
     results: dict[str, DischargeResult] = field(default_factory=dict)
     timings: dict[str, float] = field(default_factory=dict)
@@ -114,15 +115,23 @@ def step_probe(ctx: Context) -> dict:
     return info
 
 
+MAX_WORK_WIDTH = 1920
+
+
 def step_load(ctx: Context, dur_s: float = 10.0, start_s: float = 0.0) -> dict:
     t0 = time.time()
-    ctx.raw = read_frames(ctx.clip.video, start_s=start_s, dur_s=dur_s)
+    ctx.raw = read_frames(ctx.clip.video, start_s=start_s, dur_s=dur_s, max_width=MAX_WORK_WIDTH)
     w, h = ctx.station.image_size
-    if ctx.raw.size != (w, h):
-        # Survey pixels refer to the station's frame size; rescale the clip to match.
-        ctx.raw.frames = [cv.resize(f, (w, h), interpolation=cv.INTER_AREA) for f in ctx.raw.frames]
-        ctx.notes.append(f"resized {ctx.raw.size} -> {(w, h)}")
-        ctx.raw.size = (w, h)
+    # Survey pixels refer to the station's native frame size; work at most MAX_WORK_WIDTH wide
+    # and carry the scale into every pixel-space quantity (camera, masks, reference frame).
+    ctx.px_scale = min(1.0, MAX_WORK_WIDTH / w)
+    tw, th = int(round(w * ctx.px_scale)), int(round(h * ctx.px_scale))
+    if ctx.raw.size != (tw, th):
+        ctx.raw.frames = [cv.resize(f, (tw, th), interpolation=cv.INTER_AREA) for f in ctx.raw.frames]
+        ctx.notes.append(f"resized {ctx.raw.size} -> {(tw, th)}")
+        ctx.raw.size = (tw, th)
+    if ctx.px_scale < 1.0:
+        ctx.notes.append(f"working scale {ctx.px_scale:.3f} of native {w}x{h}")
     ctx.frames = ctx.raw.frames
     _timed(ctx, "load", t0)
     frozen = _frozen_fraction(ctx.frames)
@@ -144,10 +153,12 @@ def _static_mask(ctx: Context) -> np.ndarray | None:
     polys = ctx.station.static_mask
     if not polys:
         return None
+    s = ctx.px_scale
     w, h = ctx.station.image_size
+    w, h = int(round(w * s)), int(round(h * s))
     m = np.zeros((h, w), np.uint8)
     for p in polys:
-        m |= polygon_mask((h, w), p)
+        m |= polygon_mask((h, w), [(x * s, y * s) for x, y in p])
     return m
 
 
@@ -164,6 +175,8 @@ def step_check_pose(ctx: Context) -> dict:
     ref = cv.imread(str(ref_path), cv.IMREAD_GRAYSCALE)
     if ref is None:
         return {"checked": False, "reason": "reference_unreadable"}
+    if ref.shape[::-1] != ctx.raw.size:
+        ref = cv.resize(ref, ctx.raw.size, interpolation=cv.INTER_AREA)
     t0 = time.time()
     pc = check_camera_pose(ref, ctx.frames[0], _static_mask(ctx), _matcher(ctx))
     _timed(ctx, "pose", t0)
@@ -209,7 +222,7 @@ def step_orthorectify(ctx: Context, res_m: float | None = None) -> dict:
     t0 = time.time()
     st = ctx.station
     try:
-        ctx.cam = build_camera(st)
+        ctx.cam = build_camera(st).rescaled(ctx.px_scale)
         x0, y0, x1, y1 = _default_extent(st)
         res = res_m or st.ortho_res_m or max((x1 - x0), (y1 - y0)) / 600.0
         ctx.grid = OrthoGrid(x0, y0, x1, y1, float(res), ctx.level)
@@ -223,9 +236,11 @@ def step_orthorectify(ctx: Context, res_m: float | None = None) -> dict:
                                               ctx.valid_mask)
     _timed(ctx, "orthorectify", t0)
     ev = [ctx.sink.put_image("ortho", _ortho_preview(ctx)),
-          ctx.sink.put_image("frame_overlay", render_overlay(ctx.raw.frames[0], ctx.cam, st, ctx.level))]
-    return {"kind": ctx.cam.kind, "reproj_rmse_px": round(ctx.cam.reproj_rmse_px, 3),
-            "reproj_max_px": round(ctx.cam.reproj_max_px, 3), "res_m": round(ctx.grid.res_m, 4),
+          ctx.sink.put_image("frame_overlay", render_overlay(ctx.raw.frames[0], ctx.cam, st, ctx.level,
+                                                             px_scale=ctx.px_scale))]
+    return {"kind": ctx.cam.kind, "reproj_rmse_px": round(ctx.cam.reproj_rmse_px / ctx.px_scale, 3),
+            "reproj_rmse_rel_diag": round(ctx.cam.reproj_rmse_px / float(np.hypot(*ctx.cam.image_size)), 5),
+            "reproj_max_px": round(ctx.cam.reproj_max_px / ctx.px_scale, 3), "res_m": round(ctx.grid.res_m, 4),
             "ortho_shape": list(ctx.grid.shape), "water_px": int(ctx.water_mask.sum()), "evidence": ev}
 
 

@@ -19,7 +19,7 @@ from thalweg.vision.diagnose import BED_VISIBLE_RATIO
 class PolicyLimits:
     max_steps: int = 24
     max_compute_s: float = 420.0
-    grp_rmse_px_max: float = 4.0
+    grp_rmse_rel_max: float = 0.006  # GRP reprojection RMSE as a share of the image diagonal
     stab_residual_px_max: float = 2.0
     coverage_min: float = 0.6
     agree_tol: float = 0.15
@@ -65,7 +65,8 @@ class Policy:
         L = self.limits
         why: list[str] = []
         method, basis = call.args.get("method"), call.args.get("basis")
-        if ctx.cam is None or not np.isfinite(ctx.cam.reproj_rmse_px) or ctx.cam.reproj_rmse_px > L.grp_rmse_px_max:
+        diag = float(np.hypot(*ctx.cam.image_size)) if ctx.cam is not None else 0.0
+        if ctx.cam is None or not np.isfinite(ctx.cam.reproj_rmse_px) or ctx.cam.reproj_rmse_px > L.grp_rmse_rel_max * diag:
             why.append("geometry_unverified")
         if ctx.stab is not None and "stabilization_rejected" in ctx.stab.notes and ctx.stab.motion_px_p95 > 5.0:
             why.append("camera_motion_uncorrected")
