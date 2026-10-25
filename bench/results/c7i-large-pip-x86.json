@@ -1,0 +1,127 @@
+{
+ "label": "c7i-large-pip-x86",
+ "env": {
+  "cv2_version": "5.0.0",
+  "cv2_file": "/opt/thalweg/venv/lib/python3.12/site-packages/cv2/__init__.py",
+  "build": [
+   "Version control:               5.0.0",
+   "CPU/HW features:",
+   "Baseline:                    SSE SSE2 SSE3",
+   "Dispatched code generation:  SSE4_1 SSE4_2 AVX FP16 AVX2 AVX512_SKX",
+   "C++ Compiler:                /opt/rh/gcc-toolset-14/root/usr/bin/c++  (ver 14.2.1)",
+   "C Compiler:                  /opt/rh/gcc-toolset-14/root/usr/bin/cc",
+   "Parallel framework:            pthreads",
+   "Custom HAL:                  YES (ipp (ver 0.0.1))"
+  ],
+  "threads": 2,
+  "python": "3.12.3",
+  "machine": "x86_64",
+  "processor": "x86_64",
+  "instance_type": "c7i.large",
+  "ami_id": "ami-0d6dd9e8265d48906",
+  "product_codes": null
+ },
+ "ops_ms": {
+  "cvtColor_bgr2gray_1080p": 0.621,
+  "resize_area_4k_to_1080p": 35.519,
+  "remap_ortho_600x600": 0.684,
+  "warpPerspective_1080p": 3.975,
+  "gaussianBlur_s6_600": 2.082,
+  "sobel_600": 0.142,
+  "matchTemplate_31_in_55_x100": 4.217,
+  "dis_flow_600": 30.554,
+  "phaseCorrelate_600": 3.846,
+  "findHomography_usac_1000": 0.446,
+  "laplacian_1080p": 1.926
+ },
+ "pipeline": {
+  "station": "stations/vgc1.yaml",
+  "clip": "clips/bench_vgc1.json",
+  "repeat": 5,
+  "median_total_s": 39.69,
+  "median_stages_s": {
+   "load": 0.873,
+   "stabilize": 15.801,
+   "orthorectify": 0.163,
+   "diagnose": 0.538,
+   "coarse_motion": 0.997,
+   "lspiv": 7.206,
+   "stiv": 13.143
+  },
+  "runs": [
+   {
+    "total_s": 39.04,
+    "stages": {
+     "load": 0.947,
+     "stabilize": 14.582,
+     "orthorectify": 0.171,
+     "diagnose": 0.737,
+     "coarse_motion": 1.112,
+     "lspiv": 7.227,
+     "stiv": 13.243
+    },
+    "decision": "PUBLISH",
+    "q": 1.317
+   },
+   {
+    "total_s": 40.92,
+    "stages": {
+     "load": 0.878,
+     "stabilize": 16.842,
+     "orthorectify": 0.164,
+     "diagnose": 0.544,
+     "coarse_motion": 1.006,
+     "lspiv": 7.238,
+     "stiv": 13.224
+    },
+    "decision": "PUBLISH",
+    "q": 1.317
+   },
+   {
+    "total_s": 39.69,
+    "stages": {
+     "load": 0.873,
+     "stabilize": 15.801,
+     "orthorectify": 0.163,
+     "diagnose": 0.533,
+     "coarse_motion": 0.992,
+     "lspiv": 7.189,
+     "stiv": 13.126
+    },
+    "decision": "PUBLISH",
+    "q": 1.317
+   },
+   {
+    "total_s": 39.55,
+    "stages": {
+     "load": 0.854,
+     "stabilize": 15.657,
+     "orthorectify": 0.163,
+     "diagnose": 0.538,
+     "coarse_motion": 0.992,
+     "lspiv": 7.193,
+     "stiv": 13.143
+    },
+    "decision": "PUBLISH",
+    "q": 1.317
+   },
+   {
+    "total_s": 40.62,
+    "stages": {
+     "load": 0.845,
+     "stabilize": 16.785,
+     "orthorectify": 0.161,
+     "diagnose": 0.536,
+     "coarse_motion": 0.997,
+     "lspiv": 7.206,
+     "stiv": 13.089
+    },
+    "decision": "PUBLISH",
+    "q": 1.317
+   }
+  ]
+ },
+ "clips_per_hour": 90.7,
+ "usd_per_1000_gaugings": 0.984,
+ "usd_per_hour": 0.08925
+}
