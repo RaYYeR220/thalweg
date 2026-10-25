@@ -18,8 +18,10 @@ RUNS = {
     "vgc-llm-sonnet": ("llm", "frozen (blind)"),
     "vgc-autopilot-v1.1": ("autopilot", "v1.1 (after refusal-suite fixes, not blind)"),
     "vgc-llm-sonnet-v1.1": ("llm", "v1.1 (after refusal-suite fixes, not blind)"),
+    "vgc-autopilot-v1.2": ("autopilot", "v1.2 (channel-axis guard, not blind)"),
 }
-REFUSAL = ["refusal-autopilot", "refusal-llm-sonnet", "refusal-autopilot-v1.1", "refusal-llm-sonnet-v1.1"]
+REFUSAL = ["refusal-autopilot", "refusal-llm-sonnet", "refusal-autopilot-v1.1", "refusal-llm-sonnet-v1.1",
+           "refusal-autopilot-v1.2"]
 
 
 def _load(p: Path):
