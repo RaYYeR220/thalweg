@@ -41,7 +41,7 @@
       "Comment": "The Graviton worker polls this activity, runs the agent with OpenCV 5 and returns the decision.",
       "Resource": "${AgentActivityArn}",
       "TimeoutSeconds": 900,
-      "HeartbeatSeconds": 120,
+      "HeartbeatSeconds": 300,
       "ResultPath": "$.agent",
       "Catch": [
         {

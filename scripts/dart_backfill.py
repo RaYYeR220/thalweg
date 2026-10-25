@@ -54,7 +54,7 @@ def _latest_run(clip_key: str) -> dict | None:
 def cmd_backfill(a):
     s3 = _s3(a.profile)
     rows = [r for r in raw_manifest(s3) if a.group in ("all", r["group"])]
-    for i, r in enumerate(rows[a.start:], start=a.start):
+    for i, r in enumerate(rows[a.start:a.start + a.limit], start=a.start):
         t = datetime.fromisoformat(r["t"])
         stamp = t.strftime("%Y%m%dT%H%M%S")
         clip_key = f"clips/dart/{stamp}.mp4"
@@ -86,6 +86,7 @@ def main():
     ap.add_argument("--brain", default="autopilot")
     ap.add_argument("--model", default=None)
     ap.add_argument("--start", type=int, default=0)
+    ap.add_argument("--limit", type=int, default=10**6)
     ap.add_argument("--profile", default="countercharge")
     a = ap.parse_args()
     {"manifest": cmd_manifest, "backfill": cmd_backfill}[a.cmd](a)

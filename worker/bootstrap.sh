@@ -42,9 +42,12 @@ if [ ! -x /opt/thalweg/venv-pip/bin/python ]; then
   /opt/thalweg/venv-pip/bin/pip install -q --no-deps -e "$APP"
 fi
 
-cat > /etc/systemd/system/thalweg-worker.service <<EOF
+# Two worker processes: a judge's run is not queued behind a scheduled replay.
+systemctl disable --now thalweg-worker 2>/dev/null || true
+rm -f /etc/systemd/system/thalweg-worker.service
+cat > /etc/systemd/system/thalweg-worker@.service <<EOF
 [Unit]
-Description=Thalweg gauging worker
+Description=Thalweg gauging worker %i
 After=network-online.target
 Wants=network-online.target
 
@@ -62,9 +65,8 @@ StandardError=journal
 WantedBy=multi-user.target
 EOF
 systemctl daemon-reload
-systemctl enable --now thalweg-worker
-systemctl restart thalweg-worker
+for i in 1 2; do systemctl enable thalweg-worker@$i >/dev/null 2>&1; systemctl restart thalweg-worker@$i; done
 sleep 3
-systemctl --no-pager status thalweg-worker | head -5
+systemctl is-active thalweg-worker@1 thalweg-worker@2
 set -a; source /etc/thalweg.env; source /opt/thalweg/cool.env; set +a
 /opt/thalweg/venv/bin/python -c "import cv2, thalweg; print('worker cv2', cv2.__version__, cv2.__file__)"
