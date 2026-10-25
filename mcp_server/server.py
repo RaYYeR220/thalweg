@@ -14,7 +14,7 @@ import os
 import uuid
 from pathlib import Path
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from thalweg import pipeline as P
 from thalweg.agent.autopilot import AutopilotBrain
@@ -25,7 +25,7 @@ from thalweg.station import load_station
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = Path(os.environ.get("THALWEG_MCP_OUT", ROOT / "runs" / "mcp"))
-mcp = FastMCP("thalweg", stateless_http=True)
+mcp = MCPServer("thalweg", description="Camera-based river discharge gauging tools (OpenCV 5)")
 SESSIONS: dict[str, Context] = {}
 
 
@@ -100,9 +100,7 @@ def main():
     ap.add_argument("--host", default="127.0.0.1", help="bind address; the HTTP mode has no authentication of its own")
     a = ap.parse_args()
     if a.http:
-        mcp.settings.host = a.host
-        mcp.settings.port = a.port
-        mcp.run(transport="streamable-http")
+        mcp.run(transport="streamable-http", host=a.host, port=a.port)
     else:
         mcp.run()
 
