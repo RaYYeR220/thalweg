@@ -472,17 +472,59 @@ image_size:
 - 1080
 alpha: 0.85
 alpha_source: default (Perks et al. 2024 report site-specific values; not used)
-static_mask: null
-flow_hint_deg: null
-ortho_extent: null
-ortho_res_m: null
+static_mask:
+- - - 880
+    - 0
+  - - 1920
+    - 0
+  - - 1920
+    - 330
+  - - 1400
+    - 385
+  - - 700
+    - 370
+  - - 0
+    - 360
+  - - 0
+    - 120
+  - - 880
+    - 120
+flow_hint_deg: 90.0
+ortho_extent:
+- 4972.0
+- 4983.0
+- 4993.0
+- 5010.0
+ortho_res_m: 0.03
 thresholds:
   warning_q: 231.2
   source: NRFA 46003 Dart at Austins Bridge, QMED 231.2 m3/s (median annual maximum
     flood)
-notes: 'Stage and survey in the station local datum (m). Videos: 10 s at 20 Hz (Perks,
-  Newcastle University).'
+notes: 'Stage and survey share the station''s local datum (m). Fixed bank camera,
+  10 s clips at about 20 Hz. Camera intrinsics fitted to the nine far-bank GCPs; the
+  near half of the section is outside the view, so discharge there is filled from
+  the measured panels (flagged as interpolated). Bank tops are at 5000.37-5000.39
+  m: above that the river leaves the surveyed section and gauging is escalated.'
 sources:
   dataset: Perks (2024) River Dart image velocimetry deposit, doi:10.25405/data.ncl.19762027
   license: CC BY 4.0
   thresholds: UK National River Flow Archive station 46003
+camera:
+  K:
+  - - 2129.5
+    - 0.0
+    - 960.0
+  - - 0.0
+    - 2129.5
+    - 540.0
+  - - 0.0
+    - 0.0
+    - 1.0
+  dist:
+  - -0.3749
+  - 0.0
+  - 0.0
+  - 0.0
+  - 0.0
+  note: focal length and k1 fitted to the 9 GCPs with the principal point fixed at
+    the image centre (RMS 7.4 px)

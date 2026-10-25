@@ -42,6 +42,7 @@ class CameraModel:
     reproj_rmse_px: float = float("nan")
     reproj_max_px: float = float("nan")
     any_level: bool = False  # nadir footage scaled at the water surface: valid at whatever level is gauged
+    origin: np.ndarray | None = None  # world offset subtracted before projection (keeps solvePnP well conditioned)
 
     @classmethod
     def scaled(cls, m_per_px: float, image_size: tuple[int, int], origin_px: tuple[float, float] | None = None,
@@ -102,11 +103,18 @@ class CameraModel:
     def _fit_pnp(cls, xyz, ij, image_size, camera):
         K = np.array(camera["K"], dtype=np.float64)
         dist = np.array(camera.get("dist", [0, 0, 0, 0, 0]), dtype=np.float64)
-        flag = cv.SOLVEPNP_IPPE if float(np.ptp(xyz[:, 2])) <= PLANE_TOL_M else cv.SOLVEPNP_ITERATIVE
-        ok, rvec, tvec = cv.solvePnP(xyz, ij, K, dist, flags=flag)
+        # Survey grids often sit thousands of metres from their origin; solve in centred coordinates.
+        origin = xyz.mean(axis=0)
+        X = xyz - origin
+        if float(np.ptp(xyz[:, 2])) <= PLANE_TOL_M:
+            ok, rvec, tvec = cv.solvePnP(X, ij, K, dist, flags=cv.SOLVEPNP_IPPE)
+        else:
+            ok, rvec, tvec = cv.solvePnP(X, ij, K, dist, flags=cv.SOLVEPNP_SQPNP)
+            if ok:
+                ok, rvec, tvec = cv.solvePnP(X, ij, K, dist, rvec, tvec, True, cv.SOLVEPNP_ITERATIVE)
         if not ok:
             raise GeometryError("pnp_failed")
-        m = cls(kind="3d", image_size=tuple(image_size), K=K, dist=dist, rvec=rvec, tvec=tvec)
+        m = cls(kind="3d", image_size=tuple(image_size), K=K, dist=dist, rvec=rvec, tvec=tvec, origin=origin)
         m._set_reprojection(xyz, ij)
         return m
 
@@ -120,6 +128,8 @@ class CameraModel:
         if self.kind == "planar":
             pts = cv.perspectiveTransform(xyz[:, :2].reshape(-1, 1, 2), self.H)
             return pts.reshape(-1, 2)
+        if self.origin is not None:
+            xyz = xyz - self.origin
         pts, _ = cv.projectPoints(xyz, self.rvec, self.tvec, self.K, self.dist)
         return pts.reshape(-1, 2)
 
@@ -131,7 +141,7 @@ class CameraModel:
         size = (int(round(self.image_size[0] * s)), int(round(self.image_size[1] * s)))
         m = CameraModel(kind=self.kind, image_size=size, plane_z=self.plane_z, dist=self.dist, rvec=self.rvec,
                         tvec=self.tvec, reproj_rmse_px=self.reproj_rmse_px * s, reproj_max_px=self.reproj_max_px * s,
-                        any_level=self.any_level)
+                        any_level=self.any_level, origin=self.origin)
         if self.kind == "planar":
             m.H = S @ self.H
         else:
@@ -149,7 +159,8 @@ class CameraModel:
         if self.kind != "3d":
             return None
         R, _ = cv.Rodrigues(self.rvec)
-        return (-R.T @ self.tvec).ravel()
+        c = (-R.T @ self.tvec).ravel()
+        return c + self.origin if self.origin is not None else c
 
     def to_dict(self) -> dict:
         d = {"kind": self.kind, "image_size": list(self.image_size), "reproj_rmse_px": self.reproj_rmse_px,
