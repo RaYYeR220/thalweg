@@ -131,7 +131,7 @@ Real clips are corrupted in known ways, and each case has the decision the agent
 
 The frozen build made **no wrong publications**. It still missed three expected decisions:
 - a dark clip was escalated as a "moved camera";
-- a hand-held clip's stabilization was rejected, so a clean control was escalated.
+- stabilization was rejected on the hand-held clip, so both the clean and the shaken hand-held controls were escalated.
 
 These were fixed in v1.1 (pose "unverified" ≠ "moved"; per-frame stabilization). The v1.1 results are reported separately and are **not** blind.
 
