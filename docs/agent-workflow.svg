@@ -1,0 +1,318 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="t d">
+<title id="t">Thalweg agent workflow: perception, decision, action</title>
+<desc id="d">Mandatory OpenCV 5 perception prefix, then a brain (autopilot or LLM) that proposes tool calls which a code-enforced policy gate checks. Exactly one of three decisions ends the run: PUBLISH only when the stated basis holds, HOLD with a recapture request, or ESCALATE to a hydrologist. Errors fail closed. After a PUBLISH, station physics may draft a flood warning that only a person can sign.</desc>
+<defs>
+<style>
+  .bg{fill:#0b0a08}
+  .grp{fill:#0f0e0b;stroke:#2b2621;stroke-width:1}
+  .frame{fill:none;stroke:#4b443b;stroke-width:1}
+  .box{fill:#15130f;stroke:#4b443b;stroke-width:1}
+  .box.amber{fill:#241d12;stroke:#e8a33d}
+  .box.amber2{fill:#302615;stroke:#e8a33d;stroke-width:1.5}
+  .box.amberdash{fill:#241d12;stroke:#e8a33d;stroke-dasharray:5 3}
+  .box.teal{fill:#1b1d18;stroke:#7fb8a8}
+  .box.violet{fill:#1f1d1d;stroke:#a99cdb}
+  .box.dotted{fill:none;stroke:#80786b;stroke-dasharray:1.5 3}
+  .box.ext{fill:#15130f;stroke:#4b443b;stroke-dasharray:6 3}
+  .box.plain{fill:none;stroke:none}
+  text{font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;}
+  .h1{font-size:22px;font-weight:600;fill:#ede7da;letter-spacing:-0.01em}
+  .sub{font-size:12.5px;fill:#aaa293}
+  .glabel{font-size:10px;font-weight:700;letter-spacing:0.12em;fill:#7b7366}
+  .title{font-size:12.5px;font-weight:600;fill:#ede7da}
+  .body{font-size:10.5px;fill:#aaa293}
+  .strong{font-weight:600;fill:#ede7da}
+  .mono,.monob,.lblmono{font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+  .mono{font-family:'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;font-size:10px;fill:#ede7da}
+  .monob{font-family:'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;font-size:10.5px;font-weight:600;fill:#ede7da}
+  .num{font-size:10px;font-weight:700;fill:#7b7366;letter-spacing:0.06em}
+  .lbl{font-size:10px;fill:#aaa293}
+  .lblmono{font-family:'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;font-size:9.5px;fill:#aaa293}
+  .amber-t{fill:#e8a33d}
+  .teal-t{fill:#7fb8a8}
+  .violet-t{fill:#a99cdb}
+  .faint-t{fill:#7b7366}
+  .text-t{fill:#ede7da}
+  .chip{fill:none;stroke-width:1}
+  .chip.teal{stroke:#7fb8a8} .chip.violet{stroke:#a99cdb} .chip.amber{stroke:#e8a33d}
+  .chip.neutral{stroke:#80786b}
+  .chipt{font-size:8.5px;font-weight:700;letter-spacing:0.08em}
+  .chipt.teal{fill:#7fb8a8} .chipt.violet{fill:#a99cdb} .chipt.amber{fill:#e8a33d}
+  .chipt.neutral{fill:#7b7366}
+  .ln{fill:none;stroke:#8d8577;stroke-width:1}
+  .ln.amber{stroke:#e8a33d;stroke-width:1.75}
+  .ln.amberthin{stroke:#e8a33d;stroke-width:1.25}
+  .ln.dash{stroke-dasharray:5 4}
+  .ln.dot{stroke:#80786b;stroke-dasharray:1.5 3}
+  .ln.teal{stroke:#7fb8a8}
+  .ln.violet{stroke:#a99cdb}
+  .ah-line{fill:#8d8577} .ah-amber{fill:#e8a33d} .ah-dot{fill:#80786b}
+  .ah-teal{fill:#7fb8a8} .ah-violet{fill:#a99cdb}
+  .rule{stroke:#2b2621;stroke-width:1}
+</style>
+<marker id="ah-line" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-line"/></marker>
+<marker id="ahs-line" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-line"/></marker>
+<marker id="ah-amber" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-amber"/></marker>
+<marker id="ahs-amber" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-amber"/></marker>
+<marker id="ah-dot" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-dot"/></marker>
+<marker id="ahs-dot" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-dot"/></marker>
+<marker id="ah-teal" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-teal"/></marker>
+<marker id="ahs-teal" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-teal"/></marker>
+<marker id="ah-violet" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-violet"/></marker>
+<marker id="ahs-violet" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-violet"/></marker>
+</defs>
+<rect class="bg" x="0" y="0" width="1600" height="1100"/>
+<text x="32" y="40" class="h1">Thalweg · agent workflow</text>
+<text x="32" y="62" class="sub">Perception → decision → action for one clip on the Graviton4 worker. The brain only proposes; code decides what may run and what may be published.</text>
+<path d="M1000,27 L1030,27" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="1038" y="31" class="lbl">flow</text>
+<path d="M1170,27 L1200,27" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="1208" y="31" class="lbl">decision + enforcement path</text>
+<path d="M1362,27 L1392,27" class="ln amberthin dash" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="1400" y="31" class="lbl">fail-closed edge</text>
+<rect id="c1" x="1000" y="44" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1030.0" y="54.6" class="chipt teal" text-anchor="middle" data-in="c1">OPENCV 5</text>
+<text x="1068" y="55" class="lbl">OpenCV 5 step</text>
+<rect id="c2" x="1170" y="44" width="42" height="15" rx="2" class="chip violet" data-kind="chip"/>
+<text x="1191.0" y="54.6" class="chipt violet" text-anchor="middle" data-in="c2">AGENT</text>
+<text x="1220" y="55" class="lbl">agent brain</text>
+<rect id="c3" x="1362" y="44" width="36" height="15" rx="2" class="chip amber" data-kind="chip"/>
+<text x="1380.0" y="54.6" class="chipt amber" text-anchor="middle" data-in="c3">CODE</text>
+<text x="1406" y="55" class="lbl">enforced in code, not prompt</text>
+<rect id="g4" x="32" y="92" width="1500" height="208" rx="4" class="grp" data-kind="group"/>
+<text x="46" y="112" class="glabel" data-in="g4">1 · PERCEPTION · MANDATORY PREFIX, RUN BY THE SYSTEM IN THIS ORDER</text>
+<rect id="c5" x="1344" y="102" width="174" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1431.0" y="112.6" class="chipt teal" text-anchor="middle" data-in="c5">COOL BUILD · KLEIDICV + SVE</text>
+<rect id="c6" x="1278" y="102" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1308.0" y="112.6" class="chipt teal" text-anchor="middle" data-in="c6">OPENCV 5</text>
+<rect id="b7" x="48" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="59" y="146" class="body" data-in="b7"><tspan class="num">01  </tspan><tspan class="monob">probe_clip</tspan></text>
+<text x="59" y="167.0" class="body" data-in="b7">opens the video</text>
+<text x="59" y="181.0" class="body" data-in="b7">fps, frame count</text>
+<text x="59" y="195.0" class="body" data-in="b7">frame size vs survey</text>
+<text x="59" y="209.0" class="body" data-in="b7"><tspan class="amber-t">unreadable → HOLD</tspan></text>
+<rect id="b8" x="234" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="245" y="146" class="body" data-in="b8"><tspan class="num">02  </tspan><tspan class="monob">load_frames</tspan></text>
+<text x="245" y="167.0" class="body" data-in="b8">≤ 10 s, ≤ 1920 px wide</text>
+<text x="245" y="181.0" class="body" data-in="b8">timestamps → dt</text>
+<text x="245" y="195.0" class="body" data-in="b8"><tspan class="mono">frozen_frac</tspan>: share of</text>
+<text x="245" y="209.0" class="body" data-in="b8">repeated frames</text>
+<path d="M212,198 L234,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<rect id="b9" x="420" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="431" y="146" class="body" data-in="b9"><tspan class="num">03  </tspan><tspan class="monob">check_camera_pose</tspan></text>
+<text x="431" y="167.0" class="body" data-in="b9">frame 0 vs the station's</text>
+<text x="431" y="181.0" class="body" data-in="b9">reference frame</text>
+<text x="431" y="195.0" class="body" data-in="b9"><tspan class="mono">ALIKED + LightGlue</tspan></text>
+<text x="431" y="209.0" class="body" data-in="b9">on static scenery</text>
+<text x="431" y="223.0" class="body" data-in="b9">shift &gt; 3 px = moved</text>
+<text x="431" y="237.0" class="body" data-in="b9"><tspan class="amber-t">moved → ESCALATE</tspan></text>
+<path d="M398,198 L420,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<rect id="b10" x="606" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="617" y="146" class="body" data-in="b10"><tspan class="num">04  </tspan><tspan class="monob">stabilize</tspan></text>
+<text x="617" y="167.0" class="body" data-in="b10">registers frames to</text>
+<text x="617" y="181.0" class="body" data-in="b10">frame 0 on the banks</text>
+<text x="617" y="195.0" class="body" data-in="b10"><tspan class="mono">ALIKED + LightGlue</tspan></text>
+<text x="617" y="209.0" class="body" data-in="b10"><tspan class="mono">USAC/RANSAC similarity</tspan></text>
+<text x="617" y="223.0" class="body" data-in="b10">phase-corr. fallback</text>
+<path d="M584,198 L606,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<rect id="b11" x="792" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="803" y="146" class="body" data-in="b11"><tspan class="num">05  </tspan><tspan class="monob">orthorectify</tspan></text>
+<text x="803" y="167.0" class="body" data-in="b11">ortho grid on the water</text>
+<text x="803" y="181.0" class="body" data-in="b11">plane at level h</text>
+<text x="803" y="195.0" class="body" data-in="b11">planar GRPs: homography</text>
+<text x="803" y="209.0" class="body" data-in="b11">3D GRPs: DLT + solvePnP</text>
+<text x="803" y="223.0" class="body" data-in="b11">GRP RMSE · water mask</text>
+<text x="803" y="237.0" class="body" data-in="b11"><tspan class="amber-t">bad geometry, or level</tspan></text>
+<text x="803" y="251.0" class="body" data-in="b11"><tspan class="amber-t">off GRP plane → ESCALATE</tspan></text>
+<path d="M770,198 L792,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<rect id="b12" x="978" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="989" y="146" class="body" data-in="b12"><tspan class="num">06  </tspan><tspan class="monob">diagnose</tspan></text>
+<text x="989" y="167.0" class="body" data-in="b12">moving energy</text>
+<text x="989" y="181.0" class="body" data-in="b12"><tspan class="mono">static_ratio &gt; 1.2</tspan></text>
+<text x="989" y="195.0" class="body" data-in="b12">= riverbed visible</text>
+<text x="989" y="209.0" class="body" data-in="b12">glare · dark · blur</text>
+<text x="989" y="223.0" class="body" data-in="b12">contrast · tracer density</text>
+<path d="M956,198 L978,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<rect id="b13" x="1164" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="1175" y="146" class="body" data-in="b13"><tspan class="num">07  </tspan><tspan class="monob">coarse_motion</tspan></text>
+<text x="1175" y="167.0" class="body" data-in="b13">DIS optical flow on</text>
+<text x="1175" y="181.0" class="body" data-in="b13">the ortho frames</text>
+<text x="1175" y="195.0" class="body" data-in="b13">flow direction and</text>
+<text x="1175" y="209.0" class="body" data-in="b13">p90 speed; re-centres</text>
+<text x="1175" y="223.0" class="body" data-in="b13">the water band</text>
+<path d="M1142,198 L1164,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<rect id="b14" x="1350" y="128" width="164" height="160" rx="3" class="box teal" data-kind="box"/>
+<text x="1361" y="146" class="body" data-in="b14"><tspan class="num">08  </tspan><tspan class="monob">suggest_params</tspan></text>
+<text x="1361" y="167.0" class="body" data-in="b14">IA size, search radius,</text>
+<text x="1361" y="181.0" class="body" data-in="b14">pair step, vmax</text>
+<text x="1361" y="195.0" class="body" data-in="b14">starting values the</text>
+<text x="1361" y="209.0" class="body" data-in="b14">brain may change</text>
+<text x="1361" y="223.0" class="body" data-in="b14"><tspan class="faint-t">(inside coarse_motion)</tspan></text>
+<path d="M1328,198 L1350,198" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<path d="M160,288 L160,336 L1470,336 L1470,380" class="ln amberthin dash" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="168" y="328" class="lbl amber-t">any step error</text>
+<path d="M502,288 L502,312" class="ln amberthin dash" data-kind="conn"/>
+<path d="M874,288 L874,312" class="ln amberthin dash" data-kind="conn"/>
+<path d="M502,312 L1556,312 L1556,720 L1532,720" class="ln amberthin dash" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="1110" y="328" class="lbl amber-t">camera moved / geometry or level outside the survey → ESCALATE</text>
+<path d="M70,300 L70,380" class="ln teal" data-kind="conn" marker-end="url(#ah-teal)"/>
+<text x="78" y="352" class="lbl">results + evidence images</text>
+<rect id="b15" x="48" y="380" width="242" height="204" rx="3" class="box violet" data-kind="box"/>
+<rect id="c16" x="237" y="387" width="42" height="15" rx="2" class="chip violet" data-kind="chip"/>
+<text x="258.0" y="397.6" class="chipt violet" text-anchor="middle" data-in="c16">AGENT</text>
+<text x="59" y="398" class="num" data-in="b15">2 · BRAIN</text>
+<text x="59" y="413" class="title" data-in="b15">picks the next tool</text>
+<text x="59" y="429" class="body" data-in="b15"><tspan class="strong">autopilot</tspan> · deterministic baseline:</text>
+<text x="59" y="443" class="body" data-in="b15">LSPIV → Q → STIV → Q → compare,</text>
+<text x="59" y="457" class="body" data-in="b15">then the basis rules</text>
+<text x="59" y="478.0" class="body" data-in="b15"><tspan class="strong">LLM</tspan> · tool calling via Venice API</text>
+<text x="59" y="492.0" class="body" data-in="b15"><tspan class="mono">claude-sonnet-5-5</tspan> judge runs</text>
+<text x="59" y="506.0" class="body" data-in="b15"><tspan class="mono">claude-haiku-5-5</tspan> scheduled replays</text>
+<text x="59" y="520.0" class="body" data-in="b15">sees perception JSON + images</text>
+<text x="59" y="534.0" class="body" data-in="b15">$3/day cap checked before a call</text>
+<text x="59" y="555.0" class="body" data-in="b15">every call carries a one-line reason</text>
+<path d="M280,380 L280,336" class="ln amberthin dash" data-kind="conn"/>
+<circle cx="280" cy="336" r="2.5" class="ah-amber"/>
+<text x="1462" y="352" class="lbl amber-t" text-anchor="end">brain errors and budgets</text>
+<text x="1462" y="365" class="lbl amber-t" text-anchor="end">fail closed → HOLD</text>
+<rect id="b17" x="48" y="600" width="242" height="112" rx="3" class="box amberdash" data-kind="box"/>
+<text x="59" y="618" class="body" data-in="b17"><tspan class="strong amber-t">DENIED</tspan> · policy test</text>
+<text x="59" y="632.5" class="body" data-in="b17"><tspan class="mono">publish_gauging(</tspan></text>
+<text x="59" y="647.0" class="body" data-in="b17"><tspan class="mono"> basis=bed_visible_prefers_stiv)</tspan></text>
+<text x="59" y="661.5" class="body" data-in="b17"><tspan class="mono">→ basis_false:bed_not_visible</tspan></text>
+<text x="59" y="676.0" class="body" data-in="b17">reasons go back to the brain,</text>
+<text x="59" y="690.5" class="body" data-in="b17">which then escalates</text>
+<rect id="b18" x="340" y="380" width="380" height="412" rx="3" class="box amber2" data-kind="box"/>
+<rect id="c19" x="673" y="387" width="36" height="15" rx="2" class="chip amber" data-kind="chip"/>
+<text x="691.0" y="397.6" class="chipt amber" text-anchor="middle" data-in="c19">CODE</text>
+<text x="351" y="398" class="num" data-in="b18">3 · POLICY GATE</text>
+<text x="351" y="413" class="title" data-in="b18">Policy.check() runs before every tool call</text>
+<text x="351" y="429" class="body" data-in="b18">unknown tool, or any call after the decision</text>
+<text x="351" y="443" class="body" data-in="b18"><tspan class="mono">unknown_tool · already_decided</tspan></text>
+<text x="351" y="464.0" class="body" data-in="b18">argument bounds: JSON-schema types, ranges, enums</text>
+<text x="351" y="478.0" class="body" data-in="b18"><tspan class="mono">bad_args · param_bounds</tspan></text>
+<text x="351" y="499.0" class="body" data-in="b18">prerequisites: ortho + params exist; discharge</text>
+<text x="351" y="513.0" class="body" data-in="b18">needs that method's velocity field</text>
+<text x="351" y="527.0" class="body" data-in="b18"><tspan class="mono">prerequisite_missing · no_field</tspan></text>
+<text x="351" y="548.0" class="body" data-in="b18">malformed arguments and text-only replies are</text>
+<text x="351" y="562.0" class="body" data-in="b18">denied the same way; the step budget bounds retries</text>
+<text x="351" y="583.0" class="body" data-in="b18">the loop also caps ≤ 24 brain steps, ≤ 420 s compute</text>
+<text x="351" y="597.0" class="body" data-in="b18"><tspan class="mono">fail_closed:step_budget · time_budget</tspan></text>
+<rect id="b20" x="352" y="634" width="300" height="148" rx="3" class="box amber" data-kind="box"/>
+<text x="363" y="651" class="title" data-in="b20">publish_gauging: the basis must hold</text>
+<text x="363" y="667" class="body" data-in="b20"><tspan class="mono">methods_agree</tspan>: 2 methods within 15 %</text>
+<text x="363" y="681" class="body" data-in="b20"><tspan class="mono">bed_visible_prefers_stiv</tspan>: ratio &gt; 1.2</text>
+<text x="363" y="695" class="body" data-in="b20"><tspan class="mono">seeded_surface_prefers_lspiv</tspan>: ≤ 0.5</text>
+<text x="363" y="709" class="body" data-in="b20">GRP RMSE ≤ 0.6 % of the image diagonal</text>
+<text x="363" y="723" class="body" data-in="b20">stabilization residual ≤ 2 px · pose verified</text>
+<text x="363" y="737" class="body" data-in="b20">no glare / too_dark / no_moving_tracers</text>
+<text x="363" y="751" class="body" data-in="b20">frozen ≤ 20 % · coverage ≥ 0.6 · valid ≥ 50 %</text>
+<text x="363" y="765" class="body" data-in="b20">single-method basis: mean score ≥ 0.5</text>
+<path d="M290,450 L340,450" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="296" y="444" class="lbl">call</text>
+<path d="M340,500 L290,500" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="296" y="494" class="lbl amber-t">denied</text>
+<rect id="b21" x="770" y="380" width="406" height="176" rx="3" class="box teal" data-kind="box"/>
+<rect id="c22" x="1105" y="387" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1135.0" y="397.6" class="chipt teal" text-anchor="middle" data-in="c22">OPENCV 5</text>
+<text x="781" y="398" class="num" data-in="b21">4 · MEASUREMENT TOOLS</text>
+<text x="781" y="424" class="monob" data-in="b21">run_lspiv</text>
+<text x="908" y="424" class="body" data-in="b21">LSPIV, cross-correlation of windows</text>
+<text x="781" y="443" class="monob" data-in="b21">run_stiv</text>
+<text x="908" y="443" class="body" data-in="b21">STIV, streak slopes in space-time images</text>
+<text x="781" y="462" class="monob" data-in="b21">run_dense_flow</text>
+<text x="908" y="462" class="body" data-in="b21">DIS dense optical flow, temporal median</text>
+<text x="781" y="481" class="monob" data-in="b21">compute_discharge</text>
+<text x="908" y="481" class="body" data-in="b21">velocity-area Q, uncertainty, coverage</text>
+<text x="781" y="500" class="monob" data-in="b21">compare_methods</text>
+<text x="908" y="500" class="body" data-in="b21">Q per method, pairwise differences</text>
+<text x="781" y="525" class="body" data-in="b21">each result + evidence image goes back to the brain</text>
+<text x="781" y="539" class="body" data-in="b21">a tool error goes back as <tspan class="mono">{error: code}</tspan></text>
+<path d="M720,430 L770,430" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="725" y="424" class="lbl">allowed</text>
+<path d="M980,380 L980,362 L316,362 L316,412 L290,412" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="560" y="356" class="lbl">result JSON + evidence images back to the brain</text>
+<text x="1204" y="372" class="num">5 · DECISION</text>
+<rect id="b23" x="1204" y="380" width="328" height="236" rx="3" class="box amber" data-kind="box"/>
+<text x="1215" y="399" class="title" data-in="b23"><tspan class="title amber-t">HOLD</tspan><tspan class="title"> + recapture request</tspan></text>
+<text x="1215" y="415" class="body" data-in="b23">no number is published</text>
+<text x="1215" y="429" class="body" data-in="b23">recapture spec: <tspan class="mono">duration_s, fps, when</tspan></text>
+<text x="1215" y="443" class="body" data-in="b23">best estimate kept for the reviewer only</text>
+<text x="1215" y="464.0" class="body" data-in="b23"><tspan class="strong">agent</tspan>: glare, too_dark, no_moving_tracers,</text>
+<text x="1215" y="478.0" class="body" data-in="b23">frozen frames (a footage problem)</text>
+<text x="1215" y="499.0" class="body" data-in="b23"><tspan class="strong amber-t">fail closed</tspan>: LLM timeout, transport or</text>
+<text x="1215" y="513.0" class="body" data-in="b23">HTTP error · $3/day budget exhausted ·</text>
+<text x="1215" y="527.0" class="body" data-in="b23">malformed response · no API key · step (24)</text>
+<text x="1215" y="541.0" class="body" data-in="b23">or time (420 s) budget · no decision ·</text>
+<text x="1215" y="555.0" class="body" data-in="b23">perception step error (e.g. unreadable clip)</text>
+<rect id="b24" x="1204" y="634" width="328" height="158" rx="3" class="box amber" data-kind="box"/>
+<text x="1215" y="653" class="title" data-in="b24"><tspan class="title amber-t">ESCALATE</tspan><tspan class="title"> to a hydrologist</tspan></text>
+<text x="1215" y="669" class="body" data-in="b24">camera moved (pose check)</text>
+<text x="1215" y="683" class="body" data-in="b24">geometry fails, or the water level is off</text>
+<text x="1215" y="697" class="body" data-in="b24">the surveyed GRP plane (orthorectify)</text>
+<text x="1215" y="711" class="body" data-in="b24">methods disagree and no basis holds</text>
+<text x="1215" y="725" class="body" data-in="b24">autopilot: publish denied by the gate</text>
+<text x="1215" y="739" class="body" data-in="b24">evidence stays in <tspan class="mono">runs/&lt;run_id&gt;/</tspan></text>
+<path d="M720,600 L1204,600" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="734" y="594" class="lbl"><tspan class="mono">hold_and_request_recapture(duration_s, fps, when)</tspan></text>
+<path d="M720,700 L1204,700" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="734" y="694" class="lbl"><tspan class="mono">escalate_to_hydrologist(reason)</tspan></text>
+<text x="734" y="616" class="lbl">allowed decision tools end the run</text>
+<path id="publish-drop" d="M430,782 L430,856" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="438" y="830" class="lbl amber-t">allowed</text>
+<text x="556" y="846" class="glabel">6 · AFTER PUBLISH · STATION PHYSICS DRAFTS, ONLY A PERSON SIGNS</text>
+<rect id="b25" x="48" y="816" width="252" height="186" rx="3" class="box box" data-kind="box"/>
+<text x="59" y="835" class="title" data-in="b25">Example · real run</text>
+<text x="59" y="851" class="body" data-in="b25"><tspan class="faint-t">VGC video 1 · claude-sonnet-5-5</tspan></text>
+<text x="59" y="865" class="body" data-in="b25"><tspan class="mono">diagnose</tspan>: static_ratio 1.31</text>
+<text x="59" y="879" class="body" data-in="b25">→ bed visible</text>
+<text x="59" y="893" class="body" data-in="b25">STIV chosen; LSPIV kept as a</text>
+<text x="59" y="907" class="body" data-in="b25">cross-check: LSPIV 1.00 vs</text>
+<text x="59" y="921" class="body" data-in="b25">STIV 1.45 m³/s</text>
+<text x="59" y="935" class="body" data-in="b25"><tspan class="mono">publish_gauging(stiv,</tspan></text>
+<text x="59" y="949" class="body" data-in="b25"><tspan class="mono"> bed_visible_prefers_stiv)</tspan></text>
+<text x="59" y="963" class="body" data-in="b25">→ allowed → <tspan class="strong amber-t">PUBLISH</tspan></text>
+<rect id="b26" x="340" y="856" width="180" height="146" rx="3" class="box amber2" data-kind="box"/>
+<text x="351" y="875" class="title" data-in="b26"><tspan class="title amber-t">PUBLISH</tspan></text>
+<text x="351" y="891" class="body" data-in="b26">discharge Q with q_lo – q_hi</text>
+<text x="351" y="905" class="body" data-in="b26">method + basis</text>
+<text x="351" y="919" class="body" data-in="b26">Persist → <tspan class="mono">thalweg-gaugings</tspan></text>
+<text x="351" y="933" class="body" data-in="b26">evidence in <tspan class="mono">runs/&lt;id&gt;/</tspan></text>
+<rect id="b27" x="556" y="856" width="320" height="146" rx="3" class="box box" data-kind="box"/>
+<text x="567" y="875" class="title" data-in="b27">Station physics · on the worker</text>
+<text x="567" y="891" class="body" data-in="b27"><tspan class="strong">rating curve</tspan>  Q = a(h − h<tspan dy="2.5" style="font-size:8px">0</tspan><tspan dy="-2.5"> </tspan>)<tspan dy="-4" style="font-size:8px">b</tspan><tspan dy="4"> </tspan></text>
+<text x="567" y="905" class="body" data-in="b27">refit from ≥ 5 published gaugings, ≥ 3 levels</text>
+<text x="567" y="919" class="body" data-in="b27"><tspan class="strong">Kalman stage nowcast</tspan>, constant velocity,</text>
+<text x="567" y="933" class="body" data-in="b27">on the level series; resets after a 4 h gap</text>
+<text x="567" y="947" class="body" data-in="b27"><tspan class="strong">P(threshold within 3 h)</tspan> from the</text>
+<text x="567" y="961" class="body" data-in="b27">forecast mean and variance</text>
+<rect id="b28" x="912" y="856" width="180" height="146" rx="3" class="box box" data-kind="box"/>
+<text x="923" y="875" class="title" data-in="b28">Warning draft</text>
+<text x="923" y="891" class="body" data-in="b28">only if P ≥ 0.5 and the level</text>
+<text x="923" y="905" class="body" data-in="b28">is rising (or already above</text>
+<text x="923" y="919" class="body" data-in="b28">the threshold), none open</text>
+<text x="923" y="933" class="body" data-in="b28"><tspan class="mono">DRAFT</tspan>, expires in 6 h</text>
+<text x="923" y="947" class="body" data-in="b28">kept only after a PUBLISH</text>
+<rect id="b29" x="1128" y="856" width="172" height="146" rx="3" class="box box" data-kind="box"/>
+<text x="1139" y="875" class="title" data-in="b29">AwaitSignature</text>
+<text x="1139" y="891" class="body" data-in="b29">Step Functions holds the</text>
+<text x="1139" y="905" class="body" data-in="b29">run on a task token</text>
+<text x="1139" y="919" class="body" data-in="b29"><tspan class="mono">.waitForTaskToken</tspan></text>
+<text x="1139" y="933" class="body" data-in="b29">token in thalweg-warnings</text>
+<text x="1139" y="947" class="body" data-in="b29">6 h → <tspan class="mono">EXPIRED</tspan></text>
+<rect id="b30" x="1336" y="856" width="196" height="146" rx="3" class="box amber2" data-kind="box"/>
+<text x="1347" y="875" class="title" data-in="b30">Only a person signs</text>
+<text x="1347" y="891" class="body" data-in="b30">hydrologist, reviewer passcode</text>
+<text x="1347" y="905" class="body" data-in="b30"><tspan class="mono">POST /reviews/{id}</tspan></text>
+<text x="1347" y="919" class="body" data-in="b30">sign → <tspan class="mono">SendTaskSuccess</tspan></text>
+<text x="1347" y="933" class="body" data-in="b30"><tspan class="mono">IssueWarning</tspan> → <tspan class="mono">SIGNED</tspan></text>
+<text x="1347" y="947" class="body" data-in="b30"><tspan class="mono">public/warnings.json</tspan></text>
+<text x="1347" y="961" class="body" data-in="b30">reject → <tspan class="mono">REJECTED</tspan></text>
+<path d="M520,928 L556,928" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M876,928 L912,928" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M1092,928 L1128,928" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M1300,928 L1336,928" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<rect id="b31" x="32" y="1022" width="1500" height="52" rx="3" class="box amber" data-kind="box"/>
+<text x="48" y="1043" class="body" data-in="b31"><tspan class="strong amber-t">No agent tool can issue a warning. </tspan>The only tools that end a run are <tspan class="mono">publish_gauging</tspan>, <tspan class="mono">hold_and_request_recapture</tspan> and <tspan class="mono">escalate_to_hydrologist</tspan>. Warnings are drafted by station code after a published gauging</text>
+<text x="48" y="1059" class="body" data-in="b31">and reach public/warnings.json only through a human signature on the review API.</text>
+</svg>

@@ -97,9 +97,10 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--http", action="store_true")
     ap.add_argument("--port", type=int, default=8000)
+    ap.add_argument("--host", default="127.0.0.1", help="bind address; the HTTP mode has no authentication of its own")
     a = ap.parse_args()
     if a.http:
-        mcp.settings.host = "0.0.0.0"
+        mcp.settings.host = a.host
         mcp.settings.port = a.port
         mcp.run(transport="streamable-http")
     else:

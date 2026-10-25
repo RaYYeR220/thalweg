@@ -222,6 +222,12 @@ def build_camera(st: Station) -> CameraModel:
 def step_orthorectify(ctx: Context, res_m: float | None = None) -> dict:
     t0 = time.time()
     st = ctx.station
+    tz = np.asarray(st.transect)[:, 2]
+    if ctx.level >= min(tz[0], tz[-1]) or ctx.level <= tz.min():
+        # The river is outside the surveyed section (over a bank top, or below the bed): no discharge
+        # can be computed from this survey, whatever the velocities are.
+        raise StepError("level_out_of_range",
+                        f"level {ctx.level:.3f} m vs bank tops {tz[0]:.3f}/{tz[-1]:.3f} m, bed {tz.min():.3f} m")
     try:
         ctx.cam = build_camera(st).rescaled(ctx.px_scale)
         x0, y0, x1, y1 = _default_extent(st)

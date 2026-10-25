@@ -1,0 +1,332 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="t d">
+<title id="t">Thalweg system architecture</title>
+<desc id="d">A station clip lands in S3 ingest, EventBridge starts the thalweg-gauging state machine, the Graviton4 worker on the COOL AMI runs OpenCV 5 perception and the policy-gated agent, Persist records the decision, and a flood warning draft waits for a human signature through the review API before it is issued. Any failure before a persisted decision ends in HOLD.</desc>
+<defs>
+<style>
+  .bg{fill:#f6f3ec}
+  .grp{fill:#f0ebe1;stroke:#d3cab9;stroke-width:1}
+  .frame{fill:none;stroke:#b2a893;stroke-width:1}
+  .box{fill:#fcfaf6;stroke:#b2a893;stroke-width:1}
+  .box.amber{fill:#f7f0e6;stroke:#b06a10}
+  .box.amber2{fill:#f2e7d8;stroke:#b06a10;stroke-width:1.5}
+  .box.amberdash{fill:#f7f0e6;stroke:#b06a10;stroke-dasharray:5 3}
+  .box.teal{fill:#eff2ed;stroke:#2a7465}
+  .box.violet{fill:#f0eef0;stroke:#57499b}
+  .box.dotted{fill:none;stroke:#8c8373;stroke-dasharray:1.5 3}
+  .box.ext{fill:#fcfaf6;stroke:#b2a893;stroke-dasharray:6 3}
+  .box.plain{fill:none;stroke:none}
+  text{font-family:Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif;}
+  .h1{font-size:22px;font-weight:600;fill:#1c1914;letter-spacing:-0.01em}
+  .sub{font-size:12.5px;fill:#544c41}
+  .glabel{font-size:10px;font-weight:700;letter-spacing:0.12em;fill:#80776a}
+  .title{font-size:12.5px;font-weight:600;fill:#1c1914}
+  .body{font-size:10.5px;fill:#544c41}
+  .strong{font-weight:600;fill:#1c1914}
+  .mono,.monob,.lblmono{font-variant-ligatures:none;font-feature-settings:'liga' 0,'calt' 0}
+  .mono{font-family:'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;font-size:10px;fill:#1c1914}
+  .monob{font-family:'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;font-size:10.5px;font-weight:600;fill:#1c1914}
+  .num{font-size:10px;font-weight:700;fill:#80776a;letter-spacing:0.06em}
+  .lbl{font-size:10px;fill:#544c41}
+  .lblmono{font-family:'JetBrains Mono', 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;font-size:9.5px;fill:#544c41}
+  .amber-t{fill:#b06a10}
+  .teal-t{fill:#2a7465}
+  .violet-t{fill:#57499b}
+  .faint-t{fill:#80776a}
+  .text-t{fill:#1c1914}
+  .chip{fill:none;stroke-width:1}
+  .chip.teal{stroke:#2a7465} .chip.violet{stroke:#57499b} .chip.amber{stroke:#b06a10}
+  .chip.neutral{stroke:#8c8373}
+  .chipt{font-size:8.5px;font-weight:700;letter-spacing:0.08em}
+  .chipt.teal{fill:#2a7465} .chipt.violet{fill:#57499b} .chipt.amber{fill:#b06a10}
+  .chipt.neutral{fill:#80776a}
+  .ln{fill:none;stroke:#6b6356;stroke-width:1}
+  .ln.amber{stroke:#b06a10;stroke-width:1.75}
+  .ln.amberthin{stroke:#b06a10;stroke-width:1.25}
+  .ln.dash{stroke-dasharray:5 4}
+  .ln.dot{stroke:#8c8373;stroke-dasharray:1.5 3}
+  .ln.teal{stroke:#2a7465}
+  .ln.violet{stroke:#57499b}
+  .ah-line{fill:#6b6356} .ah-amber{fill:#b06a10} .ah-dot{fill:#8c8373}
+  .ah-teal{fill:#2a7465} .ah-violet{fill:#57499b}
+  .rule{stroke:#d3cab9;stroke-width:1}
+</style>
+<marker id="ah-line" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-line"/></marker>
+<marker id="ahs-line" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-line"/></marker>
+<marker id="ah-amber" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-amber"/></marker>
+<marker id="ahs-amber" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-amber"/></marker>
+<marker id="ah-dot" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-dot"/></marker>
+<marker id="ahs-dot" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-dot"/></marker>
+<marker id="ah-teal" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-teal"/></marker>
+<marker id="ahs-teal" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-teal"/></marker>
+<marker id="ah-violet" viewBox="0 0 10 10" refX="9.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,1 L10,5 L0,9 z" class="ah-violet"/></marker>
+<marker id="ahs-violet" viewBox="0 0 10 10" refX="0.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M10,1 L0,5 L10,9 z" class="ah-violet"/></marker>
+</defs>
+<rect class="bg" x="0" y="0" width="1600" height="1000"/>
+<text x="32" y="40" class="h1">Thalweg · system architecture</text>
+<text x="32" y="62" class="sub">A river-camera clip becomes a policy-checked discharge on AWS; a flood warning is issued only after a person signs it.</text>
+<path d="M992,27 L1022,27" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="1030" y="31" class="lbl">data / control flow</text>
+<path d="M1170,27 L1200,27" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="1208" y="31" class="lbl">human signature path</text>
+<path d="M1362,27 L1392,27" class="ln amberthin dash" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="1400" y="31" class="lbl">fail-closed path (ends in HOLD)</text>
+<rect x="992" y="45" width="30" height="13" rx="2" class="box dotted"/>
+<text x="1030" y="55" class="lbl">ready, not deployed</text>
+<rect id="c1" x="1170" y="44" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1200.0" y="54.6" class="chipt teal" text-anchor="middle" data-in="c1">OPENCV 5</text>
+<text x="1238" y="55" class="lbl">OpenCV 5 / COOL</text>
+<rect id="c2" x="1362" y="44" width="42" height="15" rx="2" class="chip violet" data-kind="chip"/>
+<text x="1383.0" y="54.6" class="chipt violet" text-anchor="middle" data-in="c2">AGENT</text>
+<text x="1412" y="55" class="lbl">agent component</text>
+<rect id="g3" x="32" y="96" width="420" height="244" rx="4" class="grp" data-kind="group"/>
+<text x="46" y="116" class="glabel" data-in="g3">INGEST · S3 + EVENTBRIDGE SCHEDULER</text>
+<rect id="b4" x="48" y="128" width="160" height="84" rx="3" class="box box" data-kind="box"/>
+<text x="59" y="147" class="title" data-in="b4">River camera station</text>
+<text x="59" y="163.5" class="body" data-in="b4">short clip of the river</text>
+<text x="59" y="178.0" class="body" data-in="b4">surface + a JSON sidecar</text>
+<text x="59" y="192.5" class="mono" data-in="b4">t · level · source</text>
+<rect id="b5" x="240" y="128" width="196" height="84" rx="3" class="box box" data-kind="box"/>
+<text x="251" y="147" class="title" data-in="b5">S3 · ingest bucket</text>
+<text x="251" y="163.5" class="mono" data-in="b5">thalweg-ingest-&lt;acct&gt;</text>
+<text x="251" y="178.0" class="mono" data-in="b5">clips/&lt;station&gt;/&lt;stamp&gt;.mp4</text>
+<text x="251" y="192.5" class="body" data-in="b5">+ .json sidecar, EventBridge on</text>
+<rect id="b6" x="48" y="236" width="160" height="92" rx="3" class="box box" data-kind="box"/>
+<text x="59" y="255" class="title" data-in="b6">EventBridge Scheduler</text>
+<text x="59" y="271.5" class="mono" data-in="b6">thalweg-replay</text>
+<text x="59" y="286.0" class="body" data-in="b6">every 15 min</text>
+<text x="59" y="300.5" class="body" data-in="b6">created disabled,</text>
+<text x="59" y="315.0" class="body" data-in="b6">enabled for judging</text>
+<rect id="b7" x="240" y="236" width="196" height="92" rx="3" class="box box" data-kind="box"/>
+<text x="251" y="255" class="title" data-in="b7">Replay λ</text>
+<text x="251" y="271.5" class="mono" data-in="b7">thalweg-replay</text>
+<text x="251" y="286.0" class="body" data-in="b7">next Storm Callum archive clip</text>
+<text x="251" y="300.5" class="body" data-in="b7">(River Dart) from artifacts</text>
+<text x="251" y="315.0" class="mono" data-in="b7">data/dart/ → clips/dart/</text>
+<path d="M208,170 L240,170" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M208,282 L240,282" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M338,236 L338,212" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<rect id="g8" x="32" y="356" width="420" height="240" rx="4" class="grp" data-kind="group"/>
+<text x="46" y="376" class="glabel" data-in="g8">OUTSIDE AWS</text>
+<rect id="b9" x="48" y="384" width="388" height="126" rx="3" class="box box" data-kind="box"/>
+<rect id="c10" x="383" y="391" width="42" height="15" rx="2" class="chip violet" data-kind="chip"/>
+<text x="404.0" y="401.6" class="chipt violet" text-anchor="middle" data-in="c10">AGENT</text>
+<rect id="c11" x="318" y="391" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="348.0" y="401.6" class="chipt teal" text-anchor="middle" data-in="c11">OPENCV 5</text>
+<text x="59" y="403" class="title" data-in="b9">MCP server · local</text>
+<text x="59" y="419.5" class="mono" data-in="b9">python mcp_server/server.py [--http]</text>
+<text x="59" y="434.0" class="body" data-in="b9">stdio or streamable HTTP (FastMCP)</text>
+<text x="59" y="448.5" class="mono" data-in="b9">gauge_clip · open_session · run_velocimetry</text>
+<text x="59" y="463.0" class="mono" data-in="b9">compare_methods · list_stations</text>
+<text x="59" y="477.5" class="body" data-in="b9">gauge_clip runs the full autopilot agent behind the policy gate;</text>
+<text x="59" y="492.0" class="body" data-in="b9">local clips and station YAML, no AWS calls</text>
+<rect id="b12" x="48" y="522" width="388" height="62" rx="3" class="box amber" data-kind="box"/>
+<text x="59" y="541" class="title" data-in="b12">Hydrologist · human reviewer</text>
+<text x="59" y="557.5" class="body" data-in="b12">checks the draft and its evidence in the review queue (/review/),</text>
+<text x="59" y="572.0" class="body" data-in="b12">then signs or rejects it with the reviewer passcode</text>
+<rect id="g13" x="482" y="96" width="580" height="500" rx="4" class="grp" data-kind="group"/>
+<text x="496" y="116" class="glabel" data-in="g13">ORCHESTRATION · EVENTBRIDGE + LAMBDA + STEP FUNCTIONS</text>
+<rect id="b14" x="498" y="128" width="220" height="56" rx="3" class="box box" data-kind="box"/>
+<text x="509" y="147" class="title" data-in="b14">EventBridge rule</text>
+<text x="509" y="163.5" class="mono" data-in="b14">thalweg-clip-arrived</text>
+<text x="509" y="178.0" class="body" data-in="b14">Object Created on clips/*.json</text>
+<rect id="b15" x="756" y="128" width="290" height="56" rx="3" class="box box" data-kind="box"/>
+<text x="767" y="147" class="title" data-in="b15">StartRun λ</text>
+<text x="767" y="163.5" class="mono" data-in="b15">thalweg-start-run</text>
+<text x="767" y="178.0" class="body" data-in="b15">on each new sidecar: StartExecution</text>
+<path d="M436,156 L498,156" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M718,156 L756,156" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M762,184 L762,214" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<rect id="sfn" x="498" y="196" width="548" height="392" rx="4" class="frame" data-kind="group"/>
+<text x="1032" y="213" class="glabel" text-anchor="end" data-in="sfn"><tspan class="glabel">STEP FUNCTIONS  </tspan><tspan class="monob">thalweg-gauging</tspan></text>
+<rect id="b16" x="558" y="214" width="210" height="42" rx="3" class="box box" data-kind="box"/>
+<text x="569" y="231" class="title" data-in="b16">Preflight λ</text>
+<text x="569" y="247" class="body" data-in="b16">checks station, clip and sidecar</text>
+<rect id="b17" x="558" y="266" width="210" height="56" rx="3" class="box box" data-kind="box"/>
+<rect id="c18" x="715" y="273" width="42" height="15" rx="2" class="chip violet" data-kind="chip"/>
+<text x="736.0" y="283.6" class="chipt violet" text-anchor="middle" data-in="c18">AGENT</text>
+<text x="569" y="283" class="title" data-in="b17">Agent · activity</text>
+<text x="569" y="299" class="mono" data-in="b17">thalweg-agent</text>
+<text x="569" y="313" class="body" data-in="b17">timeout 900 s · heartbeat 120 s</text>
+<rect id="b19" x="558" y="332" width="210" height="42" rx="3" class="box box" data-kind="box"/>
+<text x="569" y="349" class="title" data-in="b19">Persist λ</text>
+<text x="569" y="365" class="body" data-in="b19">run · gauging on PUBLISH · EMF</text>
+<polygon id="p20" points="568,384 758,384 768,398 758,412 568,412 558,398" class="box" data-kind="box"/>
+<text x="663" y="402" class="body" text-anchor="middle" data-in="p20"><tspan class="strong">Choice</tspan> · warning draft?</text>
+<rect id="b21" x="558" y="422" width="210" height="56" rx="3" class="box amber2" data-kind="box"/>
+<text x="569" y="439" class="title" data-in="b21">AwaitSignature λ</text>
+<text x="569" y="455" class="body" data-in="b21"><tspan class="mono">.waitForTaskToken</tspan> · up to 6 h</text>
+<text x="569" y="469" class="body" data-in="b21">draft + token → thalweg-warnings</text>
+<path d="M558,244 L528,244" class="ln amberthin dash" data-kind="conn"/>
+<path d="M558,308 L528,308" class="ln amberthin dash" data-kind="conn"/>
+<path d="M558,362 L528,362" class="ln amberthin dash" data-kind="conn"/>
+<path d="M528,244 L528,494" class="ln amberthin dash" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="535" y="489" class="lbl amber-t">catch: any error</text>
+<rect id="b22" x="512" y="494" width="208" height="80" rx="3" class="box amberdash" data-kind="box"/>
+<text x="523" y="511" class="title" data-in="b22">FailClosed λ</text>
+<text x="523" y="527" class="body" data-in="b22">run → HOLD, no number published</text>
+<text x="523" y="541" class="body" data-in="b22"><tspan class="mono">fail_closed:&lt;error&gt;</tspan></text>
+<text x="523" y="555" class="body" data-in="b22">→ Held (Fail) → alarm</text>
+<rect id="p23" x="806" y="384" width="132" height="28" rx="14" class="box" data-kind="box"/>
+<text x="872" y="402" class="body" text-anchor="middle" data-in="p23">no draft → <tspan class="strong">Done</tspan></text>
+<path d="M768,398 L806,398" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<rect id="b24" x="806" y="418" width="226" height="38" rx="3" class="box amber" data-kind="box"/>
+<text x="817" y="434" class="title" data-in="b24">IssueWarning λ · signed</text>
+<text x="817" y="449.5" class="body" data-in="b24"><tspan class="mono">SIGNED</tspan> → <tspan class="mono">public/warnings.json</tspan></text>
+<path d="M768,450 L787,450 L787,437 L806,437" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<rect id="b25" x="806" y="459" width="226" height="38" rx="3" class="box box" data-kind="box"/>
+<text x="817" y="475" class="title" data-in="b25">MarkRejected λ · rejected</text>
+<text x="817" y="490.5" class="body" data-in="b25"><tspan class="mono">REJECTED</tspan></text>
+<path d="M768,450 L787,450 L787,478 L806,478" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<rect id="b26" x="806" y="500" width="226" height="38" rx="3" class="box box" data-kind="box"/>
+<text x="817" y="516" class="title" data-in="b26">MarkExpired λ · 6 h timeout</text>
+<text x="817" y="531.5" class="body" data-in="b26"><tspan class="mono">EXPIRED</tspan></text>
+<path d="M768,450 L787,450 L787,519 L806,519" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<rect id="b27" x="806" y="541" width="226" height="38" rx="3" class="box amberdash" data-kind="box"/>
+<text x="817" y="557" class="title" data-in="b27">CloseUnsigned λ · other error</text>
+<text x="817" y="572.5" class="body" data-in="b27"><tspan class="mono">EXPIRED</tspan> → SignatureFailed (Fail)</text>
+<path d="M768,450 L787,450 L787,560 L806,560" class="ln amberthin dash" data-kind="conn" marker-end="url(#ah-amber)"/>
+<path d="M768,288 L1108,288" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M1108,302 L768,302" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="786" y="282" class="lbl">worker polls GetActivityTask, sends heartbeats</text>
+<text x="786" y="317" class="lbl"><tspan class="lblmono">SendTaskSuccess</tspan> with the decision JSON</text>
+<text x="786" y="331" class="lbl"><tspan class="lblmono">SendTaskFailure</tspan> → FailClosed</text>
+<rect id="b28" x="1092" y="96" width="476" height="66" rx="3" class="box ext" data-kind="box"/>
+<rect id="c29" x="1479" y="103" width="78" height="15" rx="2" class="chip neutral" data-kind="chip"/>
+<text x="1518.0" y="113.6" class="chipt neutral" text-anchor="middle" data-in="c29">OUTSIDE AWS</text>
+<text x="1103" y="114" class="title" data-in="b28">Venice API · OpenAI-compatible tool calling</text>
+<text x="1103" y="130" class="body" data-in="b28"><tspan class="mono">claude-sonnet-5-5</tspan> judge runs  ·  <tspan class="mono">claude-haiku-5-5</tspan> scheduled replays</text>
+<text x="1103" y="144" class="body" data-in="b28">key read from SSM · $3/day LLM cap enforced in code (thalweg-budget)</text>
+<rect id="g30" x="1092" y="176" width="476" height="420" rx="4" class="grp" data-kind="group"/>
+<text x="1106" y="196" class="glabel" data-in="g30">COMPUTE · EC2 GRAVITON4 · c8g.large</text>
+<rect id="c31" x="1106" y="206" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1136.0" y="216.6" class="chipt teal" text-anchor="middle" data-in="c31">COOL AMI</text>
+<rect id="c32" x="1172" y="206" width="108" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1226.0" y="216.6" class="chipt teal" text-anchor="middle" data-in="c32">OPENCV 5.1.0-DEV</text>
+<rect id="c33" x="1286" y="206" width="96" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1334.0" y="216.6" class="chipt teal" text-anchor="middle" data-in="c33">KLEIDICV + SVE</text>
+<text x="1106" y="240" class="body" data-in="g30"><tspan class="mono">thalweg-worker</tspan> systemd service · cv2 from COOL (/opt/cool), no pip OpenCV</text>
+<text x="1106" y="256" class="body" data-in="g30">public subnet, no inbound rules · SSM Session Manager only · IMDSv2</text>
+<rect id="b34" x="1108" y="266" width="428" height="48" rx="3" class="box box" data-kind="box"/>
+<text x="1119" y="284" class="title" data-in="b34">Activity loop</text>
+<text x="1119" y="300" class="body" data-in="b34">poll → download clip + sidecar → run → heartbeat every 30 s → reply</text>
+<rect id="b35" x="1108" y="324" width="428" height="58" rx="3" class="box teal" data-kind="box"/>
+<rect id="c36" x="1465" y="331" width="60" height="15" rx="2" class="chip teal" data-kind="chip"/>
+<text x="1495.0" y="341.6" class="chipt teal" text-anchor="middle" data-in="c36">OPENCV 5</text>
+<text x="1119" y="342" class="title" data-in="b35">Perception · mandatory prefix</text>
+<text x="1119" y="358" class="body" data-in="b35">probe, load, pose check, stabilize, orthorectify, diagnose, coarse DIS</text>
+<text x="1119" y="372" class="mono" data-in="b35">ALIKED + LightGlue · USAC/RANSAC · DLT + solvePnP · DIS</text>
+<rect id="b37" x="1108" y="392" width="428" height="76" rx="3" class="box violet" data-kind="box"/>
+<rect id="c38" x="1483" y="399" width="42" height="15" rx="2" class="chip violet" data-kind="chip"/>
+<text x="1504.0" y="409.6" class="chipt violet" text-anchor="middle" data-in="c38">AGENT</text>
+<text x="1119" y="410" class="title" data-in="b37">Agent loop · brain + policy gate</text>
+<text x="1119" y="426" class="body" data-in="b37">brain: autopilot (deterministic) or the LLM via Venice</text>
+<text x="1119" y="440" class="body" data-in="b37">every tool call passes the policy gate (code, not prompt)</text>
+<text x="1119" y="454" class="body" data-in="b37">ends in <tspan class="strong amber-t">PUBLISH · HOLD · ESCALATE</tspan></text>
+<rect id="b39" x="1108" y="478" width="428" height="46" rx="3" class="box box" data-kind="box"/>
+<text x="1119" y="496" class="title" data-in="b39">Station physics</text>
+<text x="1119" y="512" class="body" data-in="b39">rating Q = a(h − h<tspan dy="2.5" style="font-size:8px">0</tspan><tspan dy="-2.5"> </tspan>)<tspan dy="-4" style="font-size:8px">b</tspan><tspan dy="4"> </tspan>· Kalman stage nowcast · P(cross ≤ 3 h) → draft</text>
+<rect id="b40" x="1108" y="534" width="428" height="46" rx="3" class="box box" data-kind="box"/>
+<text x="1119" y="552" class="title" data-in="b40">Evidence + trace</text>
+<text x="1119" y="568" class="body" data-in="b40">evidence .jpg + <tspan class="mono">trace.json</tspan> → S3 artifacts <tspan class="mono">runs/&lt;run_id&gt;/</tspan></text>
+<path d="M1536,430 L1554,430 L1554,162" class="ln violet" data-kind="conn" marker-end="url(#ah-violet)"/>
+<path d="M338,128 L338,86 L1077,86 L1077,276 L1108,276" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="560" y="82" class="lbl">worker reads the clip + sidecar from ingest (GetObject)</text>
+<rect id="g41" x="32" y="632" width="790" height="356" rx="4" class="grp" data-kind="group"/>
+<text x="46" y="652" class="glabel" data-in="g41">FRONT DOOR · API GATEWAY + LAMBDA</text>
+<rect id="b42" x="48" y="664" width="500" height="62" rx="3" class="box box" data-kind="box"/>
+<text x="59" y="682" class="title" data-in="b42">HTTP API thalweg-site · the live front door</text>
+<text x="59" y="698" class="body" data-in="b42"><tspan class="mono">/</tspan> and <tspan class="mono">/artifacts/*</tspan> → thalweg-web λ   ·   <tspan class="mono">/api/*</tspan> → thalweg-api λ</text>
+<text x="59" y="712" class="body" data-in="b42">same URL layout as CloudFront, so the web app runs unchanged</text>
+<rect id="b43" x="48" y="744" width="238" height="96" rx="3" class="box box" data-kind="box"/>
+<text x="59" y="762" class="title" data-in="b43">thalweg-web λ</text>
+<text x="59" y="778" class="body" data-in="b43">static app from S3 web</text>
+<text x="59" y="792" class="body" data-in="b43"><tspan class="mono">/artifacts/*</tspan> from S3 artifacts</text>
+<text x="59" y="806" class="body" data-in="b43">(<tspan class="mono">runs/ stations/ public/</tspan> only)</text>
+<text x="59" y="820" class="body" data-in="b43">objects &gt; 4 MiB → presigned URL</text>
+<rect id="b44" x="310" y="744" width="238" height="96" rx="3" class="box box" data-kind="box"/>
+<text x="321" y="762" class="title" data-in="b44">HTTP API thalweg · bare routes</text>
+<text x="321" y="778" class="body" data-in="b44">origin for CloudFront's /api/*</text>
+<text x="321" y="792" class="body" data-in="b44">CORS for localhost:3000</text>
+<text x="321" y="806" class="body" data-in="b44">throttle 25 rps, burst 50</text>
+<rect id="b45" x="48" y="860" width="500" height="112" rx="3" class="box dotted" data-kind="box"/>
+<text x="59" y="878" class="title" data-in="b45">ThalwegWeb · CloudFront + OAC</text>
+<text x="59" y="894" class="body" data-in="b45"><tspan class="amber-t">ready, awaiting account verification: not deployed</tspan></text>
+<text x="59" y="908" class="body" data-in="b45">would serve <tspan class="mono">/</tspan> → S3 web, <tspan class="mono">/artifacts/*</tspan> → S3 artifacts, <tspan class="mono">/api/*</tspan> → thalweg API</text>
+<text x="59" y="922" class="body" data-in="b45">three viewer-request functions; same buckets, same router, no app change</text>
+<rect id="b46" x="580" y="664" width="226" height="308" rx="3" class="box box" data-kind="box"/>
+<text x="591" y="682" class="title" data-in="b46">thalweg-api λ · router</text>
+<text x="591" y="698" class="mono" data-in="b46">GET /health · /stations</text>
+<text x="591" y="712" class="mono" data-in="b46">GET /stations/{id}[/gaugings]</text>
+<text x="591" y="726" class="mono" data-in="b46">GET /runs[/{id}] · /reviews</text>
+<text x="591" y="747.0" class="body" data-in="b46"><tspan class="mono">POST /runs</tspan> → StartExecution</text>
+<text x="591" y="761.0" class="body" data-in="b46">dedup lock per (clip, brain)</text>
+<text x="591" y="775.0" class="body" data-in="b46">judge LLM runs capped at 40/day</text>
+<text x="591" y="796.0" class="body" data-in="b46"><tspan class="mono">POST /reviews/{id}</tspan> + passcode</text>
+<text x="591" y="810.0" class="body" data-in="b46">sign → <tspan class="mono amber-t">SendTaskSuccess</tspan></text>
+<text x="591" y="824.0" class="body" data-in="b46">reject → <tspan class="mono">SendTaskFailure(Rejected)</tspan></text>
+<text x="591" y="845.0" class="body" data-in="b46">passcode + service token from SSM</text>
+<text x="591" y="859.0" class="body" data-in="b46">reads and writes the tables</text>
+<path d="M400,584 L400,664" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="408" y="652" class="lbl amber-t">browser</text>
+<path d="M167,726 L167,744" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M548,695 L580,695" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<path d="M548,792 L580,792" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M429,860 L429,840" class="ln dot" data-kind="conn" marker-end="url(#ah-dot)"/>
+<path d="M745,664 L745,478" class="ln amber" data-kind="conn" marker-end="url(#ah-amber)"/>
+<text x="752" y="612" class="lbl amber-t">sign / reject with the task token</text>
+<path d="M640,664 L640,616 L467,616 L467,228 L558,228" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="476" y="610" class="lbl">POST /runs → StartExecution</text>
+<rect id="g47" x="852" y="632" width="464" height="356" rx="4" class="grp" data-kind="group"/>
+<text x="866" y="652" class="glabel" data-in="g47">STORAGE</text>
+<rect id="b48" x="868" y="664" width="252" height="308" rx="3" class="box box" data-kind="box"/>
+<text x="879" y="682" class="title" data-in="b48">DynamoDB · on-demand</text>
+<text x="879" y="698" class="mono" data-in="b48">thalweg-stations</text>
+<text x="879" y="712" class="body" data-in="b48">station, latest fields, levels</text>
+<text x="879" y="733.0" class="mono" data-in="b48">thalweg-gaugings</text>
+<text x="879" y="747.0" class="body" data-in="b48">station_id + t · published Q</text>
+<text x="879" y="768.0" class="mono" data-in="b48">thalweg-runs</text>
+<text x="879" y="782.0" class="body" data-in="b48">run_id · GSI by_station · locks</text>
+<text x="879" y="803.0" class="mono" data-in="b48">thalweg-warnings</text>
+<text x="879" y="817.0" class="body" data-in="b48">id · GSI by_state · task token</text>
+<text x="879" y="838.0" class="mono" data-in="b48">thalweg-budget</text>
+<text x="879" y="852.0" class="body" data-in="b48">day · llm_usd · judge_llm_runs</text>
+<rect id="b49" x="1134" y="664" width="166" height="308" rx="3" class="box box" data-kind="box"/>
+<text x="1145" y="682" class="title" data-in="b49">S3 · private, SSE-S3</text>
+<text x="1145" y="698" class="mono" data-in="b49">thalweg-artifacts-&lt;acct&gt;</text>
+<text x="1145" y="712" class="body" data-in="b49"><tspan class="mono">runs/&lt;run_id&gt;/</tspan></text>
+<text x="1145" y="726" class="body" data-in="b49">evidence + trace.json</text>
+<text x="1145" y="740" class="body" data-in="b49"><tspan class="mono">stations/</tspan> · <tspan class="mono">public/</tspan></text>
+<text x="1145" y="754" class="body" data-in="b49"><tspan class="mono">public/warnings.json</tspan></text>
+<text x="1145" y="768" class="body" data-in="b49"><tspan class="mono">data/</tspan> archives, replay</text>
+<text x="1145" y="782" class="body" data-in="b49">manifest, models (never</text>
+<text x="1145" y="796" class="body" data-in="b49">served) · retained</text>
+<text x="1145" y="817.0" class="mono" data-in="b49">thalweg-web-&lt;acct&gt;</text>
+<text x="1145" y="831.0" class="body" data-in="b49">static export of the app</text>
+<path d="M806,760 L868,760" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M1000,588 L1000,664" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<text x="992" y="622" class="lbl" text-anchor="end">task λs</text>
+<path d="M1106,596 L1106,664" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<path d="M1220,596 L1220,664" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+<rect id="g50" x="1340" y="632" width="228" height="356" rx="4" class="grp" data-kind="group"/>
+<text x="1354" y="652" class="glabel" data-in="g50">OPERATIONS</text>
+<rect id="b51" x="1356" y="664" width="196" height="100" rx="3" class="box box" data-kind="box"/>
+<text x="1367" y="682" class="title" data-in="b51">SSM Parameter Store</text>
+<text x="1367" y="698" class="lblmono" data-in="b51">/thalweg/venice_api_key</text>
+<text x="1367" y="712" class="lblmono" data-in="b51">/thalweg/reviewer_passcode</text>
+<text x="1367" y="726" class="lblmono" data-in="b51">/thalweg/mcp_token</text>
+<text x="1367" y="740" class="lblmono" data-in="b51">/thalweg/notify_email</text>
+<rect id="b52" x="1356" y="774" width="196" height="156" rx="3" class="box box" data-kind="box"/>
+<text x="1367" y="792" class="title" data-in="b52">CloudWatch</text>
+<text x="1367" y="808" class="body" data-in="b52">dashboard <tspan class="mono">thalweg</tspan></text>
+<text x="1367" y="822" class="body" data-in="b52">alarms → SNS thalweg-alarms:</text>
+<text x="1367" y="836" class="lblmono" data-in="b52">thalweg-executions-failed</text>
+<text x="1367" y="850" class="lblmono" data-in="b52">thalweg-worker-silent</text>
+<text x="1367" y="864" class="body" data-in="b52">EMF from Persist + FailClosed:</text>
+<text x="1367" y="878" class="lblmono" data-in="b52">Decision · GaugingLatency</text>
+<text x="1367" y="892" class="lblmono" data-in="b52">LLMCostUSD · PolicyDenials</text>
+<text x="1367" y="906" class="body" data-in="b52">+ AWS/States, Lambda, API GW</text>
+<rect id="b53" x="1356" y="938" width="196" height="40" rx="3" class="box box" data-kind="box"/>
+<text x="1367" y="954" class="body" data-in="b53"><tspan class="strong">AWS Budget </tspan><tspan class="mono">thalweg</tspan></text>
+<text x="1367" y="968" class="body" data-in="b53">monthly · alert at 80%</text>
+<path d="M1454,596 L1454,664" class="ln" data-kind="conn" marker-end="url(#ah-line)"/>
+</svg>

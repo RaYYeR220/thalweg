@@ -73,8 +73,8 @@ Vectors pass a score threshold, a speed bound, a direction gate and the normalis
 - Geometry (GRP reprojection under 0.6% of the image diagonal), stabilization, coverage ≥ 0.6, valid vectors and image quality must also pass. Denials are returned to the brain and written to the trace.
 
 **Fail closed.**
-- An LLM timeout, transport error, malformed output, an exhausted daily budget, a tool exception, or running out of steps or time all lead to `HOLD`.
-- A moved camera, a water level outside the surveyed section, or a degenerate camera model lead to `ESCALATE`.
+- An LLM timeout, transport error, malformed output, an exhausted daily budget, or running out of steps or time leads to `HOLD`. Tool errors are returned to the brain as results; the brain may retry or stop.
+- A moved camera, a water level outside the surveyed section (checked before any measurement), or a degenerate camera model leads to `ESCALATE`.
 
 **No warning tool.** Warnings are drafted by station logic after a published gauging. The draft is held by a Step Functions task token, and only a person can resolve it through the review API (passcode, 409 on a non-draft, 6 h expiry).
 

@@ -129,7 +129,7 @@ without it puts the schedule back to disabled. Run one replay right away with
 
 The worker runs on the COOL Graviton4 AMI (AWS Marketplace, subscribe first). It is a
 `c8g.large` in a public subnet of the default VPC with no inbound rules (SSM Session Manager
-only), IMDSv2 required and a 40 GB gp3 root volume.
+only), IMDSv2 required and a 64 GB gp3 root volume.
 
 ```bash
 npx cdk deploy ThalwegWorker -c worker=true -c coolAmi=ami-0123456789abcdef0 --profile <p>
