@@ -113,7 +113,7 @@ The workload is one complete gauging of an 8-second clip (VGC video 1) by the de
 ## Run it
 
 ```bash
-uv venv --python 3.12 && uv pip install -e ".[dev]"
+uv venv --python 3.12 && uv pip install -r requirements-dev.lock && uv pip install --no-deps -e .
 python scripts/fetch_models.py                 # ALIKED + LightGlue ONNX (52 MB, SHA-1 checked)
 python scripts/fetch_data.py vgc2020           # Video Globe Challenge 2020 (1.1 GB, etalab-2.0)
 export THALWEG_DATA=~/.cache/thalweg/data
