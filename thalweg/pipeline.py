@@ -280,15 +280,43 @@ def step_diagnose(ctx: Context) -> dict:
     return ctx.diag.to_dict()
 
 
+AXIS_TOLERANCE_DEG = 45.0
+
+
+def _axis_guard(ctx: Context, cm: CoarseMotion) -> str | None:
+    """Keep the measured flow direction on the channel axis surveyed for the station.
+
+    On glassy, poorly seeded water the dense flow can be dominated by ripples running toward a
+    bank. Lines and search windows laid across the channel would then measure almost nothing
+    normal to the section. If the measured axis is more than 45 degrees off the surveyed one,
+    the surveyed axis is used, in the sense closest to the measurement.
+    """
+    hint = ctx.station.flow_hint_deg
+    if hint is None:
+        return None
+    d = (cm.direction_deg - hint + 180.0) % 360.0 - 180.0
+    axis_dev = min(abs(d), 180.0 - abs(d))
+    if axis_dev <= AXIS_TOLERANCE_DEG:
+        return None
+    sense = hint if abs(d) <= 90.0 else (hint + 180.0) % 360.0
+    sense = (sense + 180.0) % 360.0 - 180.0
+    note = f"flow_axis_from_survey: measured {cm.direction_deg:.0f} deg is {axis_dev:.0f} deg off the channel axis"
+    cm.direction_deg = float(sense)
+    return note
+
+
 def step_coarse_motion(ctx: Context) -> dict:
     t0 = time.time()
     ctx.coarse = coarse_motion(ctx.ortho, ctx.raw.dt_s, ctx.grid, ctx.water_mask)
+    guard = _axis_guard(ctx, ctx.coarse)
+    if guard:
+        ctx.notes.append(guard)
     ctx.params = suggest_params(ctx.coarse, ctx.grid.res_m, ctx.raw.dt_s)
     # Re-centre the water band on the measured flow direction.
     ctx.water_mask = water_mask_from_transect(ctx.grid, ctx.station.transect, ctx.level, _band_half_length(ctx),
                                               ctx.coarse.direction_deg, ctx.valid_mask)
     _timed(ctx, "coarse_motion", t0)
-    return {**ctx.coarse.to_dict(), "suggested": ctx.params}
+    return {**ctx.coarse.to_dict(), "suggested": ctx.params, **({"axis_guard": guard} if guard else {})}
 
 
 # ---- velocimetry ----------------------------------------------------------------------------------------
