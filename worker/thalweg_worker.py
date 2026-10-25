@@ -15,7 +15,7 @@ import tempfile
 import threading
 import time
 import traceback
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
 
@@ -108,6 +108,13 @@ def station_physics(station, clip, decision) -> tuple[dict | None, dict]:
     for t, h in levels:
         kf.update(t, h)
     info["stage_rate_m_per_h"] = round(kf.rate_m_per_h, 4)
+    # Nowcast band for the station page: 3 h ahead in 15-minute steps.
+    info["forecast"] = [{"t": (clip.t + timedelta(seconds=dt)).isoformat(), "h": round(m, 4), "sd": round(sd, 4)}
+                        for dt in range(0, 3 * 3600 + 1, 900) for m, sd in [kf.forecast(float(dt))]]
+    from thalweg.hydro.warning import threshold_stage
+    h_thr, q_thr = threshold_stage(station, rating)
+    info["threshold"] = {"stage": None if h_thr is None else round(float(h_thr), 4),
+                         "q": None if q_thr is None else round(float(q_thr), 2), "source": station.thresholds.source}
     draft = None
     if decision.kind == "PUBLISH" and not item.get("open_warning"):
         w = assess_warning(station, kf, rating, clip.t, float(decision.q["q"]))
