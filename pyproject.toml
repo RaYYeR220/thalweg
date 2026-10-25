@@ -1,0 +1,32 @@
+[project]
+name = "thalweg"
+version = "0.1.0"
+description = "Camera-based river discharge gauging with OpenCV 5 and a policy-gated agent"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "opencv-python-headless==5.0.0.93",
+  "numpy>=2.1,<3",
+  "scipy>=1.14",
+  "pydantic>=2.9",
+  "pyyaml>=6.0",
+  "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+aws = ["boto3>=1.35"]
+mcp = ["mcp>=1.9"]
+dev = ["pytest>=8.3", "openpyxl>=3.1", "odfpy>=1.4", "python-docx>=1.1", "moto[all]>=5.0"]
+
+[project.scripts]
+thalweg = "thalweg.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: hits external services (skipped unless -m live)"]
+addopts = "-m 'not live'"
