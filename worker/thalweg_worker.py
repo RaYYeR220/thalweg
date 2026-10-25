@@ -147,14 +147,37 @@ def handle(task_input: dict, heartbeat) -> dict:
             while not stop.wait(30):
                 heartbeat()
         threading.Thread(target=beat, daemon=True).start()
+        out_dir = work / "out"
+        uploaded: set[str] = set()
+
+        def progress(step) -> None:
+            # Stream the trace as it grows so the run page can show the agent working.
+            for f in out_dir.glob("*.jpg"):
+                if f.name not in uploaded:
+                    s3.upload_file(str(f), ENV["THALWEG_ARTIFACTS_BUCKET"], f"runs/{run_id}/{f.name}",
+                                   ExtraArgs={"ContentType": "image/jpeg", "CacheControl": "max-age=86400"})
+                    uploaded.add(f.name)
+            body = {"run_id": run_id, "station_id": station.id, "brain": brain_name, "model": getattr(brain, "model", None),
+                    "clip": {"t": clip.t.isoformat(), "level": clip.level}, "done": False,
+                    "steps": [st.to_dict() for st in steps_ref]}
+            s3.put_object(Bucket=ENV["THALWEG_ARTIFACTS_BUCKET"], Key=f"runs/{run_id}/progress.json",
+                          Body=json.dumps(body, default=str).encode(), ContentType="application/json",
+                          CacheControl="no-store")
+
+        steps_ref: list = []
+
+        def on_step(step) -> None:
+            steps_ref.append(step)
+            progress(step)
         try:
-            res = run_agent(station, clip, brain, sink, limits=PolicyLimits(), run_id=run_id)
+            res = run_agent(station, clip, brain, sink, limits=PolicyLimits(), run_id=run_id, on_step=on_step)
         finally:
             stop.set()
         draft, physics = station_physics(station, clip, res.decision)
         trace = res.to_dict() | {"physics": physics, "warning_draft": draft, "brain_name": brain_name,
                                  "requested_by": task_input.get("requested_by")}
         sink.put_json("trace", trace)
+        sink.put_json("progress", {**trace, "done": True})
         _upload_dir(work / "out", ENV["THALWEG_ARTIFACTS_BUCKET"], f"runs/{run_id}/")
         d = res.decision
         out = {"run_id": run_id, "decision": {"kind": d.kind, "reasons": d.reasons, "method": d.method,

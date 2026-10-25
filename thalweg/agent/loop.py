@@ -34,7 +34,8 @@ def new_run_id() -> str:
 
 
 def run_agent(station: Station, clip: Clip, brain, sink: ArtifactSink, limits: PolicyLimits | None = None,
-              run_id: str | None = None, ctx: Context | None = None) -> RunResult:
+              run_id: str | None = None, ctx: Context | None = None, on_step=None) -> RunResult:
+    """Run the perceive -> decide -> act loop. `on_step(step)` is called after every recorded step."""
     limits = limits or PolicyLimits()
     policy = Policy(limits)
     run_id = run_id or new_run_id()
@@ -49,6 +50,11 @@ def run_agent(station: Station, clip: Clip, brain, sink: ArtifactSink, limits: P
         s = Step(i=len(steps), actor=actor, tool=tool, args=args, reason=reason, verdict=verdict, ok=ok,
                  summary=summary, evidence=ev, error=error, t_ms=int(1000 * (time.time() - (t0 or time.time()))))
         steps.append(s)
+        if on_step is not None:
+            try:
+                on_step(s)
+            except Exception:  # noqa: BLE001 - progress reporting must never break a run
+                pass
         return s
 
     # 1. Mandatory perception. Any failure here ends the run without a number.
