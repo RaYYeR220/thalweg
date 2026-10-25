@@ -55,8 +55,8 @@ def _homography(a: np.ndarray, b: np.ndarray, model: str = "similarity"):
 
 
 def stabilize(frames: list[np.ndarray], static_mask: np.ndarray | None = None, matcher: FeatureMatcher | None = None,
-              keyframe_every: int = 5, min_motion_px: float = 0.3, max_motion_px: float = 80.0,
-              min_inlier_ratio: float = 0.3) -> StabResult:
+              keyframe_every: int = 5, min_motion_px: float = 0.3, max_motion_frac: float = 0.3,
+              min_inlier_ratio: float = 0.12, min_inliers: int = 20) -> StabResult:
     """Register every frame to the first one on static scenery.
 
     Homographies are estimated on keyframes (USAC MAGSAC) and interpolated in between;
@@ -69,12 +69,14 @@ def stabilize(frames: list[np.ndarray], static_mask: np.ndarray | None = None, m
     keys = list(range(0, len(frames), keyframe_every))
     if keys[-1] != len(frames) - 1:
         keys.append(len(frames) - 1)
-    Hk, inl, res = {0: np.eye(3)}, [1.0], [0.0]
+    Hk, inl, res, n_inl = {0: np.eye(3)}, [1.0], [0.0], [10**6]
     notes = []
     if matcher.fallback_reason:
         notes.append(matcher.fallback_reason)
     for k in keys[1:]:
-        a, b = matcher.match(ref, frames[k], static_mask, static_mask, cached_a=cache)
+        # The mask describes static scenery in the reference view only; a hand-held or drifting
+        # camera moves that scenery around in later frames, so frame k is matched unmasked.
+        a, b = matcher.match(ref, frames[k], static_mask, None, cached_a=cache)
         H, r, rp = _homography(a, b)
         if H is None:
             notes.append(f"frame_{k}_unmatched")
@@ -82,8 +84,9 @@ def stabilize(frames: list[np.ndarray], static_mask: np.ndarray | None = None, m
         Hk[k] = H
         inl.append(r)
         res.append(rp)
+        n_inl.append(int(r * len(a)))
     motion = max(_corner_shift(Hk[k], w, h) for k in Hk)
-    if motion > max_motion_px or min(inl) < min_inlier_ratio:
+    if motion > max_motion_frac * w or min(inl) < min_inlier_ratio or min(n_inl) < min_inliers:
         # Implausible camera motion or weak support: the matches were probably on moving water.
         # Never warp the clip with a wrong model. Measure the real camera motion on the static
         # scenery with phase correlation instead; a still camera needs no correction.
@@ -123,7 +126,9 @@ def _phase_motion(frames: list[np.ndarray], static_mask: np.ndarray | None, keys
     win = cv.createHanningWindow(ref.shape[::-1], cv.CV_32F)
     for k in keys[1:]:
         cur = frames[k][y0:y1, x0:x1].astype(np.float32) * static_mask[y0:y1, x0:x1]
-        (dx, dy), _ = cv.phaseCorrelate(ref, cur, win)
+        (dx, dy), resp = cv.phaseCorrelate(ref, cur, win)
+        if resp < 0.1:
+            return float("inf")  # no clear peak: the camera motion could not be measured this way
         best = max(best, float(np.hypot(dx, dy)))
     return best
 
