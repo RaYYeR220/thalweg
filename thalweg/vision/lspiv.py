@@ -20,19 +20,33 @@ def remove_background(frames: list[np.ndarray], mode: str = "mean") -> list[np.n
     "mean" / "median": subtract one temporal background.
     "highpass:<k>": subtract a centred moving average over 2k+1 frames, which also removes slow
     illumination changes and keeps only features that move within a fraction of a second.
+    Memory stays at one float32 copy of the clip plus a running sum.
     """
-    stack = np.stack([f.astype(np.float32) for f in frames])
+    n = len(frames)
     if mode.startswith("highpass"):
         k = int(mode.split(":")[1]) if ":" in mode else 5
-        csum = np.cumsum(np.concatenate([np.zeros_like(stack[:1]), stack]), axis=0)
-        n = len(stack)
+        f32 = [f.astype(np.float32) for f in frames]
+        acc = np.zeros_like(f32[0])
+        lo, hi = 0, -1  # current window is frames[lo..hi]
         out = []
         for i in range(n):
-            a, b = max(0, i - k), min(n, i + k + 1)
-            out.append(stack[i] - (csum[b] - csum[a]) / (b - a))
+            a, b = max(0, i - k), min(n - 1, i + k)
+            while hi < b:
+                hi += 1
+                acc += f32[hi]
+            while lo < a:
+                acc -= f32[lo]
+                lo += 1
+            out.append(f32[i] - acc / (hi - lo + 1))
         return out
-    bg = np.median(stack, axis=0) if mode == "median" else stack.mean(axis=0)
-    return [s - bg for s in stack]
+    if mode == "median":
+        bg = np.median(np.stack(frames), axis=0).astype(np.float32)
+    else:
+        bg = np.zeros(frames[0].shape, np.float64)
+        for f in frames:
+            bg += f
+        bg = (bg / n).astype(np.float32)
+    return [f.astype(np.float32) - bg for f in frames]
 
 
 def _subpixel(c: np.ndarray, r: int, k: int) -> tuple[float, float]:

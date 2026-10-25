@@ -237,6 +237,12 @@ def step_orthorectify(ctx: Context, res_m: float | None = None) -> dict:
     except GeometryError as e:
         raise StepError(e.code, e.detail) from e
     ctx.ortho = orthorectify(ctx.frames, ctx.maps)
+    # The full-resolution frames are no longer needed; keep the first one for evidence overlays.
+    first = ctx.raw.frames[0]
+    ctx.raw.frames = [first]
+    ctx.frames = None
+    if ctx.stab is not None:
+        ctx.stab.frames = []
     ctx.valid_mask = valid_ortho_mask(ctx.cam, ctx.maps)
     if ctx.stab is not None and ctx.stab.valid is not None:
         # Only water seen in every stabilized frame takes part in the measurement.
