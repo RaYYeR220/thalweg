@@ -193,7 +193,8 @@ def handle(task_input: dict, heartbeat) -> dict:
                "timings": res.timings, "policy_denials": sum(1 for s in res.steps if not s.verdict.allowed),
                "evidence": [f"runs/{run_id}/{k}.jpg" for k in ("frame_overlay", "ortho", "field_lspiv", "field_stiv",
                                                                   "sti_mid") if (work / "out" / f"{k}.jpg").exists()]}
-        if d.q:
+        if d.kind == "PUBLISH" and d.q:
+            # Only a published gauging carries a discharge; unpublished estimates stay in the trace.
             out["decision"].update(q=d.q.get("q"), q_lo=d.q.get("q_lo"), q_hi=d.q.get("q_hi"))
         if d.kind == "PUBLISH":
             out["gauging"] = {"station_id": station.id, "t": clip.t.isoformat(), "level": clip.level,
