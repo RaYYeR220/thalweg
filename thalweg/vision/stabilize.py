@@ -14,6 +14,7 @@ from thalweg.vision.features import FeatureMatcher
 class StabResult:
     frames: list[np.ndarray]
     H: list[np.ndarray]
+    valid: np.ndarray | None = field(default=None, kw_only=True)  # pixels covered by every registered frame
     residual_px_p95: float  # p95 reprojection residual of the inliers, worst frame
     motion_px_p95: float  # p95 corner displacement removed, i.e. how much the camera moved
     inlier_ratio_min: float
@@ -99,18 +100,54 @@ def stabilize(frames: list[np.ndarray], static_mask: np.ndarray | None = None, m
     if motion < min_motion_px and all(np.isfinite(res)):
         return StabResult(frames, [np.eye(3)] * len(frames), float(max(res)), motion, float(min(inl)),
                           matcher.method, len(keys), notes + ["static_camera"])
-    out, Hs = [], []
+    # Keyframes are anchored to the reference by ALIKED + LightGlue. Hand-held jitter between them is
+    # far too irregular to interpolate, so every in-between frame is registered to its keyframe by
+    # Lucas-Kanade tracking of static points (forward-backward checked) and a robust similarity.
+    out, Hs, lk_res = [], [], []
+    seeds = {}
+    for k in keys:
+        mk = static_mask if k == 0 or static_mask is None else cv.warpPerspective(
+            static_mask, np.linalg.inv(Hk[k]), (w, h), flags=cv.INTER_NEAREST)
+        seeds[k] = cv.goodFeaturesToTrack(frames[k], 600, 0.01, 8, mask=mk)
     for i, f in enumerate(frames):
         k0 = max(k for k in keys if k <= i)
-        k1 = min(k for k in keys if k >= i)
-        t = 0.0 if k1 == k0 else (i - k0) / (k1 - k0)
-        H = (1 - t) * Hk[k0] + t * Hk[k1]
-        H = H / H[2, 2]
-        Hs.append(H)
-        out.append(cv.warpPerspective(f, H, (w, h), flags=cv.INTER_LINEAR, borderMode=cv.BORDER_REPLICATE))
-    finite = [x for x in res if np.isfinite(x)]
-    return StabResult(out, Hs, float(max(finite)) if finite else float("inf"), motion, float(min(inl)),
-                      matcher.method, len(keys), notes)
+        H = Hk[k0]
+        if i != k0 and seeds[k0] is not None and len(seeds[k0]) >= 12:
+            A, r = _lk_similarity(frames[k0], f, seeds[k0])
+            if A is not None:
+                H = Hk[k0] @ A
+                lk_res.append(r)
+            else:
+                notes.append(f"frame_{i}_lk_failed")
+        Hs.append(H / H[2, 2])
+        # Constant (black) borders: replicated edges would be texture that moves with the camera.
+        out.append(cv.warpPerspective(f, Hs[-1], (w, h), flags=cv.INTER_LINEAR, borderMode=cv.BORDER_CONSTANT))
+    ones = np.full((h, w), 255, np.uint8)
+    valid = ones.copy()
+    for H in Hs[:: max(1, len(Hs) // 40)] + [Hs[-1]]:
+        valid &= cv.warpPerspective(ones, H, (w, h), flags=cv.INTER_NEAREST, borderMode=cv.BORDER_CONSTANT)
+    valid = cv.erode(valid, np.ones((9, 9), np.uint8))
+    finite = [x for x in res + lk_res if np.isfinite(x)]
+    return StabResult(out, Hs, float(np.percentile(finite, 95)) if finite else float("inf"), motion, float(min(inl)),
+                      matcher.method + "+lk", len(keys), notes, valid=(valid > 0).astype(np.uint8))
+
+
+def _lk_similarity(key: np.ndarray, img: np.ndarray, pts: np.ndarray):
+    """Similarity mapping `img` onto `key` from LK-tracked static points; returns (3x3, p95 residual px)."""
+    lk = dict(winSize=(21, 21), maxLevel=4, criteria=(cv.TERM_CRITERIA_EPS | cv.TERM_CRITERIA_COUNT, 30, 0.01))
+    p1, st1, _ = cv.calcOpticalFlowPyrLK(key, img, pts, None, **lk)
+    p0b, st2, _ = cv.calcOpticalFlowPyrLK(img, key, p1, None, **lk)
+    good = (st1.ravel() == 1) & (st2.ravel() == 1) & (np.linalg.norm((p0b - pts).reshape(-1, 2), axis=1) < 0.5)
+    if good.sum() < 12:
+        return None, float("inf")
+    a, b = pts.reshape(-1, 2)[good], p1.reshape(-1, 2)[good]
+    M, inl = cv.estimateAffinePartial2D(b, a, method=cv.RANSAC, ransacReprojThreshold=1.0, maxIters=2000)
+    if M is None or inl.sum() < 10:
+        return None, float("inf")
+    A = np.vstack([M, [0.0, 0.0, 1.0]])
+    m = inl.ravel().astype(bool)
+    r = np.linalg.norm(cv.perspectiveTransform(b[m].reshape(-1, 1, 2), A).reshape(-1, 2) - a[m], axis=1)
+    return A, float(np.percentile(r, 95))
 
 
 def _phase_motion(frames: list[np.ndarray], static_mask: np.ndarray | None, keys: list[int]) -> float:

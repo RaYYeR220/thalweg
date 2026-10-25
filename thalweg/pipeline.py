@@ -232,6 +232,10 @@ def step_orthorectify(ctx: Context, res_m: float | None = None) -> dict:
         raise StepError(e.code, e.detail) from e
     ctx.ortho = orthorectify(ctx.frames, ctx.maps)
     ctx.valid_mask = valid_ortho_mask(ctx.cam, ctx.maps)
+    if ctx.stab is not None and ctx.stab.valid is not None:
+        # Only water seen in every stabilized frame takes part in the measurement.
+        seen = cv.remap(ctx.stab.valid * 255, ctx.maps[0], ctx.maps[1], cv.INTER_NEAREST, borderValue=0)
+        ctx.valid_mask = ctx.valid_mask & (seen > 0).astype(np.uint8)
     flow = ctx.station.flow_hint_deg if ctx.station.flow_hint_deg is not None else 0.0
     ctx.water_mask = water_mask_from_transect(ctx.grid, st.transect, ctx.level, _band_half_length(ctx), flow,
                                               ctx.valid_mask)
