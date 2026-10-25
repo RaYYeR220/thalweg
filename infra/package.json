@@ -1,0 +1,26 @@
+{
+  "name": "thalweg-infra",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "AWS CDK app for Thalweg: data, workflow, API, web/CDN, ops and the Graviton worker.",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "synth": "cdk synth",
+    "test": "tsx --test test/*.test.ts",
+    "cdk": "cdk"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.274.0",
+    "constructs": "10.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "aws-cdk": "2.1146.1",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

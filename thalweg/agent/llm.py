@@ -16,7 +16,7 @@ from thalweg.agent.types import ToolCall
 
 PROMPT = (Path(__file__).parent / "prompt.md").read_text(encoding="utf-8")
 DEFAULT_MODEL = os.environ.get("THALWEG_MODEL", "claude-sonnet-5-5")
-BASE_URL = os.environ.get("THALWEG_LLM_BASE_URL", "https://api.venice.ai/api/v1")
+BASE_URL = os.environ.get("THALWEG_LLM_BASE_URL") or os.environ.get("VENICE_BASE_URL") or "https://api.venice.ai/api/v1"
 
 
 class BrainError(Exception):
@@ -49,7 +49,7 @@ class VeniceClient:
 
 
 def _ssm_key() -> str | None:
-    name = os.environ.get("THALWEG_VENICE_PARAM")
+    name = os.environ.get("THALWEG_PARAM_VENICE_KEY") or os.environ.get("THALWEG_VENICE_PARAM")
     if not name:
         return None
     try:

@@ -1,0 +1,249 @@
+{
+  "Comment": "Thalweg gauging: preflight, the agent on the Graviton worker, persist, and the human signature for flood warnings. Every failure before a persisted decision ends in HOLD (fail closed).",
+  "StartAt": "Preflight",
+  "States": {
+    "Preflight": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${PreflightFunctionArn}",
+        "Payload": {
+          "input.$": "$",
+          "execution_arn.$": "$$.Execution.Id"
+        }
+      },
+      "OutputPath": "$.Payload",
+      "Retry": [
+        {
+          "ErrorEquals": ["ClipNotReady"],
+          "IntervalSeconds": 10,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        },
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "FailClosed"
+        }
+      ],
+      "Next": "Agent"
+    },
+    "Agent": {
+      "Type": "Task",
+      "Comment": "The Graviton worker polls this activity, runs the agent with OpenCV 5 and returns the decision.",
+      "Resource": "${AgentActivityArn}",
+      "TimeoutSeconds": 900,
+      "HeartbeatSeconds": 120,
+      "ResultPath": "$.agent",
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "FailClosed"
+        }
+      ],
+      "Next": "Persist"
+    },
+    "Persist": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${PersistFunctionArn}",
+        "Payload.$": "$"
+      },
+      "OutputPath": "$.Payload",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "FailClosed"
+        }
+      ],
+      "Next": "WarningDrafted"
+    },
+    "WarningDrafted": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "And": [
+            { "Variable": "$.warning_draft", "IsPresent": true },
+            { "Not": { "Variable": "$.warning_draft", "IsNull": true } }
+          ],
+          "Next": "AwaitSignature"
+        }
+      ],
+      "Default": "Done"
+    },
+    "AwaitSignature": {
+      "Type": "Task",
+      "Comment": "Stores the draft and its task token, then waits for a reviewer to sign or reject through the review API.",
+      "Resource": "arn:aws:states:::lambda:invoke.waitForTaskToken",
+      "Parameters": {
+        "FunctionName": "${AwaitSignatureFunctionArn}",
+        "Payload": {
+          "task_token.$": "$$.Task.Token",
+          "run_id.$": "$.run_id",
+          "warning_draft.$": "$.warning_draft"
+        }
+      },
+      "TimeoutSeconds": 21600,
+      "ResultPath": "$.signature",
+      "Catch": [
+        {
+          "ErrorEquals": ["Rejected"],
+          "ResultPath": "$.error",
+          "Next": "MarkRejected"
+        },
+        {
+          "ErrorEquals": ["States.Timeout"],
+          "ResultPath": "$.error",
+          "Next": "MarkExpired"
+        },
+        {
+          "ErrorEquals": ["States.ALL"],
+          "ResultPath": "$.error",
+          "Next": "CloseUnsigned"
+        }
+      ],
+      "Next": "IssueWarning"
+    },
+    "IssueWarning": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${IssueWarningFunctionArn}",
+        "Payload": {
+          "run_id.$": "$.run_id",
+          "warning_draft.$": "$.warning_draft",
+          "signature.$": "$.signature"
+        }
+      },
+      "OutputPath": "$.Payload",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 5,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "Done"
+    },
+    "MarkRejected": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${CloseWarningFunctionArn}",
+        "Payload": {
+          "outcome": "REJECTED",
+          "warning_draft.$": "$.warning_draft",
+          "error.$": "$.error"
+        }
+      },
+      "OutputPath": "$.Payload",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 5,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "Done"
+    },
+    "MarkExpired": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${CloseWarningFunctionArn}",
+        "Payload": {
+          "outcome": "EXPIRED",
+          "warning_draft.$": "$.warning_draft",
+          "error.$": "$.error"
+        }
+      },
+      "OutputPath": "$.Payload",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 5,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "Done"
+    },
+    "CloseUnsigned": {
+      "Type": "Task",
+      "Comment": "The signature step itself failed: the draft can never be signed, so it closes as EXPIRED and the execution fails for the alarm.",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${CloseWarningFunctionArn}",
+        "Payload": {
+          "outcome": "EXPIRED",
+          "warning_draft.$": "$.warning_draft",
+          "error.$": "$.error"
+        }
+      },
+      "ResultPath": null,
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 5,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "SignatureFailed"
+    },
+    "SignatureFailed": {
+      "Type": "Fail",
+      "Error": "SignatureStepFailed",
+      "Cause": "The warning draft could not be held for signature; it was closed unsigned."
+    },
+    "FailClosed": {
+      "Type": "Task",
+      "Comment": "Marks the run HOLD with reason fail_closed:<error>. No number is published.",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${FailClosedFunctionArn}",
+        "Payload.$": "$"
+      },
+      "ResultPath": "$.fail_closed",
+      "Retry": [
+        {
+          "ErrorEquals": ["Lambda.ServiceException", "Lambda.AWSLambdaException", "Lambda.SdkClientException", "Lambda.TooManyRequestsException"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 6,
+          "BackoffRate": 2
+        }
+      ],
+      "Next": "Held"
+    },
+    "Held": {
+      "Type": "Fail",
+      "Comment": "The run is recorded as HOLD; the execution fails so the failed-executions alarm sees it.",
+      "Error": "FailClosed",
+      "CausePath": "$.fail_closed.Payload.reason"
+    },
+    "Done": {
+      "Type": "Succeed"
+    }
+  }
+}
