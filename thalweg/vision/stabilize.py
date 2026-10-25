@@ -32,10 +32,21 @@ def _corner_shift(H: np.ndarray, w: int, h: int) -> float:
     return float(np.max(np.linalg.norm(cv.perspectiveTransform(c, H) - c, axis=2)))
 
 
-def _homography(a: np.ndarray, b: np.ndarray):
+def _homography(a: np.ndarray, b: np.ndarray, model: str = "similarity"):
+    """Frame-to-reference transform from matched static points.
+
+    A fixed camera that vibrates or drifts is described by a similarity (shift, small rotation,
+    zoom). A full homography is reserved for well-spread support: fitted to points on two thin
+    bank strips it is nearly degenerate and its extrapolated corners can move by hundreds of pixels.
+    """
     if len(a) < 8:
         return None, 0.0, float("inf")
-    H, inl = cv.findHomography(b, a, cv.USAC_MAGSAC, 1.5)
+    if model == "similarity":
+        M, inl = cv.estimateAffinePartial2D(b, a, method=cv.RANSAC, ransacReprojThreshold=1.5, maxIters=4000,
+                                            confidence=0.999)
+        H = None if M is None else np.vstack([M, [0.0, 0.0, 1.0]])
+    else:
+        H, inl = cv.findHomography(b, a, cv.USAC_MAGSAC, 1.5)
     if H is None:
         return None, 0.0, float("inf")
     m = inl.ravel().astype(bool)
@@ -124,20 +135,23 @@ class PoseCheck:
     inliers: int
     H: np.ndarray | None
     method: str
+    verified: bool = True  # False when the view could not be compared (dark, fogged, blank)
 
     def summary(self) -> dict:
-        return {"moved": self.moved, "shift_px_p95": round(self.shift_px_p95, 2), "inliers": self.inliers,
-                "method": self.method}
+        return {"moved": self.moved, "verified": self.verified, "shift_px_p95": round(self.shift_px_p95, 2),
+                "inliers": self.inliers, "method": self.method}
 
 
 def check_camera_pose(ref_img: np.ndarray, img: np.ndarray, static_mask: np.ndarray | None = None,
-                      matcher: FeatureMatcher | None = None, tol_px: float = 3.0) -> PoseCheck:
+                      matcher: FeatureMatcher | None = None, tol_px: float = 3.0, min_inliers: int = 15) -> PoseCheck:
     """Compare a clip against the station's reference frame: has the camera been knocked or re-aimed?"""
     matcher = matcher or FeatureMatcher()
     a, b = matcher.match(ref_img, img, static_mask, static_mask)
     H, r, _ = _homography(a, b)
-    if H is None:
-        return PoseCheck(True, float("inf"), 0, None, matcher.method)
+    inliers = int(r * len(a))
+    if H is None or inliers < min_inliers:
+        # Not enough to compare: that is "unverified", not "moved". Image quality decides what happens next.
+        return PoseCheck(False, float("nan"), inliers, None, matcher.method, verified=False)
     h, w = ref_img.shape[:2]
     shift = _corner_shift(np.linalg.inv(H), w, h)
-    return PoseCheck(shift > tol_px, shift, int(r * len(a)), H, matcher.method)
+    return PoseCheck(shift > tol_px, shift, inliers, H, matcher.method)

@@ -59,6 +59,8 @@ def run_agent(station: Station, clip: Clip, brain, sink: ArtifactSink, limits: P
             record("system", name, {}, "mandatory perception step", Verdict(True), True, out, t0=t0)
             if name == "load_frames":
                 ctx.frozen_frac = out.get("frozen_frac", 0.0)
+            if name == "check_camera_pose" and out.get("checked"):
+                ctx.pose_verified = bool(out.get("verified", True))
             if name == "check_camera_pose" and out.get("checked") and out.get("moved"):
                 decision = Decision("ESCALATE", ["camera_moved: the view no longer matches the surveyed reference frame; "
                                                  "GRP pixels must be re-confirmed before any gauging"],

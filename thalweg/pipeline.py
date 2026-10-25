@@ -83,6 +83,8 @@ class Context:
     coarse: CoarseMotion | None = None
     params: dict = field(default_factory=dict)
     px_scale: float = 1.0  # working frames / station survey pixels
+    frozen_frac: float = 0.0  # share of repeated frames in the clip
+    pose_verified: bool = True  # False when the reference-view check could not be made
     fields: dict[str, VectorField] = field(default_factory=dict)
     results: dict[str, DischargeResult] = field(default_factory=dict)
     timings: dict[str, float] = field(default_factory=dict)

@@ -73,6 +73,8 @@ class Policy:
         elif ctx.stab is not None and np.isfinite(ctx.stab.residual_px_p95) and ctx.stab.residual_px_p95 > L.stab_residual_px_max \
                 and "static_camera" not in ctx.stab.notes:
             why.append("stabilization_residual_high")
+        if getattr(ctx, "pose_verified", True) is False:
+            why.append("camera_pose_unverified")
         if ctx.diag is None:
             why.append("not_diagnosed")
         else:
