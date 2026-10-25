@@ -1,0 +1,1272 @@
+{
+ "benchmark": "Video Globe Challenge 2020 (Bodart, Le Coz, Jodeau & Hauet; doi:10.57745/KVNIHX)",
+ "protocol": "Videos 1 and 8 were used for development. The agent, policy and parameters were frozen (git tag eval-freeze) before videos 2-7 were scored once per brain. Every run is in eval/runs.jsonl.",
+ "experts": {
+  "vgc1": {
+   "n": 15,
+   "median_abs_err_pct": 23.02,
+   "best_abs_err_pct": 1.83,
+   "q_ref": 1.26,
+   "u_ref_pct": 12.4,
+   "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+   "experts_q": [
+    0.836,
+    1.381,
+    0.862,
+    0.937,
+    1.237,
+    0.889,
+    0.715,
+    1.109,
+    0.925,
+    1.191,
+    1.084,
+    1.116,
+    0.97,
+    1.101,
+    0.948
+   ]
+  },
+  "vgc2": {
+   "n": 17,
+   "median_abs_err_pct": 16.17,
+   "best_abs_err_pct": 3.67,
+   "q_ref": 107.945,
+   "u_ref_pct": 5.5,
+   "site": "West Normanby (drone)",
+   "experts_q": [
+    79.943,
+    89.74,
+    91.283,
+    79.059,
+    99.727,
+    80.877,
+    103.98,
+    73.29,
+    90.495,
+    97.925,
+    114.218,
+    123.762,
+    113.424,
+    90.163,
+    84.582,
+    114.255,
+    78.645
+   ]
+  },
+  "vgc3": {
+   "n": 18,
+   "median_abs_err_pct": 22.4,
+   "best_abs_err_pct": 2.1,
+   "q_ref": 55.16,
+   "u_ref_pct": 5.8,
+   "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+   "experts_q": [
+    45.734,
+    -43.71,
+    54.001,
+    41.638,
+    49.714,
+    40.852,
+    39.506,
+    -52.195,
+    53.812,
+    43.971,
+    49.809,
+    37.012,
+    52.277,
+    40.457,
+    -50.582,
+    46.089,
+    41.013,
+    52.79
+   ]
+  },
+  "vgc4": {
+   "n": 22,
+   "median_abs_err_pct": 10.5,
+   "best_abs_err_pct": 0.42,
+   "q_ref": 139.0,
+   "u_ref_pct": 15.0,
+   "site": "Russell River (drone)",
+   "experts_q": [
+    147.252,
+    105.71,
+    135.433,
+    107.52,
+    150.984,
+    160.713,
+    130.385,
+    140.245,
+    161.778,
+    136.631,
+    166.129,
+    155.604,
+    130.2,
+    92.522,
+    114.389,
+    150.713,
+    151.573,
+    48.823,
+    139.588,
+    155.8,
+    51.237,
+    146.124
+   ]
+  },
+  "vgc5": {
+   "n": 23,
+   "median_abs_err_pct": 13.39,
+   "best_abs_err_pct": 1.25,
+   "q_ref": 19.7,
+   "u_ref_pct": 5.3,
+   "site": "Le Stor\u00e5ne \u00e0 Ruud",
+   "experts_q": [
+    22.771,
+    21.002,
+    15.745,
+    18.955,
+    18.979,
+    18.246,
+    15.66,
+    18.083,
+    16.631,
+    14.727,
+    19.292,
+    20.161,
+    16.878,
+    16.161,
+    18.671,
+    16.398,
+    16.51,
+    15.846,
+    17.062,
+    14.763,
+    19.946,
+    17.527,
+    20.01
+   ]
+  },
+  "vgc6": {
+   "n": 17,
+   "median_abs_err_pct": 17.7,
+   "best_abs_err_pct": 0.11,
+   "q_ref": 53.74,
+   "u_ref_pct": 9.3,
+   "site": "Le Groin \u00e0 Artemare (01)",
+   "experts_q": [
+    37.074,
+    -40.799,
+    54.475,
+    42.982,
+    44.228,
+    54.324,
+    -38.768,
+    -47.873,
+    32.056,
+    42.295,
+    49.871,
+    52.804,
+    44.322,
+    45.774,
+    51.969,
+    43.91,
+    53.682
+   ]
+  },
+  "vgc7": {
+   "n": 15,
+   "median_abs_err_pct": 2.16,
+   "best_abs_err_pct": 0.04,
+   "q_ref": 962.8,
+   "u_ref_pct": 5.3,
+   "site": "Herbert River (drone)",
+   "experts_q": [
+    901.489,
+    952.878,
+    983.462,
+    922.698,
+    981.444,
+    981.823,
+    953.999,
+    963.159,
+    927.582,
+    731.726,
+    955.819,
+    635.192,
+    650.171,
+    983.634,
+    928.706
+   ]
+  },
+  "vgc8": {
+   "n": 23,
+   "median_abs_err_pct": 9.43,
+   "best_abs_err_pct": 0.31,
+   "q_ref": 0.636,
+   "u_ref_pct": 5.0,
+   "site": "Finsalbekken \u00e0 Ridabu",
+   "experts_q": [
+    0.763,
+    0.814,
+    0.998,
+    0.72,
+    0.767,
+    0.72,
+    0.674,
+    0.621,
+    0.619,
+    0.916,
+    0.696,
+    0.692,
+    0.68,
+    0.654,
+    0.764,
+    0.733,
+    0.76,
+    0.641,
+    0.764,
+    0.638,
+    0.608,
+    0.651,
+    0.638
+   ]
+  }
+ },
+ "runs": {
+  "vgc-autopilot": {
+   "brain": "autopilot",
+   "label": "frozen (blind)",
+   "summary": {
+    "test_videos": 6,
+    "published": 5,
+    "escalated": 1,
+    "held": 0,
+    "mae_published_pct": 13.11,
+    "mae_all_estimates_pct": 11.11,
+    "within_ref_uncertainty": 1,
+    "beats_median_expert": 3,
+    "mean_beats_share": 0.515,
+    "cost_usd": 0.0
+   },
+   "rows": [
+    {
+     "video": "vgc1",
+     "split": "dev",
+     "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "q_published": 1.375,
+     "q_estimate": 1.375,
+     "q_ref": 1.26,
+     "u_ref": 0.124,
+     "published": {
+      "err_pct": 9.13,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 15,
+      "beats_share": 0.867
+     },
+     "estimate": {
+      "err_pct": 9.13,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 15,
+      "beats_share": 0.867
+     },
+     "expert_median_err_pct": 23.02,
+     "estimates": {
+      "lspiv": {
+       "q": 0.999,
+       "q_lo": 0.9325,
+       "q_hi": 1.0654,
+       "coverage": 1.0
+      },
+      "stiv": {
+       "q": 1.375,
+       "q_lo": 1.2542,
+       "q_hi": 1.4958,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 43.2,
+     "run_id": "r-20261025215946-d33ee2"
+    },
+    {
+     "video": "vgc8",
+     "split": "dev",
+     "site": "Finsalbekken \u00e0 Ridabu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 0.7757,
+     "q_estimate": 0.7757,
+     "q_ref": 0.636,
+     "u_ref": 0.05,
+     "published": {
+      "err_pct": 21.97,
+      "within_ref_u": false,
+      "expert_rank": 21,
+      "n_experts": 23,
+      "beats_share": 0.13
+     },
+     "estimate": {
+      "err_pct": 21.97,
+      "within_ref_u": false,
+      "expert_rank": 21,
+      "n_experts": 23,
+      "beats_share": 0.13
+     },
+     "expert_median_err_pct": 9.43,
+     "estimates": {
+      "lspiv": {
+       "q": 0.7235,
+       "q_lo": 0.6737,
+       "q_hi": 0.7733,
+       "coverage": 0.999
+      },
+      "stiv": {
+       "q": 0.8278,
+       "q_lo": 0.7489,
+       "q_hi": 0.9068,
+       "coverage": 0.952
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 47.8,
+     "run_id": "r-20261025220031-f96b51"
+    },
+    {
+     "video": "vgc2",
+     "split": "test",
+     "site": "West Normanby (drone)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 127.2796,
+     "q_estimate": 127.2796,
+     "q_ref": 107.945,
+     "u_ref": 0.055,
+     "published": {
+      "err_pct": 17.91,
+      "within_ref_u": false,
+      "expert_rank": 12,
+      "n_experts": 17,
+      "beats_share": 0.353
+     },
+     "estimate": {
+      "err_pct": 17.91,
+      "within_ref_u": false,
+      "expert_rank": 12,
+      "n_experts": 17,
+      "beats_share": 0.353
+     },
+     "expert_median_err_pct": 16.17,
+     "estimates": {
+      "lspiv": {
+       "q": 118.8359,
+       "q_lo": 111.5368,
+       "q_hi": 126.1351,
+       "coverage": 1.0
+      },
+      "stiv": {
+       "q": 135.7232,
+       "q_lo": 126.2242,
+       "q_hi": 145.2221,
+       "coverage": 0.984
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 58.8,
+     "run_id": "r-20261025220121-423b0b"
+    },
+    {
+     "video": "vgc3",
+     "split": "test",
+     "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 51.2917,
+     "q_estimate": 51.2917,
+     "q_ref": 55.16,
+     "u_ref": 0.058,
+     "published": {
+      "err_pct": -7.01,
+      "within_ref_u": false,
+      "expert_rank": 5,
+      "n_experts": 18,
+      "beats_share": 0.778
+     },
+     "estimate": {
+      "err_pct": -7.01,
+      "within_ref_u": false,
+      "expert_rank": 5,
+      "n_experts": 18,
+      "beats_share": 0.778
+     },
+     "expert_median_err_pct": 24.51,
+     "estimates": {
+      "lspiv": {
+       "q": 47.5491,
+       "q_lo": 44.6963,
+       "q_hi": 50.4019,
+       "coverage": 0.996
+      },
+      "stiv": {
+       "q": 55.0344,
+       "q_lo": 51.7557,
+       "q_hi": 58.3131,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 56.5,
+     "run_id": "r-20261025220223-7d99ab"
+    },
+    {
+     "video": "vgc4",
+     "split": "test",
+     "site": "Russell River (drone)",
+     "decision": "ESCALATE",
+     "method": null,
+     "basis": null,
+     "reasons": [
+      "the evidence did not satisfy the publication policy"
+     ],
+     "q_published": null,
+     "q_estimate": 140.5328,
+     "q_ref": 139.0,
+     "u_ref": 0.15,
+     "published": {
+      "err_pct": null,
+      "within_ref_u": null,
+      "expert_rank": null
+     },
+     "estimate": {
+      "err_pct": 1.1,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 22,
+      "beats_share": 0.909
+     },
+     "expert_median_err_pct": 11.95,
+     "estimates": {
+      "lspiv": {
+       "q": 140.5328,
+       "q_lo": 129.1956,
+       "q_hi": 151.87,
+       "coverage": 0.758
+      },
+      "stiv": {
+       "q": 150.767,
+       "q_lo": 135.7992,
+       "q_hi": 165.7348,
+       "coverage": 0.61
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 45.9,
+     "run_id": "r-20261025220320-a3dad9"
+    },
+    {
+     "video": "vgc5",
+     "split": "test",
+     "site": "Le Stor\u00e5ne \u00e0 Ruud",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 24.2514,
+     "q_estimate": 24.2514,
+     "q_ref": 19.7,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": 23.1,
+      "within_ref_u": false,
+      "expert_rank": 22,
+      "n_experts": 23,
+      "beats_share": 0.087
+     },
+     "estimate": {
+      "err_pct": 23.1,
+      "within_ref_u": false,
+      "expert_rank": 22,
+      "n_experts": 23,
+      "beats_share": 0.087
+     },
+     "expert_median_err_pct": 13.39,
+     "estimates": {
+      "lspiv": {
+       "q": 22.6808,
+       "q_lo": 21.4958,
+       "q_hi": 23.8657,
+       "coverage": 0.994
+      },
+      "stiv": {
+       "q": 25.8221,
+       "q_lo": 24.3518,
+       "q_hi": 27.2924,
+       "coverage": 0.936
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 53.7,
+     "run_id": "r-20261025220408-6d66b5"
+    },
+    {
+     "video": "vgc6",
+     "split": "test",
+     "site": "Le Groin \u00e0 Artemare (01)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 55.4648,
+     "q_estimate": 55.4648,
+     "q_ref": 53.74,
+     "u_ref": 0.0928,
+     "published": {
+      "err_pct": 3.21,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "estimate": {
+      "err_pct": 3.21,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "expert_median_err_pct": 17.7,
+     "estimates": {
+      "lspiv": {
+       "q": 54.6314,
+       "q_lo": 51.3315,
+       "q_hi": 57.9313,
+       "coverage": 0.995
+      },
+      "stiv": {
+       "q": 56.2982,
+       "q_lo": 52.9065,
+       "q_hi": 59.6899,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 52.1,
+     "run_id": "r-20261025220503-17b69e"
+    },
+    {
+     "video": "vgc7",
+     "split": "test",
+     "site": "Herbert River (drone)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "q_published": 824.9568,
+     "q_estimate": 824.9568,
+     "q_ref": 962.8,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": -14.32,
+      "within_ref_u": false,
+      "expert_rank": 13,
+      "n_experts": 15,
+      "beats_share": 0.2
+     },
+     "estimate": {
+      "err_pct": -14.32,
+      "within_ref_u": false,
+      "expert_rank": 13,
+      "n_experts": 15,
+      "beats_share": 0.2
+     },
+     "expert_median_err_pct": 2.16,
+     "estimates": {
+      "lspiv": {
+       "q": 3.4292,
+       "q_lo": 2.8493,
+       "q_hi": 4.0091,
+       "coverage": 0.318
+      },
+      "stiv": {
+       "q": 824.9568,
+       "q_lo": 536.0851,
+       "q_hi": 1113.8286,
+       "coverage": 0.958
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 30.4,
+     "run_id": "r-20261025220557-c69cd9"
+    }
+   ]
+  },
+  "vgc-llm-sonnet": {
+   "brain": "llm",
+   "label": "frozen (blind)",
+   "summary": {
+    "test_videos": 6,
+    "published": 5,
+    "escalated": 1,
+    "held": 0,
+    "mae_published_pct": 12.27,
+    "mae_all_estimates_pct": 17.32,
+    "within_ref_uncertainty": 3,
+    "beats_median_expert": 2,
+    "mean_beats_share": 0.426,
+    "cost_usd": 0.735
+   },
+   "rows": [
+    {
+     "video": "vgc1",
+     "split": "dev",
+     "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "static_ratio 1.31 flags a visible bed that biases LSPIV low (1.0 vs 1.49 m\u00b3/s); STIV streaks are clean and parallel with full coverage."
+     ],
+     "q_published": 1.4939,
+     "q_estimate": 1.4939,
+     "q_ref": 1.26,
+     "u_ref": 0.124,
+     "published": {
+      "err_pct": 18.56,
+      "within_ref_u": false,
+      "expert_rank": 8,
+      "n_experts": 15,
+      "beats_share": 0.533
+     },
+     "estimate": {
+      "err_pct": 18.56,
+      "within_ref_u": false,
+      "expert_rank": 8,
+      "n_experts": 15,
+      "beats_share": 0.533
+     },
+     "expert_median_err_pct": 23.02,
+     "estimates": {
+      "stiv": {
+       "q": 1.4939,
+       "q_lo": 1.3845,
+       "q_hi": 1.6034,
+       "coverage": 1.0
+      },
+      "lspiv": {
+       "q": 0.999,
+       "q_lo": 0.9325,
+       "q_hi": 1.0654,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0505,
+     "seconds": 55.0,
+     "run_id": "r-20261025220631-d65e1f"
+    },
+    {
+     "video": "vgc8",
+     "split": "dev",
+     "site": "Finsalbekken \u00e0 Ridabu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and the LSPIV field is restored with 95% valid vectors."
+     ],
+     "q_published": 0.6707,
+     "q_estimate": 0.6707,
+     "q_ref": 0.636,
+     "u_ref": 0.05,
+     "published": {
+      "err_pct": 5.46,
+      "within_ref_u": false,
+      "expert_rank": 9,
+      "n_experts": 23,
+      "beats_share": 0.652
+     },
+     "estimate": {
+      "err_pct": 5.46,
+      "within_ref_u": false,
+      "expert_rank": 9,
+      "n_experts": 23,
+      "beats_share": 0.652
+     },
+     "expert_median_err_pct": 9.43,
+     "estimates": {
+      "lspiv": {
+       "q": 0.6751,
+       "q_lo": 0.6283,
+       "q_hi": 0.7218,
+       "coverage": 1.0
+      },
+      "stiv": {
+       "q": 0.8278,
+       "q_lo": 0.7489,
+       "q_hi": 0.9068,
+       "coverage": 0.952
+      },
+      "dense_flow": {
+       "q": 0.6664,
+       "q_lo": 0.6205,
+       "q_hi": 0.7124,
+       "coverage": 0.999
+      }
+     },
+     "cost_usd": 0.1759,
+     "seconds": 75.5,
+     "run_id": "r-20261025220743-53f86c"
+    },
+    {
+     "video": "vgc2",
+     "split": "test",
+     "site": "West Normanby (drone)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "static_ratio is 5.0 (bed visible), so LSPIV is biased low at 118.8 m\u00b3/s. STIV has straight parallel streaks, valid_frac 0.87 and coverage 0.98, and gives 135.7 m\u00b3/s. The two methods differ by about 12%."
+     ],
+     "q_published": 135.7232,
+     "q_estimate": 135.7232,
+     "q_ref": 107.945,
+     "u_ref": 0.055,
+     "published": {
+      "err_pct": 25.73,
+      "within_ref_u": false,
+      "expert_rank": 14,
+      "n_experts": 17,
+      "beats_share": 0.235
+     },
+     "estimate": {
+      "err_pct": 25.73,
+      "within_ref_u": false,
+      "expert_rank": 14,
+      "n_experts": 17,
+      "beats_share": 0.235
+     },
+     "expert_median_err_pct": 16.17,
+     "estimates": {
+      "stiv": {
+       "q": 135.7232,
+       "q_lo": 126.2242,
+       "q_hi": 145.2221,
+       "coverage": 0.984
+      },
+      "lspiv": {
+       "q": 118.8359,
+       "q_lo": 111.5368,
+       "q_hi": 126.1351,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0565,
+     "seconds": 55.5,
+     "run_id": "r-20261025220947-2999c4"
+    },
+    {
+     "video": "vgc3",
+     "split": "test",
+     "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "static_ratio is 1.56 (bed visible), so LSPIV is biased low, at 47.5 m\u00b3/s against STIV's 54.3 m\u00b3/s. The STI streaks are clean and the STIV score is 0.84. The two methods are within 15% of each other."
+     ],
+     "q_published": 54.2581,
+     "q_estimate": 54.2581,
+     "q_ref": 55.16,
+     "u_ref": 0.058,
+     "published": {
+      "err_pct": -1.64,
+      "within_ref_u": true,
+      "expert_rank": 1,
+      "n_experts": 18,
+      "beats_share": 1.0
+     },
+     "estimate": {
+      "err_pct": -1.64,
+      "within_ref_u": true,
+      "expert_rank": 1,
+      "n_experts": 18,
+      "beats_share": 1.0
+     },
+     "expert_median_err_pct": 24.51,
+     "estimates": {
+      "stiv": {
+       "q": 54.2581,
+       "q_lo": 47.9391,
+       "q_hi": 60.5772,
+       "coverage": 1.0
+      },
+      "lspiv": {
+       "q": 47.5491,
+       "q_lo": 44.6963,
+       "q_hi": 50.4019,
+       "coverage": 0.996
+      }
+     },
+     "cost_usd": 0.0516,
+     "seconds": 52.2,
+     "run_id": "r-20261025221100-84021f"
+    },
+    {
+     "video": "vgc4",
+     "split": "test",
+     "site": "Russell River (drone)",
+     "decision": "ESCALATE",
+     "method": null,
+     "basis": null,
+     "reasons": [
+      "The first STIV (144 m\u00b3/s) and LSPIV (141 m\u00b3/s) runs agree within 3% and have coherent channel fields. Both have valid fractions of 0.43 and 0.39, and the policy denied them for being under 0.5. This is because the banks are covered by static tree canopy with no surface motion. The STIV reruns that cleared 0.5 gave 64 and 80 m\u00b3/s, with noisy bank vectors dragging the result down. I can't publish a number I trust, so a person should decide whether to mask the canopy stations and accept the ~142 m\u00b3/s estimate."
+     ],
+     "q_published": null,
+     "q_estimate": 79.8641,
+     "q_ref": 139.0,
+     "u_ref": 0.15,
+     "published": {
+      "err_pct": null,
+      "within_ref_u": null,
+      "expert_rank": null
+     },
+     "estimate": {
+      "err_pct": -42.54,
+      "within_ref_u": false,
+      "expert_rank": 21,
+      "n_experts": 22,
+      "beats_share": 0.091
+     },
+     "expert_median_err_pct": 11.95,
+     "estimates": {
+      "stiv": {
+       "q": 79.8641,
+       "q_lo": 50.1469,
+       "q_hi": 109.5814,
+       "coverage": 1.0
+      },
+      "lspiv": {
+       "q": 140.5328,
+       "q_lo": 129.1956,
+       "q_hi": 151.87,
+       "coverage": 0.758
+      }
+     },
+     "cost_usd": 0.1803,
+     "seconds": 75.6,
+     "run_id": "r-20261025221208-d6ed8a"
+    },
+    {
+     "video": "vgc5",
+     "split": "test",
+     "site": "Le Stor\u00e5ne \u00e0 Ruud",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "After widening the search window, LSPIV (24.5 m\u00b3/s) and STIV (25.8 m\u00b3/s) agree within 5%."
+     ],
+     "q_published": 25.1793,
+     "q_estimate": 25.1793,
+     "q_ref": 19.7,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": 27.81,
+      "within_ref_u": false,
+      "expert_rank": 24,
+      "n_experts": 23,
+      "beats_share": 0.0
+     },
+     "estimate": {
+      "err_pct": 27.81,
+      "within_ref_u": false,
+      "expert_rank": 24,
+      "n_experts": 23,
+      "beats_share": 0.0
+     },
+     "expert_median_err_pct": 13.39,
+     "estimates": {
+      "lspiv": {
+       "q": 24.5365,
+       "q_lo": 23.024,
+       "q_hi": 26.049,
+       "coverage": 0.832
+      },
+      "stiv": {
+       "q": 25.8221,
+       "q_lo": 24.3518,
+       "q_hi": 27.2924,
+       "coverage": 0.936
+      }
+     },
+     "cost_usd": 0.1163,
+     "seconds": 87.3,
+     "run_id": "r-20261025221418-fde244"
+    },
+    {
+     "video": "vgc6",
+     "split": "test",
+     "site": "Le Groin \u00e0 Artemare (01)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV (54.6 m\u00b3/s) and STIV (56.3 m\u00b3/s) agree within 3%, with full coverage and coherent fields."
+     ],
+     "q_published": 55.4648,
+     "q_estimate": 55.4648,
+     "q_ref": 53.74,
+     "u_ref": 0.0928,
+     "published": {
+      "err_pct": 3.21,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "estimate": {
+      "err_pct": 3.21,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "expert_median_err_pct": 17.7,
+     "estimates": {
+      "lspiv": {
+       "q": 54.6314,
+       "q_lo": 51.3315,
+       "q_hi": 57.9313,
+       "coverage": 0.995
+      },
+      "stiv": {
+       "q": 56.2982,
+       "q_lo": 52.9065,
+       "q_hi": 59.6899,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0502,
+     "seconds": 53.4,
+     "run_id": "r-20261025221622-755144"
+    },
+    {
+     "video": "vgc7",
+     "split": "test",
+     "site": "Herbert River (drone)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "static_ratio 2.0 means the bed is visible, so LSPIV and dense flow are pinned to static texture and failed. STIV has 85% valid vectors, streaks match the overlay, and coverage is 0.95."
+     ],
+     "q_published": 934.1895,
+     "q_estimate": 934.1895,
+     "q_ref": 962.8,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": -2.97,
+      "within_ref_u": true,
+      "expert_rank": 9,
+      "n_experts": 15,
+      "beats_share": 0.467
+     },
+     "estimate": {
+      "err_pct": -2.97,
+      "within_ref_u": true,
+      "expert_rank": 9,
+      "n_experts": 15,
+      "beats_share": 0.467
+     },
+     "expert_median_err_pct": 2.16,
+     "estimates": {
+      "stiv": {
+       "q": 934.1895,
+       "q_lo": 670.16,
+       "q_hi": 1198.219,
+       "coverage": 0.955
+      }
+     },
+     "cost_usd": 0.0532,
+     "seconds": 36.0,
+     "run_id": "r-20261025221730-ff8094"
+    }
+   ]
+  }
+ },
+ "refusal": {
+  "refusal-autopilot": {
+   "cases": 9,
+   "correct": 6,
+   "wrong_publishes": 0,
+   "rows": [
+    {
+     "case": "clean_vgc1",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "correct": true,
+     "q": 1.317
+    },
+    {
+     "case": "clean_vgc8",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "the evidence did not satisfy the publication policy"
+     ],
+     "correct": false,
+     "q": 0.72
+    },
+    {
+     "case": "handheld_shake_vgc8",
+     "transform": "shake",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "the evidence did not satisfy the publication policy"
+     ],
+     "correct": false,
+     "q": 0.8883
+    },
+    {
+     "case": "night_vgc1",
+     "transform": "night",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+     ],
+     "correct": false,
+     "q": null
+    },
+    {
+     "case": "glare_vgc8",
+     "transform": "glare",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers, glare"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "frozen_feed_vgc1",
+     "transform": "frozen",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "still_water_vgc8",
+     "transform": "still",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "camera_moved_vgc1",
+     "transform": "moved",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "level_above_banks_vgc8",
+     "transform": "level",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "perception_failed:orthorectify:planar_grp_level_mismatch"
+     ],
+     "correct": true,
+     "q": null
+    }
+   ]
+  },
+  "refusal-llm-sonnet": {
+   "cases": 9,
+   "correct": 6,
+   "wrong_publishes": 0,
+   "rows": [
+    {
+     "case": "clean_vgc1",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "static_ratio 1.35 flags a visible bed, so LSPIV is biased and unreliable (7% valid vectors); STIV has full coverage, clean streaks, and Q=1.42 m\u00b3/s \u00b18%."
+     ],
+     "correct": true,
+     "q": 1.4171
+    },
+    {
+     "case": "clean_vgc8",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "Stabilization was rejected (residual_px_p95 infinite, motion_px_p95 about 496 px, against a 2 px limit), even though the camera-pose check says the camera did not move. The orthorectified frames can't be trusted, so any velocity or discharge from them would be unreliable. The footage itself is fine (static_ratio 0.12, no quality flags), so a recapture wouldn't help. A person needs to check the stabilization and the reference view."
+     ],
+     "correct": false,
+     "q": null
+    },
+    {
+     "case": "handheld_shake_vgc8",
+     "transform": "shake",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "Stabilization was rejected (residual_px_p95 infinite, motion_px_p95 494, inlier ratio 0.43), yet the camera-pose check reports no movement (0.41 px). The ortho velocities would therefore be unreliable, and I can't tell whether the cause is the footage or the stabilization. Image quality is otherwise fine (static_ratio 0.11, no flags), so a person needs to check the stabilization and geometry before any discharge is published."
+     ],
+     "correct": false,
+     "q": null
+    },
+    {
+     "case": "night_vgc1",
+     "transform": "night",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+     ],
+     "correct": false,
+     "q": null
+    },
+    {
+     "case": "glare_vgc8",
+     "transform": "glare",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "Diagnostics show glare_frac=1.0 with no_moving_tracers, low_contrast and blurred flags, and the orthorectified water area is saturated white, so no velocimetry is possible on this clip."
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "frozen_feed_vgc1",
+     "transform": "frozen",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "frozen_frac 0.985 (limit 0.2) means almost all frames are duplicates. STIV shows a blank space-time image with random vectors, LSPIV has 0.2% valid vectors, and the surface has no tracers with the bed visible."
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "still_water_vgc8",
+     "transform": "still",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "54% of frames are frozen (limit 20%), there are no moving tracers, and STIV and LSPIV both returned essentially zero valid vectors, so the clip can't be measured."
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "camera_moved_vgc1",
+     "transform": "moved",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "level_above_banks_vgc8",
+     "transform": "level",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "perception_failed:orthorectify:planar_grp_level_mismatch"
+     ],
+     "correct": true,
+     "q": null
+    }
+   ]
+  }
+ }
+}
