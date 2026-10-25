@@ -1,0 +1,278 @@
+{
+ "run_id": "r-20261025222054-b882a6",
+ "station_id": "vgc1",
+ "clip": "frozen_feed_vgc1.mp4",
+ "brain": "autopilot",
+ "model": null,
+ "decision": {
+  "kind": "HOLD",
+  "reasons": [
+   "image quality blocks velocimetry: no_moving_tracers"
+  ],
+  "method": null,
+  "basis": null,
+  "q": null,
+  "recapture_spec": {
+   "when": "next good light"
+  },
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25.0,
+    "frames": 201,
+    "duration_s": 8.04,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 3
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 201,
+    "dt_s": 0.04,
+    "duration_s": 8.0,
+    "warnings": [],
+    "frozen_frac": 0.985
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1090
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": false,
+    "shift_px_p95": 0.1,
+    "inliers": 488,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      1.0001,
+      0.00013,
+      -0.10051
+     ],
+     [
+      2e-05,
+      1.00009,
+      -0.01927
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2208
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 0.637,
+    "motion_px_p95": 0.101,
+    "inlier_ratio_min": 0.994,
+    "keyframes": 9,
+    "notes": [
+     "static_camera"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 7458
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.015,
+    "ortho_shape": [
+     513,
+     567
+    ],
+    "water_px": 125147,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 77
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 0.0319,
+    "static_texture": 12.3123,
+    "static_ratio": 385.9842,
+    "tracer_density": 0.0,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0001,
+    "blur_var": 370.4094,
+    "contrast": 64.0,
+    "water_px": 125147,
+    "frames": 201,
+    "flags": [
+     "no_moving_tracers",
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 468
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 0.0,
+    "speed_p90_px": 5.8655,
+    "direction_deg": 0.0,
+    "coherence": 0.5353,
+    "speed_p50_ms": 0.0,
+    "speed_p90_ms": 2.1996,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 23,
+     "search_px": 13,
+     "shift_px": [
+      4.1,
+      -0.0
+     ],
+     "step_px": 11,
+     "vmax_ms": 6.6,
+     "flow_deg": 0.0,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1085
+  },
+  {
+   "i": 7,
+   "actor": "autopilot",
+   "tool": "hold_and_request_recapture",
+   "args": {
+    "reason": "image quality blocks velocimetry: no_moving_tracers",
+    "when": "next good light"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "HOLD",
+    "reasons": [
+     "image quality blocks velocimetry: no_moving_tracers"
+    ],
+    "method": null,
+    "basis": null,
+    "q": null,
+    "recapture_spec": {
+     "when": "next good light"
+    },
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 0.726,
+  "pose": 2.195,
+  "stabilize": 7.459,
+  "orthorectify": 0.059,
+  "diagnose": 0.468,
+  "coarse_motion": 1.085
+ },
+ "cost_usd": 0.0,
+ "started": "2026-10-25T22:20:54.498832+00:00",
+ "ended": "2026-10-25T22:21:06.891274+00:00",
+ "notes": [],
+ "estimates": {}
+}

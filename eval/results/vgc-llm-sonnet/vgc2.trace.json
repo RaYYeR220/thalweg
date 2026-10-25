@@ -1,0 +1,483 @@
+{
+ "run_id": "r-20261025220947-2999c4",
+ "station_id": "vgc2",
+ "clip": "DJI_0161.MP4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "PUBLISH",
+  "reasons": [
+   "static_ratio is 5.0 (bed visible), so LSPIV is biased low at 118.8 m\u00b3/s. STIV has straight parallel streaks, valid_frac 0.87 and coverage 0.98, and gives 135.7 m\u00b3/s. The two methods differ by about 12%."
+  ],
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "q": {
+   "q": 135.7232,
+   "q_lo": 126.2242,
+   "q_hi": 145.2221,
+   "area": 89.8444,
+   "wetted_width": 57.4791,
+   "coverage": 0.9838,
+   "alpha": 0.85,
+   "level": 3.681,
+   "method": "stiv",
+   "v_mean": 1.5106,
+   "uncertainty": {
+    "alpha": 0.0588,
+    "velocity": 0.0372,
+    "interpolation": 0.0032,
+    "level": 0.0064,
+    "total_95": 0.07
+   },
+   "published": true
+  },
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 29.97002997002997,
+    "frames": 770,
+    "duration_s": 25.692333333333334,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 89
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 300,
+    "dt_s": 0.03337,
+    "duration_s": 9.98,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2016
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": false,
+    "reason": "no_reference_frame"
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 1.403,
+    "motion_px_p95": 9.846,
+    "inlier_ratio_min": 0.704,
+    "keyframes": 13,
+    "notes": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 9928
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.06,
+    "ortho_shape": [
+     750,
+     1117
+    ],
+    "water_px": 633424,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 180
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 2.4842,
+    "static_texture": 12.4116,
+    "static_ratio": 4.9962,
+    "tracer_density": 1.6892,
+    "glare_frac": 0.0001,
+    "dark_frac": 0.0022,
+    "blur_var": 961.2906,
+    "contrast": 99.0,
+    "water_px": 633424,
+    "frames": 300,
+    "flags": [
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1836
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 1.2682,
+    "speed_p90_px": 20.5802,
+    "direction_deg": 88.5725,
+    "coherence": 0.1618,
+    "speed_p50_ms": 2.2804,
+    "speed_p90_ms": 37.0074,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 65,
+     "search_px": 30,
+     "shift_px": [
+      0.4,
+      -14.4
+     ],
+     "step_px": 32,
+     "vmax_ms": 8.0,
+     "flow_deg": 88.6,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 3657
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "static_ratio 5.0 (bed_visible), so STIV with a temporal high-pass is the robust method.",
+    "background": "highpass:3",
+    "window": 16,
+    "line_m": 8
+   },
+   "reason": "static_ratio 5.0 (bed_visible), so STIV with a temporal high-pass is the robust method.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 52,
+    "valid_frac": 0.867,
+    "speed_p50": 1.71,
+    "speed_p90": 2.455,
+    "score_mean": 0.756,
+    "direction_deg": 88.6,
+    "rejected": {
+     "low_score": 8
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.03336666666666677,
+     "vmax_ms": 8.0,
+     "background": "highpass:3",
+     "res_m": 0.06,
+     "line_m": 8,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 17635
+  },
+  {
+   "i": 8,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Independent cross-check using the coarse-motion suggested parameters, with a high-pass to suppress static bed texture.",
+    "background": "highpass:3",
+    "ia_px": 65,
+    "search_px": 30,
+    "pair_step": 1
+   },
+   "reason": "Independent cross-check using the coarse-motion suggested parameters, with a high-pass to suppress static bed texture.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 556,
+    "valid": 380,
+    "valid_frac": 0.683,
+    "speed_p50": 1.498,
+    "speed_p90": 2.152,
+    "score_mean": 0.538,
+    "direction_deg": 94.8,
+    "rejected": {
+     "search_edge": 0,
+     "low_score": 141,
+     "direction": 12,
+     "median_test": 23
+    },
+    "params": {
+     "ia_px": 65,
+     "search_px": 30,
+     "step_px": 32,
+     "pair_step": 1,
+     "dt_s": 0.03336666666666677,
+     "shift_px": [
+      0,
+      -14
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.06
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 22924
+  },
+  {
+   "i": 9,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "STIV streaks are straight and parallel, and the field is coherent, so I'm computing its discharge."
+   },
+   "reason": "STIV streaks are straight and parallel, and the field is coherent, so I'm computing its discharge.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 135.7232,
+    "q_lo": 126.2242,
+    "q_hi": 145.2221,
+    "area": 89.8444,
+    "wetted_width": 57.4791,
+    "coverage": 0.9838,
+    "alpha": 0.85,
+    "level": 3.681,
+    "method": "stiv",
+    "v_mean": 1.5106,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0372,
+     "interpolation": 0.0032,
+     "level": 0.0064,
+     "total_95": 0.07
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 10,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "lspiv",
+    "reason": "The LSPIV field is coherent along the channel, so I'm computing its discharge for the cross-check."
+   },
+   "reason": "The LSPIV field is coherent along the channel, so I'm computing its discharge for the cross-check.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 118.8359,
+    "q_lo": 111.5368,
+    "q_hi": 126.1351,
+    "area": 89.8444,
+    "wetted_width": 57.4791,
+    "coverage": 1.0,
+    "alpha": 0.85,
+    "level": 3.681,
+    "method": "lspiv",
+    "v_mean": 1.3227,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0165,
+     "interpolation": 0.0,
+     "level": 0.0064,
+     "total_95": 0.0614
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1
+  },
+  {
+   "i": 11,
+   "actor": "llm",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "stiv",
+    "basis": "bed_visible_prefers_stiv",
+    "reason": "static_ratio is 5.0 (bed visible), so LSPIV is biased low at 118.8 m\u00b3/s. STIV has straight parallel streaks, valid_frac 0.87 and coverage 0.98, and gives 135.7 m\u00b3/s. The two methods differ by about 12%."
+   },
+   "reason": "static_ratio is 5.0 (bed visible), so LSPIV is biased low at 118.8 m\u00b3/s. STIV has straight parallel streaks, valid_frac 0.87 and coverage 0.98, and gives 135.7 m\u00b3/s. The two methods differ by about 12%.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "PUBLISH",
+    "reasons": [
+     "static_ratio is 5.0 (bed visible), so LSPIV is biased low at 118.8 m\u00b3/s. STIV has straight parallel streaks, valid_frac 0.87 and coverage 0.98, and gives 135.7 m\u00b3/s. The two methods differ by about 12%."
+    ],
+    "method": "stiv",
+    "basis": "bed_visible_prefers_stiv",
+    "q": {
+     "q": 135.7232,
+     "q_lo": 126.2242,
+     "q_hi": 145.2221,
+     "area": 89.8444,
+     "wetted_width": 57.4791,
+     "coverage": 0.9838,
+     "alpha": 0.85,
+     "level": 3.681,
+     "method": "stiv",
+     "v_mean": 1.5106,
+     "uncertainty": {
+      "alpha": 0.0588,
+      "velocity": 0.0372,
+      "interpolation": 0.0032,
+      "level": 0.0064,
+      "total_95": 0.07
+     },
+     "published": true
+    },
+    "recapture_spec": null,
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 1.498,
+  "stabilize": 9.929,
+  "orthorectify": 0.162,
+  "diagnose": 1.836,
+  "coarse_motion": 3.658,
+  "stiv": 15.459,
+  "lspiv": 22.912
+ },
+ "cost_usd": 0.05652,
+ "started": "2026-10-25T22:09:47.360915+00:00",
+ "ended": "2026-10-25T22:10:59.851981+00:00",
+ "notes": [],
+ "estimates": {
+  "stiv": {
+   "q": 135.7232,
+   "q_lo": 126.2242,
+   "q_hi": 145.2221,
+   "coverage": 0.984
+  },
+  "lspiv": {
+   "q": 118.8359,
+   "q_lo": 111.5368,
+   "q_hi": 126.1351,
+   "coverage": 1.0
+  }
+ }
+}

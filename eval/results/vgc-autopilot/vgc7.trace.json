@@ -1,0 +1,508 @@
+{
+ "run_id": "r-20261025220557-c69cd9",
+ "station_id": "vgc7",
+ "clip": "DJI_0051.MP4",
+ "brain": "autopilot",
+ "model": null,
+ "decision": {
+  "kind": "PUBLISH",
+  "reasons": [
+   "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+  ],
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "q": {
+   "q": 824.9568,
+   "q_lo": 536.0851,
+   "q_hi": 1113.8286,
+   "area": 747.1914,
+   "wetted_width": 189.3076,
+   "coverage": 0.9575,
+   "alpha": 0.95,
+   "level": 0.0,
+   "method": "stiv",
+   "v_mean": 1.1041,
+   "uncertainty": {
+    "alpha": 0.0526,
+    "velocity": 0.3461,
+    "interpolation": 0.0085,
+    "level": 0.0025,
+    "total_95": 0.3502
+   },
+   "published": true
+  },
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 4096,
+    "height": 2160,
+    "fps": 29.97002997002997,
+    "frames": 680,
+    "duration_s": 22.689333333333334,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 157
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 300,
+    "dt_s": 0.03337,
+    "duration_s": 9.98,
+    "warnings": [
+     "downscaled_x0.469"
+    ],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 6732
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": false,
+    "reason": "no_reference_frame"
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 1.396,
+    "motion_px_p95": 9.772,
+    "inlier_ratio_min": 0.729,
+    "keyframes": 13,
+    "notes": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 7762
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.2,
+    "ortho_shape": [
+     490,
+     985
+    ],
+    "water_px": 460110,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 101
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 2.2967,
+    "static_texture": 4.613,
+    "static_ratio": 2.0086,
+    "tracer_density": 0.1339,
+    "glare_frac": 0.0127,
+    "dark_frac": 0.0057,
+    "blur_var": 318.2814,
+    "contrast": 85.0,
+    "water_px": 460110,
+    "frames": 300,
+    "flags": [
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 953
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 10.195,
+    "speed_p90_px": 30.9835,
+    "direction_deg": 59.2147,
+    "coherence": 0.4254,
+    "speed_p50_ms": 61.109,
+    "speed_p90_ms": 185.7155,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 65,
+     "search_px": 30,
+     "shift_px": [
+      11.1,
+      -18.6
+     ],
+     "step_px": 32,
+     "vmax_ms": 8.0,
+     "flow_deg": 59.2,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1771
+  },
+  {
+   "i": 7,
+   "actor": "autopilot",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "standard method with assistant-suggested windows"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 212,
+    "valid": 47,
+    "valid_frac": 0.222,
+    "speed_p50": 0.418,
+    "speed_p90": 0.934,
+    "score_mean": 0.333,
+    "direction_deg": 0.0,
+    "rejected": {
+     "search_edge": 3,
+     "low_score": 38,
+     "direction": 119,
+     "median_test": 5
+    },
+    "params": {
+     "ia_px": 65,
+     "search_px": 30,
+     "step_px": 32,
+     "pair_step": 1,
+     "dt_s": 0.03336666666666677,
+     "shift_px": [
+      11,
+      -19
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.2
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 8115
+  },
+  {
+   "i": 8,
+   "actor": "autopilot",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "lspiv",
+    "reason": "discharge from LSPIV"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 3.4292,
+    "q_lo": 2.8493,
+    "q_hi": 4.0091,
+    "area": 747.1914,
+    "wetted_width": 189.3076,
+    "coverage": 0.3182,
+    "alpha": 0.95,
+    "level": 0.0,
+    "method": "lspiv",
+    "v_mean": 0.0046,
+    "uncertainty": {
+     "alpha": 0.0526,
+     "velocity": 0.085,
+     "interpolation": 0.1364,
+     "level": 0.0025,
+     "total_95": 0.1691
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1
+  },
+  {
+   "i": 9,
+   "actor": "autopilot",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "independent second method for a cross-check"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 52,
+    "valid_frac": 0.867,
+    "speed_p50": 2.46,
+    "speed_p90": 7.224,
+    "score_mean": 0.637,
+    "direction_deg": 59.2,
+    "rejected": {
+     "low_score": 1,
+     "too_fast": 7
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.03336666666666677,
+     "vmax_ms": 8.0,
+     "background": "highpass:3",
+     "res_m": 0.2,
+     "line_m": 8.0,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 6830
+  },
+  {
+   "i": 10,
+   "actor": "autopilot",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "discharge from STIV"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 824.9568,
+    "q_lo": 536.0851,
+    "q_hi": 1113.8286,
+    "area": 747.1914,
+    "wetted_width": 189.3076,
+    "coverage": 0.9575,
+    "alpha": 0.95,
+    "level": 0.0,
+    "method": "stiv",
+    "v_mean": 1.1041,
+    "uncertainty": {
+     "alpha": 0.0526,
+     "velocity": 0.3461,
+     "interpolation": 0.0085,
+     "level": 0.0025,
+     "total_95": 0.3502
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1
+  },
+  {
+   "i": 11,
+   "actor": "autopilot",
+   "tool": "compare_methods",
+   "args": {
+    "reason": "cross-check"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "methods": {
+     "lspiv": 3.4292,
+     "stiv": 824.9568
+    },
+    "spread": 1.983,
+    "pairwise": {
+     "lspiv~stiv": 1.983
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 12,
+   "actor": "autopilot",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "stiv",
+    "basis": "bed_visible_prefers_stiv",
+    "reason": "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "PUBLISH",
+    "reasons": [
+     "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+    ],
+    "method": "stiv",
+    "basis": "bed_visible_prefers_stiv",
+    "q": {
+     "q": 824.9568,
+     "q_lo": 536.0851,
+     "q_hi": 1113.8286,
+     "area": 747.1914,
+     "wetted_width": 189.3076,
+     "coverage": 0.9575,
+     "alpha": 0.95,
+     "level": 0.0,
+     "method": "stiv",
+     "v_mean": 1.1041,
+     "uncertainty": {
+      "alpha": 0.0526,
+      "velocity": 0.3461,
+      "interpolation": 0.0085,
+      "level": 0.0025,
+      "total_95": 0.3502
+     },
+     "published": true
+    },
+    "recapture_spec": null,
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 6.107,
+  "stabilize": 7.762,
+  "orthorectify": 0.088,
+  "diagnose": 0.953,
+  "coarse_motion": 1.771,
+  "lspiv": 8.108,
+  "stiv": 5.647
+ },
+ "cost_usd": 0.0,
+ "started": "2026-10-25T22:05:57.863173+00:00",
+ "ended": "2026-10-25T22:06:30.291056+00:00",
+ "notes": [
+  "working scale 0.469 of native 4096x2160"
+ ],
+ "estimates": {
+  "lspiv": {
+   "q": 3.4292,
+   "q_lo": 2.8493,
+   "q_hi": 4.0091,
+   "coverage": 0.318
+  },
+  "stiv": {
+   "q": 824.9568,
+   "q_lo": 536.0851,
+   "q_hi": 1113.8286,
+   "coverage": 0.958
+  }
+ }
+}

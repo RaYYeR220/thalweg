@@ -1,0 +1,288 @@
+{
+ "run_id": "r-20261025222327-1c2418",
+ "station_id": "vgc8",
+ "clip": "glare_vgc8.mp4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "HOLD",
+  "reasons": [
+   "Diagnostics show glare_frac=1.0 with no_moving_tracers, low_contrast and blurred flags, and the orthorectified water area is saturated white, so no velocimetry is possible on this clip."
+  ],
+  "method": null,
+  "basis": null,
+  "q": null,
+  "recapture_spec": {
+   "duration_s": 30,
+   "fps": 30,
+   "when": "daylight, with the sun off the water or under overcast sky"
+  },
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.01,
+    "frames": 240,
+    "duration_s": 7.997334221926025,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 240,
+    "dt_s": 0.03332,
+    "duration_s": 7.96,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1259
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": false,
+    "shift_px_p95": 0.45,
+    "inliers": 211,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      0.99989,
+      -0.00056,
+      0.17253
+     ],
+     [
+      4e-05,
+      0.99988,
+      -0.07939
+     ],
+     [
+      -0.0,
+      -0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2086
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 1.471,
+    "motion_px_p95": 1.471,
+    "inlier_ratio_min": 0.439,
+    "keyframes": 11,
+    "notes": [
+     "feature_model_rejected",
+     "static_camera"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 10095
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.008,
+    "ortho_shape": [
+     575,
+     525
+    ],
+    "water_px": 136670,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 102
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 0.0,
+    "static_texture": 0.002,
+    "static_ratio": 1.9706,
+    "tracer_density": 0.0,
+    "glare_frac": 1.0,
+    "dark_frac": 0.0,
+    "blur_var": 0.0,
+    "contrast": 0.0,
+    "water_px": 136670,
+    "frames": 240,
+    "flags": [
+     "no_moving_tracers",
+     "bed_visible",
+     "glare",
+     "blurred",
+     "low_contrast"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 730
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 0.2916,
+    "speed_p90_px": 1.5012,
+    "direction_deg": 140.0431,
+    "coherence": 0.4905,
+    "speed_p50_ms": 0.07,
+    "speed_p90_ms": 0.3604,
+    "suggested": {
+     "pair_step": 3,
+     "ia_px": 21,
+     "search_px": 11,
+     "shift_px": [
+      -2.4,
+      -2.0
+     ],
+     "step_px": 10,
+     "vmax_ms": 1.08,
+     "flow_deg": 140.0,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1142
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "hold_and_request_recapture",
+   "args": {
+    "reason": "Diagnostics show glare_frac=1.0 with no_moving_tracers, low_contrast and blurred flags, and the orthorectified water area is saturated white, so no velocimetry is possible on this clip.",
+    "duration_s": 30,
+    "fps": 30,
+    "when": "daylight, with the sun off the water or under overcast sky"
+   },
+   "reason": "Diagnostics show glare_frac=1.0 with no_moving_tracers, low_contrast and blurred flags, and the orthorectified water area is saturated white, so no velocimetry is possible on this clip.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "HOLD",
+    "reasons": [
+     "Diagnostics show glare_frac=1.0 with no_moving_tracers, low_contrast and blurred flags, and the orthorectified water area is saturated white, so no velocimetry is possible on this clip."
+    ],
+    "method": null,
+    "basis": null,
+    "q": null,
+    "recapture_spec": {
+     "duration_s": 30,
+     "fps": 30,
+     "when": "daylight, with the sun off the water or under overcast sky"
+    },
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 0.831,
+  "pose": 2.068,
+  "stabilize": 10.096,
+  "orthorectify": 0.083,
+  "diagnose": 0.729,
+  "coarse_motion": 1.142
+ },
+ "cost_usd": 0.01424,
+ "started": "2026-10-25T22:23:27.519874+00:00",
+ "ended": "2026-10-25T22:23:47.369178+00:00",
+ "notes": [],
+ "estimates": {}
+}

@@ -1,0 +1,390 @@
+{
+ "run_id": "r-20261025222502-38df51",
+ "station_id": "vgc8",
+ "clip": "still_water_vgc8.mp4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "HOLD",
+  "reasons": [
+   "54% of frames are frozen (limit 20%), there are no moving tracers, and STIV and LSPIV both returned essentially zero valid vectors, so the clip can't be measured."
+  ],
+  "method": null,
+  "basis": null,
+  "q": null,
+  "recapture_spec": {
+   "duration_s": 30,
+   "fps": 30,
+   "when": "daylight"
+  },
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.01,
+    "frames": 240,
+    "duration_s": 7.997334221926025,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 4
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 240,
+    "dt_s": 0.03332,
+    "duration_s": 7.96,
+    "warnings": [],
+    "frozen_frac": 0.544
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1363
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": false,
+    "shift_px_p95": 0.14,
+    "inliers": 230,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      0.99992,
+      -6e-05,
+      0.07326
+     ],
+     [
+      -8e-05,
+      1.00001,
+      0.04494
+     ],
+     [
+      -0.0,
+      -0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1947
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 0.707,
+    "motion_px_p95": 0.146,
+    "inlier_ratio_min": 0.987,
+    "keyframes": 11,
+    "notes": [
+     "static_camera"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 7478
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.008,
+    "ortho_shape": [
+     575,
+     525
+    ],
+    "water_px": 136670,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 141
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 0.2765,
+    "static_texture": 18.5617,
+    "static_ratio": 67.143,
+    "tracer_density": 0.0,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0022,
+    "blur_var": 1064.5233,
+    "contrast": 87.0,
+    "water_px": 136670,
+    "frames": 240,
+    "flags": [
+     "no_moving_tracers",
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 756
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 0.6085,
+    "speed_p90_px": 11.146,
+    "direction_deg": -25.9753,
+    "coherence": 0.5173,
+    "speed_p50_ms": 0.1461,
+    "speed_p90_ms": 2.6759,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 45,
+     "search_px": 21,
+     "shift_px": [
+      7.0,
+      3.4
+     ],
+     "step_px": 22,
+     "vmax_ms": 8.0,
+     "flow_deg": -26.0,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1198
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "Bed visible (static_ratio 67), so STIV with temporal high-pass is the robust method; the coarse suggestion gives window 16.",
+    "background": "highpass:3",
+    "window": 16,
+    "line_m": 6
+   },
+   "reason": "Bed visible (static_ratio 67), so STIV with temporal high-pass is the robust method; the coarse suggestion gives window 16.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 0,
+    "valid_frac": 0.0,
+    "speed_p50": null,
+    "speed_p90": null,
+    "score_mean": null,
+    "direction_deg": null,
+    "rejected": {
+     "low_score": 60
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.033322225924691695,
+     "vmax_ms": 8.0,
+     "background": "highpass:3",
+     "res_m": 0.008,
+     "line_m": 6,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 144834
+  },
+  {
+   "i": 8,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Independent cross-check using the coarse-motion suggested parameters, with a high-pass to suppress static texture.",
+    "background": "highpass:3",
+    "ia_px": 45,
+    "search_px": 21,
+    "pair_step": 1
+   },
+   "reason": "Independent cross-check using the coarse-motion suggested parameters, with a high-pass to suppress static texture.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 248,
+    "valid": 1,
+    "valid_frac": 0.004,
+    "speed_p50": 0.018,
+    "speed_p90": 0.018,
+    "score_mean": 0.265,
+    "direction_deg": 96.5,
+    "rejected": {
+     "search_edge": 11,
+     "low_score": 235,
+     "direction": 1
+    },
+    "params": {
+     "ia_px": 45,
+     "search_px": 21,
+     "step_px": 22,
+     "pair_step": 1,
+     "dt_s": 0.033322225924691695,
+     "shift_px": [
+      7,
+      3
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.008
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 1591
+  },
+  {
+   "i": 9,
+   "actor": "llm",
+   "tool": "hold_and_request_recapture",
+   "args": {
+    "reason": "54% of frames are frozen (limit 20%), there are no moving tracers, and STIV and LSPIV both returned essentially zero valid vectors, so the clip can't be measured.",
+    "duration_s": 30,
+    "fps": 30,
+    "when": "daylight"
+   },
+   "reason": "54% of frames are frozen (limit 20%), there are no moving tracers, and STIV and LSPIV both returned essentially zero valid vectors, so the clip can't be measured.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "HOLD",
+    "reasons": [
+     "54% of frames are frozen (limit 20%), there are no moving tracers, and STIV and LSPIV both returned essentially zero valid vectors, so the clip can't be measured."
+    ],
+    "method": null,
+    "basis": null,
+    "q": null,
+    "recapture_spec": {
+     "duration_s": 30,
+     "fps": 30,
+     "when": "daylight"
+    },
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 0.909,
+  "pose": 1.933,
+  "stabilize": 7.479,
+  "orthorectify": 0.121,
+  "diagnose": 0.756,
+  "coarse_motion": 1.198,
+  "stiv": 143.919,
+  "lspiv": 1.587
+ },
+ "cost_usd": 0.03424,
+ "started": "2026-10-25T22:25:02.649879+00:00",
+ "ended": "2026-10-25T22:27:55.013302+00:00",
+ "notes": [],
+ "estimates": {}
+}

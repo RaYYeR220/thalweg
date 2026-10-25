@@ -1,0 +1,416 @@
+[
+ {
+  "video": "vgc1",
+  "split": "dev",
+  "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "reasons": [
+   "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+  ],
+  "q_published": 1.375,
+  "q_estimate": 1.375,
+  "estimates": {
+   "lspiv": {
+    "q": 0.999,
+    "q_lo": 0.9325,
+    "q_hi": 1.0654,
+    "coverage": 1.0
+   },
+   "stiv": {
+    "q": 1.375,
+    "q_lo": 1.2542,
+    "q_hi": 1.4958,
+    "coverage": 1.0
+   }
+  },
+  "q_ref": 1.26,
+  "u_ref": 0.124,
+  "published": {
+   "err_pct": 9.13,
+   "within_ref_u": true,
+   "expert_rank": 3,
+   "n_experts": 15,
+   "beats_share": 0.867
+  },
+  "estimate": {
+   "err_pct": 9.13,
+   "within_ref_u": true,
+   "expert_rank": 3,
+   "n_experts": 15,
+   "beats_share": 0.867
+  },
+  "expert_median_err_pct": 23.02,
+  "cost_usd": 0.0,
+  "seconds": 43.2,
+  "run_id": "r-20261025215946-d33ee2",
+  "git": "294bbb3",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:00:31.564608+00:00"
+ },
+ {
+  "video": "vgc8",
+  "split": "dev",
+  "site": "Finsalbekken \u00e0 Ridabu",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV and STIV agree within tolerance"
+  ],
+  "q_published": 0.7757,
+  "q_estimate": 0.7757,
+  "estimates": {
+   "lspiv": {
+    "q": 0.7235,
+    "q_lo": 0.6737,
+    "q_hi": 0.7733,
+    "coverage": 0.999
+   },
+   "stiv": {
+    "q": 0.8278,
+    "q_lo": 0.7489,
+    "q_hi": 0.9068,
+    "coverage": 0.952
+   }
+  },
+  "q_ref": 0.636,
+  "u_ref": 0.05,
+  "published": {
+   "err_pct": 21.97,
+   "within_ref_u": false,
+   "expert_rank": 21,
+   "n_experts": 23,
+   "beats_share": 0.13
+  },
+  "estimate": {
+   "err_pct": 21.97,
+   "within_ref_u": false,
+   "expert_rank": 21,
+   "n_experts": 23,
+   "beats_share": 0.13
+  },
+  "expert_median_err_pct": 9.43,
+  "cost_usd": 0.0,
+  "seconds": 47.8,
+  "run_id": "r-20261025220031-f96b51",
+  "git": "294bbb3",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:01:21.287990+00:00"
+ },
+ {
+  "video": "vgc2",
+  "split": "test",
+  "site": "West Normanby (drone)",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV and STIV agree within tolerance"
+  ],
+  "q_published": 127.2796,
+  "q_estimate": 127.2796,
+  "estimates": {
+   "lspiv": {
+    "q": 118.8359,
+    "q_lo": 111.5368,
+    "q_hi": 126.1351,
+    "coverage": 1.0
+   },
+   "stiv": {
+    "q": 135.7232,
+    "q_lo": 126.2242,
+    "q_hi": 145.2221,
+    "coverage": 0.984
+   }
+  },
+  "q_ref": 107.945,
+  "u_ref": 0.055,
+  "published": {
+   "err_pct": 17.91,
+   "within_ref_u": false,
+   "expert_rank": 12,
+   "n_experts": 17,
+   "beats_share": 0.353
+  },
+  "estimate": {
+   "err_pct": 17.91,
+   "within_ref_u": false,
+   "expert_rank": 12,
+   "n_experts": 17,
+   "beats_share": 0.353
+  },
+  "expert_median_err_pct": 16.17,
+  "cost_usd": 0.0,
+  "seconds": 58.8,
+  "run_id": "r-20261025220121-423b0b",
+  "git": "294bbb3",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:02:23.262644+00:00"
+ },
+ {
+  "video": "vgc3",
+  "split": "test",
+  "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV and STIV agree within tolerance"
+  ],
+  "q_published": 51.2917,
+  "q_estimate": 51.2917,
+  "estimates": {
+   "lspiv": {
+    "q": 47.5491,
+    "q_lo": 44.6963,
+    "q_hi": 50.4019,
+    "coverage": 0.996
+   },
+   "stiv": {
+    "q": 55.0344,
+    "q_lo": 51.7557,
+    "q_hi": 58.3131,
+    "coverage": 1.0
+   }
+  },
+  "q_ref": 55.16,
+  "u_ref": 0.058,
+  "published": {
+   "err_pct": -7.01,
+   "within_ref_u": false,
+   "expert_rank": 5,
+   "n_experts": 18,
+   "beats_share": 0.778
+  },
+  "estimate": {
+   "err_pct": -7.01,
+   "within_ref_u": false,
+   "expert_rank": 5,
+   "n_experts": 18,
+   "beats_share": 0.778
+  },
+  "expert_median_err_pct": 24.51,
+  "cost_usd": 0.0,
+  "seconds": 56.5,
+  "run_id": "r-20261025220223-7d99ab",
+  "git": "30beb02",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:03:20.905967+00:00"
+ },
+ {
+  "video": "vgc4",
+  "split": "test",
+  "site": "Russell River (drone)",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "ESCALATE",
+  "method": null,
+  "basis": null,
+  "reasons": [
+   "the evidence did not satisfy the publication policy"
+  ],
+  "q_published": null,
+  "q_estimate": 140.5328,
+  "estimates": {
+   "lspiv": {
+    "q": 140.5328,
+    "q_lo": 129.1956,
+    "q_hi": 151.87,
+    "coverage": 0.758
+   },
+   "stiv": {
+    "q": 150.767,
+    "q_lo": 135.7992,
+    "q_hi": 165.7348,
+    "coverage": 0.61
+   }
+  },
+  "q_ref": 139.0,
+  "u_ref": 0.15,
+  "published": {
+   "err_pct": null,
+   "within_ref_u": null,
+   "expert_rank": null
+  },
+  "estimate": {
+   "err_pct": 1.1,
+   "within_ref_u": true,
+   "expert_rank": 3,
+   "n_experts": 22,
+   "beats_share": 0.909
+  },
+  "expert_median_err_pct": 11.95,
+  "cost_usd": 0.0,
+  "seconds": 45.9,
+  "run_id": "r-20261025220320-a3dad9",
+  "git": "30beb02",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:04:08.752638+00:00"
+ },
+ {
+  "video": "vgc5",
+  "split": "test",
+  "site": "Le Stor\u00e5ne \u00e0 Ruud",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV and STIV agree within tolerance"
+  ],
+  "q_published": 24.2514,
+  "q_estimate": 24.2514,
+  "estimates": {
+   "lspiv": {
+    "q": 22.6808,
+    "q_lo": 21.4958,
+    "q_hi": 23.8657,
+    "coverage": 0.994
+   },
+   "stiv": {
+    "q": 25.8221,
+    "q_lo": 24.3518,
+    "q_hi": 27.2924,
+    "coverage": 0.936
+   }
+  },
+  "q_ref": 19.7,
+  "u_ref": 0.053,
+  "published": {
+   "err_pct": 23.1,
+   "within_ref_u": false,
+   "expert_rank": 22,
+   "n_experts": 23,
+   "beats_share": 0.087
+  },
+  "estimate": {
+   "err_pct": 23.1,
+   "within_ref_u": false,
+   "expert_rank": 22,
+   "n_experts": 23,
+   "beats_share": 0.087
+  },
+  "expert_median_err_pct": 13.39,
+  "cost_usd": 0.0,
+  "seconds": 53.7,
+  "run_id": "r-20261025220408-6d66b5",
+  "git": "30beb02",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:05:03.621562+00:00"
+ },
+ {
+  "video": "vgc6",
+  "split": "test",
+  "site": "Le Groin \u00e0 Artemare (01)",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "reasons": [
+   "LSPIV and STIV agree within tolerance"
+  ],
+  "q_published": 55.4648,
+  "q_estimate": 55.4648,
+  "estimates": {
+   "lspiv": {
+    "q": 54.6314,
+    "q_lo": 51.3315,
+    "q_hi": 57.9313,
+    "coverage": 0.995
+   },
+   "stiv": {
+    "q": 56.2982,
+    "q_lo": 52.9065,
+    "q_hi": 59.6899,
+    "coverage": 1.0
+   }
+  },
+  "q_ref": 53.74,
+  "u_ref": 0.0928,
+  "published": {
+   "err_pct": 3.21,
+   "within_ref_u": true,
+   "expert_rank": 5,
+   "n_experts": 17,
+   "beats_share": 0.765
+  },
+  "estimate": {
+   "err_pct": 3.21,
+   "within_ref_u": true,
+   "expert_rank": 5,
+   "n_experts": 17,
+   "beats_share": 0.765
+  },
+  "expert_median_err_pct": 17.7,
+  "cost_usd": 0.0,
+  "seconds": 52.1,
+  "run_id": "r-20261025220503-17b69e",
+  "git": "30beb02",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:05:57.797568+00:00"
+ },
+ {
+  "video": "vgc7",
+  "split": "test",
+  "site": "Herbert River (drone)",
+  "brain": "autopilot",
+  "model": null,
+  "decision": "PUBLISH",
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "reasons": [
+   "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+  ],
+  "q_published": 824.9568,
+  "q_estimate": 824.9568,
+  "estimates": {
+   "lspiv": {
+    "q": 3.4292,
+    "q_lo": 2.8493,
+    "q_hi": 4.0091,
+    "coverage": 0.318
+   },
+   "stiv": {
+    "q": 824.9568,
+    "q_lo": 536.0851,
+    "q_hi": 1113.8286,
+    "coverage": 0.958
+   }
+  },
+  "q_ref": 962.8,
+  "u_ref": 0.053,
+  "published": {
+   "err_pct": -14.32,
+   "within_ref_u": false,
+   "expert_rank": 13,
+   "n_experts": 15,
+   "beats_share": 0.2
+  },
+  "estimate": {
+   "err_pct": -14.32,
+   "within_ref_u": false,
+   "expert_rank": 13,
+   "n_experts": 15,
+   "beats_share": 0.2
+  },
+  "expert_median_err_pct": 2.16,
+  "cost_usd": 0.0,
+  "seconds": 30.4,
+  "run_id": "r-20261025220557-c69cd9",
+  "git": "30beb02",
+  "tag": "vgc-autopilot",
+  "time": "2026-10-25T22:06:30.483637+00:00"
+ }
+]

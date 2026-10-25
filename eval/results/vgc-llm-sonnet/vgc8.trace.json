@@ -1,0 +1,725 @@
+{
+ "run_id": "r-20261025220743-53f86c",
+ "station_id": "vgc8",
+ "clip": "VGC8_video.mp4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "PUBLISH",
+  "reasons": [
+   "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and the LSPIV field is restored with 95% valid vectors."
+  ],
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "q": {
+   "q": 0.6707,
+   "q_lo": 0.6244,
+   "q_hi": 0.7171,
+   "area": 1.017,
+   "wetted_width": 3.4127,
+   "coverage": 1.0,
+   "alpha": 0.85,
+   "level": 0.0,
+   "method": "lspiv+dense_flow",
+   "v_mean": 0.6638,
+   "uncertainty": {
+    "alpha": 0.0588,
+    "velocity": 0.0144,
+    "interpolation": 0.0,
+    "level": 0.0336,
+    "total_95": 0.0692
+   },
+   "published": true
+  },
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 29.976820249458267,
+    "frames": 516,
+    "duration_s": 17.2133,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 33
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 300,
+    "dt_s": 0.03332,
+    "duration_s": 9.98,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1590
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": false,
+    "reason": "no_reference_frame"
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 1.202,
+    "motion_px_p95": 1.202,
+    "inlier_ratio_min": 0.507,
+    "keyframes": 13,
+    "notes": [
+     "feature_model_rejected",
+     "static_camera"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 9072
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.008,
+    "ortho_shape": [
+     575,
+     525
+    ],
+    "water_px": 136670,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 89
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 14.3997,
+    "static_texture": 1.7514,
+    "static_ratio": 0.1216,
+    "tracer_density": 60.8217,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0491,
+    "blur_var": 850.0594,
+    "contrast": 88.0,
+    "water_px": 136670,
+    "frames": 300,
+    "flags": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 879
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 3.9681,
+    "speed_p90_px": 5.7756,
+    "direction_deg": -1.2736,
+    "coherence": 0.8971,
+    "speed_p50_ms": 0.9527,
+    "speed_p90_ms": 1.3866,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 23,
+     "search_px": 13,
+     "shift_px": [
+      4.0,
+      0.1
+     ],
+     "step_px": 11,
+     "vmax_ms": 4.16,
+     "flow_deg": -1.3,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1408
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Low static_ratio 0.12 and high tracer density: well-seeded surface, use suggested parameters.",
+    "ia_px": 23,
+    "search_px": 13,
+    "pair_step": 1,
+    "background": "median"
+   },
+   "reason": "Low static_ratio 0.12 and high tracer density: well-seeded surface, use suggested parameters.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 1146,
+    "valid": 1094,
+    "valid_frac": 0.955,
+    "speed_p50": 0.853,
+    "speed_p90": 1.225,
+    "score_mean": 0.47,
+    "direction_deg": -0.7,
+    "rejected": {
+     "search_edge": 0,
+     "low_score": 38,
+     "direction": 14
+    },
+    "params": {
+     "ia_px": 23,
+     "search_px": 13,
+     "step_px": 11,
+     "pair_step": 1,
+     "dt_s": 0.03332222222222225,
+     "shift_px": [
+      4,
+      0
+     ],
+     "background": "median",
+     "pairs": 150,
+     "res_m": 0.008
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 9033
+  },
+  {
+   "i": 8,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "Independent cross-check with suggested window 16.",
+    "window": 16,
+    "background": "highpass:3"
+   },
+   "reason": "Independent cross-check with suggested window 16.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 55,
+    "valid_frac": 0.917,
+    "speed_p50": 0.972,
+    "speed_p90": 1.376,
+    "score_mean": 0.664,
+    "direction_deg": -1.3,
+    "rejected": {
+     "low_score": 5
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.03332222222222225,
+     "vmax_ms": 4.16,
+     "background": "highpass:3",
+     "res_m": 0.008,
+     "line_m": 1.61,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 25909
+  },
+  {
+   "i": 9,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "lspiv",
+    "reason": "Coherent LSPIV field, valid 95%."
+   },
+   "reason": "Coherent LSPIV field, valid 95%.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 0.6751,
+    "q_lo": 0.6283,
+    "q_hi": 0.7218,
+    "area": 1.017,
+    "wetted_width": 3.4127,
+    "coverage": 1.0,
+    "alpha": 0.85,
+    "level": 0.0,
+    "method": "lspiv",
+    "v_mean": 0.6638,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0144,
+     "interpolation": 0.0,
+     "level": 0.0336,
+     "total_95": 0.0692
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2
+  },
+  {
+   "i": 10,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "STI streaks straight and parallel, matches overlay."
+   },
+   "reason": "STI streaks straight and parallel, matches overlay.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 0.8278,
+    "q_lo": 0.7489,
+    "q_hi": 0.9068,
+    "area": 1.017,
+    "wetted_width": 3.4127,
+    "coverage": 0.9525,
+    "alpha": 0.85,
+    "level": 0.0,
+    "method": "stiv",
+    "v_mean": 0.814,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0665,
+     "interpolation": 0.0095,
+     "level": 0.0336,
+     "total_95": 0.0954
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 11,
+   "actor": "llm",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "lspiv",
+    "basis": "seeded_surface_prefers_lspiv",
+    "reason": "The methods differ by about 20%, but static_ratio is 0.12 and tracer density is high, so the surface is well seeded and LSPIV is the reference method, with a coherent field and 95% valid vectors."
+   },
+   "reason": "The methods differ by about 20%, but static_ratio is 0.12 and tracer density is high, so the surface is well seeded and LSPIV is the reference method, with a coherent field and 95% valid vectors.",
+   "verdict": {
+    "allowed": false,
+    "reasons": [
+     "confidence_low:lspiv:0.47"
+    ]
+   },
+   "ok": null,
+   "summary": null,
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 12,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "LSPIV mean score 0.47 is below 0.5; try a larger IA and a longer pair step to raise correlation.",
+    "ia_px": 41,
+    "search_px": 14,
+    "pair_step": 2,
+    "background": "highpass:3"
+   },
+   "reason": "LSPIV mean score 0.47 is below 0.5; try a larger IA and a longer pair step to raise correlation.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 1116,
+    "valid": 63,
+    "valid_frac": 0.056,
+    "speed_p50": 1.257,
+    "speed_p90": 1.369,
+    "score_mean": 0.298,
+    "direction_deg": 0.1,
+    "rejected": {
+     "search_edge": 4,
+     "low_score": 1049
+    },
+    "params": {
+     "ia_px": 41,
+     "search_px": 14,
+     "step_px": 11,
+     "pair_step": 2,
+     "dt_s": 0.03332222222222225,
+     "shift_px": [
+      8,
+      0
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.008
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 17454
+  },
+  {
+   "i": 13,
+   "actor": "llm",
+   "tool": "run_dense_flow",
+   "args": {
+    "reason": "LSPIV and STIV disagree by about 20% and LSPIV confidence is low, so I want a third opinion.",
+    "background": "median",
+    "pair_step": 1
+   },
+   "reason": "LSPIV and STIV disagree by about 20% and LSPIV confidence is low, so I want a third opinion.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "dense_flow",
+    "vectors": 1109,
+    "valid": 1051,
+    "valid_frac": 0.948,
+    "speed_p50": 0.84,
+    "speed_p90": 1.229,
+    "score_mean": 0.753,
+    "direction_deg": -1.4,
+    "rejected": {
+     "low_score": 37,
+     "direction": 21
+    },
+    "params": {
+     "step_px": 11,
+     "pair_step": 1,
+     "background": "median",
+     "pairs": 60,
+     "dt_s": 0.03332222222222225,
+     "res_m": 0.008
+    },
+    "evidence": [
+     "field_dense_flow.jpg"
+    ]
+   },
+   "evidence": [
+    "field_dense_flow.jpg"
+   ],
+   "error": null,
+   "t_ms": 2519
+  },
+  {
+   "i": 14,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "dense_flow",
+    "reason": "Dense flow has a coherent field and a score of 0.75. Its speeds match LSPIV, so I need its discharge to check agreement."
+   },
+   "reason": "Dense flow has a coherent field and a score of 0.75. Its speeds match LSPIV, so I need its discharge to check agreement.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 0.6664,
+    "q_lo": 0.6205,
+    "q_hi": 0.7124,
+    "area": 1.017,
+    "wetted_width": 3.4127,
+    "coverage": 0.9993,
+    "alpha": 0.85,
+    "level": 0.0,
+    "method": "dense_flow",
+    "v_mean": 0.6553,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0131,
+     "interpolation": 0.0001,
+     "level": 0.0336,
+     "total_95": 0.069
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2
+  },
+  {
+   "i": 15,
+   "actor": "llm",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "mean_of_agreeing",
+    "basis": "methods_agree",
+    "reason": "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and dense flow has a score of 0.75. STIV is about 20% higher."
+   },
+   "reason": "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and dense flow has a score of 0.75. STIV is about 20% higher.",
+   "verdict": {
+    "allowed": false,
+    "reasons": [
+     "valid_vectors_low:lspiv:0.06"
+    ]
+   },
+   "ok": null,
+   "summary": null,
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 16,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "The last LSPIV run (IA 41) was poor and replaced the good one, so I'm re-running the good settings.",
+    "ia_px": 23,
+    "search_px": 13,
+    "pair_step": 1,
+    "background": "median"
+   },
+   "reason": "The last LSPIV run (IA 41) was poor and replaced the good one, so I'm re-running the good settings.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 1146,
+    "valid": 1094,
+    "valid_frac": 0.955,
+    "speed_p50": 0.853,
+    "speed_p90": 1.225,
+    "score_mean": 0.47,
+    "direction_deg": -0.7,
+    "rejected": {
+     "search_edge": 0,
+     "low_score": 38,
+     "direction": 14
+    },
+    "params": {
+     "ia_px": 23,
+     "search_px": 13,
+     "step_px": 11,
+     "pair_step": 1,
+     "dt_s": 0.03332222222222225,
+     "shift_px": [
+      4,
+      0
+     ],
+     "background": "median",
+     "pairs": 150,
+     "res_m": 0.008
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 9116
+  },
+  {
+   "i": 17,
+   "actor": "llm",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "mean_of_agreeing",
+    "basis": "methods_agree",
+    "reason": "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and the LSPIV field is restored with 95% valid vectors."
+   },
+   "reason": "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and the LSPIV field is restored with 95% valid vectors.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "PUBLISH",
+    "reasons": [
+     "LSPIV (0.675 m\u00b3/s) and dense flow (0.666 m\u00b3/s) agree within 2%, and the LSPIV field is restored with 95% valid vectors."
+    ],
+    "method": "mean_of_agreeing",
+    "basis": "methods_agree",
+    "q": {
+     "q": 0.6707,
+     "q_lo": 0.6244,
+     "q_hi": 0.7171,
+     "area": 1.017,
+     "wetted_width": 3.4127,
+     "coverage": 1.0,
+     "alpha": 0.85,
+     "level": 0.0,
+     "method": "lspiv+dense_flow",
+     "v_mean": 0.6638,
+     "uncertainty": {
+      "alpha": 0.0588,
+      "velocity": 0.0144,
+      "interpolation": 0.0,
+      "level": 0.0336,
+      "total_95": 0.0692
+     },
+     "published": true
+    },
+    "recapture_spec": null,
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 1.084,
+  "stabilize": 9.073,
+  "orthorectify": 0.076,
+  "diagnose": 0.88,
+  "coarse_motion": 1.409,
+  "lspiv": 35.585,
+  "stiv": 24.869,
+  "dense_flow": 2.511
+ },
+ "cost_usd": 0.17588,
+ "started": "2026-10-25T22:07:43.558181+00:00",
+ "ended": "2026-10-25T22:09:47.197818+00:00",
+ "notes": [],
+ "estimates": {
+  "lspiv": {
+   "q": 0.6751,
+   "q_lo": 0.6283,
+   "q_hi": 0.7218,
+   "coverage": 1.0
+  },
+  "stiv": {
+   "q": 0.8278,
+   "q_lo": 0.7489,
+   "q_hi": 0.9068,
+   "coverage": 0.952
+  },
+  "dense_flow": {
+   "q": 0.6664,
+   "q_lo": 0.6205,
+   "q_hi": 0.7124,
+   "coverage": 0.999
+  }
+ }
+}

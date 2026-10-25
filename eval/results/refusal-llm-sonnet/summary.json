@@ -1,0 +1,178 @@
+{
+ "cases": 9,
+ "correct": 6,
+ "wrong_publishes": 0,
+ "rows": [
+  {
+   "case": "clean_vgc1",
+   "transform": "none",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "static_ratio 1.35 flags a visible bed, so LSPIV is biased and unreliable (7% valid vectors); STIV has full coverage, clean streaks, and Q=1.42 m\u00b3/s \u00b18%."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.4171,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0488,
+   "time": "2026-10-25T22:22:45.441271+00:00"
+  },
+  {
+   "case": "clean_vgc8",
+   "transform": "none",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "Stabilization was rejected (residual_px_p95 infinite, motion_px_p95 about 496 px, against a 2 px limit), even though the camera-pose check says the camera did not move. The orthorectified frames can't be trusted, so any velocity or discharge from them would be unreliable. The footage itself is fine (static_ratio 0.12, no quality flags), so a recapture wouldn't help. A person needs to check the stabilization and the reference view."
+   ],
+   "correct": false,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0146,
+   "time": "2026-10-25T22:23:04.713911+00:00"
+  },
+  {
+   "case": "handheld_shake_vgc8",
+   "transform": "shake",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "Stabilization was rejected (residual_px_p95 infinite, motion_px_p95 494, inlier ratio 0.43), yet the camera-pose check reports no movement (0.41 px). The ortho velocities would therefore be unreliable, and I can't tell whether the cause is the footage or the stabilization. Image quality is otherwise fine (static_ratio 0.11, no flags), so a person needs to check the stabilization and geometry before any discharge is published."
+   ],
+   "correct": false,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0157,
+   "time": "2026-10-25T22:23:24.128679+00:00"
+  },
+  {
+   "case": "night_vgc1",
+   "transform": "night",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+   ],
+   "correct": false,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0,
+   "time": "2026-10-25T22:23:27.513538+00:00"
+  },
+  {
+   "case": "glare_vgc8",
+   "transform": "glare",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "Diagnostics show glare_frac=1.0 with no_moving_tracers, low_contrast and blurred flags, and the orthorectified water area is saturated white, so no velocimetry is possible on this clip."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0142,
+   "time": "2026-10-25T22:23:47.476068+00:00"
+  },
+  {
+   "case": "frozen_feed_vgc1",
+   "transform": "frozen",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "frozen_frac 0.985 (limit 0.2) means almost all frames are duplicates. STIV shows a blank space-time image with random vectors, LSPIV has 0.2% valid vectors, and the surface has no tracers with the bed visible."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0357,
+   "time": "2026-10-25T22:25:02.641816+00:00"
+  },
+  {
+   "case": "still_water_vgc8",
+   "transform": "still",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "54% of frames are frozen (limit 20%), there are no moving tracers, and STIV and LSPIV both returned essentially zero valid vectors, so the clip can't be measured."
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0342,
+   "time": "2026-10-25T22:27:55.146299+00:00"
+  },
+  {
+   "case": "camera_moved_vgc1",
+   "transform": "moved",
+   "expected": [
+    "ESCALATE"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0,
+   "time": "2026-10-25T22:27:59.544887+00:00"
+  },
+  {
+   "case": "level_above_banks_vgc8",
+   "transform": "level",
+   "expected": [
+    "ESCALATE"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "perception_failed:orthorectify:planar_grp_level_mismatch"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "llm",
+   "model": "claude-sonnet-5-5",
+   "tag": "refusal-llm-sonnet",
+   "cost_usd": 0.0,
+   "time": "2026-10-25T22:28:10.582139+00:00"
+  }
+ ]
+}

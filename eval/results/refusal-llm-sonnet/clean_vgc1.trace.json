@@ -1,0 +1,459 @@
+{
+ "run_id": "r-20261025222143-ce04af",
+ "station_id": "vgc1",
+ "clip": "clean_vgc1.mp4",
+ "brain": "llm",
+ "model": "claude-sonnet-5-5",
+ "decision": {
+  "kind": "PUBLISH",
+  "reasons": [
+   "static_ratio 1.35 flags a visible bed, so LSPIV is biased and unreliable (7% valid vectors); STIV has full coverage, clean streaks, and Q=1.42 m\u00b3/s \u00b18%."
+  ],
+  "method": "stiv",
+  "basis": "bed_visible_prefers_stiv",
+  "q": {
+   "q": 1.4171,
+   "q_lo": 1.3045,
+   "q_hi": 1.5297,
+   "area": 1.8627,
+   "wetted_width": 5.5797,
+   "coverage": 1.0,
+   "alpha": 0.85,
+   "level": 0.0,
+   "method": "stiv",
+   "v_mean": 0.7608,
+   "uncertainty": {
+    "alpha": 0.0588,
+    "velocity": 0.0442,
+    "interpolation": 0.0,
+    "level": 0.03,
+    "total_95": 0.0795
+   },
+   "published": true
+  },
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25.0,
+    "frames": 201,
+    "duration_s": 8.04,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 7
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 201,
+    "dt_s": 0.04,
+    "duration_s": 8.0,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1335
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": false,
+    "shift_px_p95": 0.1,
+    "inliers": 488,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      1.0001,
+      0.00013,
+      -0.10051
+     ],
+     [
+      2e-05,
+      1.00009,
+      -0.01927
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2290
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue",
+    "residual_px_p95": 1.062,
+    "motion_px_p95": 0.833,
+    "inlier_ratio_min": 0.921,
+    "keyframes": 9,
+    "notes": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 6584
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "planar",
+    "reproj_rmse_px": 0.0,
+    "reproj_rmse_rel_diag": 0.0,
+    "reproj_max_px": 0.0,
+    "res_m": 0.015,
+    "ortho_shape": [
+     513,
+     567
+    ],
+    "water_px": 125147,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 71
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 6.3279,
+    "static_texture": 8.5444,
+    "static_ratio": 1.3503,
+    "tracer_density": 24.1139,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0,
+    "blur_var": 239.353,
+    "contrast": 64.0,
+    "water_px": 125147,
+    "frames": 201,
+    "flags": [
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 605
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 1.963,
+    "speed_p90_px": 2.5957,
+    "direction_deg": -175.7904,
+    "coherence": 0.9533,
+    "speed_p50_ms": 0.7361,
+    "speed_p90_ms": 0.9734,
+    "suggested": {
+     "pair_step": 2,
+     "ia_px": 21,
+     "search_px": 12,
+     "shift_px": [
+      -3.6,
+      0.3
+     ],
+     "step_px": 10,
+     "vmax_ms": 2.92,
+     "flow_deg": -175.8,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 851
+  },
+  {
+   "i": 7,
+   "actor": "llm",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "static_ratio 1.35 (bed_visible), so STIV with a high-pass is the robust method; the coarse-motion suggestion gives window 16.",
+    "background": "highpass:3",
+    "window": 16,
+    "line_m": 6
+   },
+   "reason": "static_ratio 1.35 (bed_visible), so STIV with a high-pass is the robust method; the coarse-motion suggestion gives window 16.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 60,
+    "valid_frac": 1.0,
+    "speed_p50": 0.834,
+    "speed_p90": 1.245,
+    "score_mean": 0.684,
+    "direction_deg": -175.8,
+    "rejected": {},
+    "params": {
+     "lines": 60,
+     "dt_s": 0.040000000000000036,
+     "vmax_ms": 2.92,
+     "background": "highpass:3",
+     "res_m": 0.015,
+     "line_m": 6,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 26945
+  },
+  {
+   "i": 8,
+   "actor": "llm",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "Independent cross-check using the suggested parameters; I expect it to be biased low because the bed is visible.",
+    "background": "highpass:3",
+    "ia_px": 21,
+    "search_px": 12,
+    "pair_step": 2
+   },
+   "reason": "Independent cross-check using the suggested parameters; I expect it to be biased low because the bed is visible.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 1245,
+    "valid": 92,
+    "valid_frac": 0.074,
+    "speed_p50": 0.679,
+    "speed_p90": 0.878,
+    "score_mean": 0.3,
+    "direction_deg": -154.8,
+    "rejected": {
+     "search_edge": 2,
+     "low_score": 1141,
+     "direction": 9,
+     "median_test": 1
+    },
+    "params": {
+     "ia_px": 21,
+     "search_px": 12,
+     "step_px": 10,
+     "pair_step": 2,
+     "dt_s": 0.040000000000000036,
+     "shift_px": [
+      -4,
+      0
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.015
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 9154
+  },
+  {
+   "i": 9,
+   "actor": "llm",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "STIV has full valid coverage and clean parallel streaks, and the bed is visible."
+   },
+   "reason": "STIV has full valid coverage and clean parallel streaks, and the bed is visible.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 1.4171,
+    "q_lo": 1.3045,
+    "q_hi": 1.5297,
+    "area": 1.8627,
+    "wetted_width": 5.5797,
+    "coverage": 1.0,
+    "alpha": 0.85,
+    "level": 0.0,
+    "method": "stiv",
+    "v_mean": 0.7608,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0442,
+     "interpolation": 0.0,
+     "level": 0.03,
+     "total_95": 0.0795
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1
+  },
+  {
+   "i": 10,
+   "actor": "llm",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "stiv",
+    "basis": "bed_visible_prefers_stiv",
+    "reason": "static_ratio 1.35 flags a visible bed, so LSPIV is biased and unreliable (7% valid vectors); STIV has full coverage, clean streaks, and Q=1.42 m\u00b3/s \u00b18%."
+   },
+   "reason": "static_ratio 1.35 flags a visible bed, so LSPIV is biased and unreliable (7% valid vectors); STIV has full coverage, clean streaks, and Q=1.42 m\u00b3/s \u00b18%.",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "PUBLISH",
+    "reasons": [
+     "static_ratio 1.35 flags a visible bed, so LSPIV is biased and unreliable (7% valid vectors); STIV has full coverage, clean streaks, and Q=1.42 m\u00b3/s \u00b18%."
+    ],
+    "method": "stiv",
+    "basis": "bed_visible_prefers_stiv",
+    "q": {
+     "q": 1.4171,
+     "q_lo": 1.3045,
+     "q_hi": 1.5297,
+     "area": 1.8627,
+     "wetted_width": 5.5797,
+     "coverage": 1.0,
+     "alpha": 0.85,
+     "level": 0.0,
+     "method": "stiv",
+     "v_mean": 0.7608,
+     "uncertainty": {
+      "alpha": 0.0588,
+      "velocity": 0.0442,
+      "interpolation": 0.0,
+      "level": 0.03,
+      "total_95": 0.0795
+     },
+     "published": true
+    },
+    "recapture_spec": null,
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 0.869,
+  "pose": 2.273,
+  "stabilize": 6.585,
+  "orthorectify": 0.056,
+  "diagnose": 0.604,
+  "coarse_motion": 0.851,
+  "stiv": 26.406,
+  "lspiv": 9.145
+ },
+ "cost_usd": 0.04883,
+ "started": "2026-10-25T22:21:43.693068+00:00",
+ "ended": "2026-10-25T22:22:45.301962+00:00",
+ "notes": [],
+ "estimates": {
+  "stiv": {
+   "q": 1.4171,
+   "q_lo": 1.3045,
+   "q_hi": 1.5297,
+   "coverage": 1.0
+  }
+ }
+}
