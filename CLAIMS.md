@@ -21,7 +21,7 @@ Every public statement about Thalweg, tagged by how it can be checked.
 | COOL vs stock OpenCV vs x86 timings and $/1000 gaugings | REPRODUCIBLE | `bench/run_bench.py`, `bench/results/` (5 repeats, median) |
 | Cost per 1000 gaugings | MODELED | On-demand instance price plus COOL software fee, times measured seconds per clip. It excludes storage, requests and the LLM. |
 | The Storm Callum warning would have been drafted about 1.5 h before the stage passed the QMED level | MODELED | The nowcast rule replayed on the published stage series. The rating curve maps QMED to a stage, so this depends on that curve. |
-| The live station gauges Storm Callum every 15 minutes | VERIFIED-LIVE | The station page and the runs list. It is a replay of 2018 footage. |
+| The live station gauges Storm Callum every 10 minutes | VERIFIED-LIVE | The station page and the runs list. It is a replay of 2018 footage. |
 
 ## Not claimed
 

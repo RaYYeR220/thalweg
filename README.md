@@ -2,7 +2,7 @@
 
 **A camera is a stream gauge.** Thalweg reads river video with OpenCV 5 and turns it into a discharge measurement (m³/s). An agent decides whether the measurement can be trusted. When the evidence doesn't hold, it refuses to publish: it asks for a better clip or hands the case to a hydrologist. The station also keeps a rating curve and a stage nowcast. When a flood threshold is coming, it drafts a warning that only a person can sign.
 
-- **Live station:** River Dart at Austins Bridge (UK), replaying Storm Callum (12 Oct 2018) → <!--SITE-->
+- **Live station:** River Dart at Austins Bridge (UK), replaying Storm Callum (12 Oct 2018) → https://jp89re6ozf.execute-api.us-east-1.amazonaws.com/station/
 - **Benchmark:** blind, against 15–23 human hydrologists on the 8 real videos of the Video Globe Challenge 2020 → [`eval/`](eval/)
 - **Runs on:** AWS Graviton4 with COOL (Cloud-Optimized OpenCV), Step Functions, DynamoDB, S3, API Gateway
 

@@ -92,7 +92,7 @@ Vectors pass a score threshold, a speed bound, a direction gate and the normalis
 - **Orchestration.** Step Functions Standard: Preflight → Agent (activity, 15 min, heartbeat) → Persist → Choice → AwaitSignature (`waitForTaskToken`, 6 h) → IssueWarning / Rejected / Expired, plus FailClosed on any error.
 - **Data.** S3 (ingest, artifacts, web; SSE-S3, public access blocked); DynamoDB on demand (stations, gaugings, runs, warnings, budget); SSM SecureStrings for the LLM key, reviewer passcode and service token.
 - **Interfaces.** An API Gateway HTTP API with a Python router (reads, `POST /runs` idempotent while running, a 40/day cap on judge-triggered LLM runs, `POST /reviews/{id}`), and a second HTTP API that serves the static site and proxies evidence images. A CloudFront distribution is defined and tested in CDK. It is not deployed because the account is awaiting CloudFront verification.
-- **Operations.** EventBridge Scheduler replays the Storm Callum archive into ingest every 15 minutes. CloudWatch provides a dashboard, EMF metrics (decisions by kind, latency, policy denials, LLM cost) and alarms (failed executions, silent worker). An AWS Budget on the `project=thalweg` tag and a $3/day LLM cap are enforced in code.
+- **Operations.** EventBridge Scheduler replays the Storm Callum archive into ingest every 10 minutes. CloudWatch provides a dashboard, EMF metrics (decisions by kind, latency, policy denials, LLM cost) and alarms (failed executions, silent worker). An AWS Budget on the `project=thalweg` tag and a $3/day LLM cap are enforced in code.
 - **Infrastructure as code.** AWS CDK (TypeScript), with 8 assertion tests and 78 handler tests.
 
 ## 8. Evaluation

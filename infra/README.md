@@ -104,7 +104,7 @@ without the CDN), `ThalwegApi.ApiUrl` (bare routes, CORS for `http://localhost:3
 
 ## The replay schedule
 
-`thalweg-replay` feeds the River Dart station one archived Storm Callum clip every 15 minutes
+`thalweg-replay` feeds the River Dart station one archived Storm Callum clip every 10 minutes
 so it keeps gauging during judging. It reads
 `s3://thalweg-artifacts-<acct>/data/dart/replay-manifest.json`:
 
