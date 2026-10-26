@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Review queue · Thalweg</title>
+<meta name="description" content="Flood-warning drafts waiting for a hydrologist. Signing resumes a paused Step Functions execution; the agent has no tool to do it.">
+<meta name="theme-color" content="#14100b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..500,0..100&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="/" aria-label="Thalweg, home"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/station/">Station</a>
+      <a href="/station/#runs">Runs</a>
+      <a href="/review/" aria-current="page">Review</a>
+      <a href="/benchmark/">Benchmark</a>
+      <a href="/performance/">Performance</a>
+      <a class="ext" href="https://github.com/RaYYeR220/thalweg" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tex">
+  <div class="wrap page">
+    <div class="head">
+      <div class="t">
+        <p class="chap">Review queue</p>
+        <h1 class="display">Only a person can <em>issue a warning.</em></h1>
+        <p class="lede">The station drafts a flood warning when its nowcast says the threshold is likely within three hours. The Step Functions execution then pauses on a task token (<code>waitForTaskToken</code>). Signing here resumes it and publishes the warning; rejecting closes it. The agent has no tool for either, and an unsigned draft expires after six hours.</p>
+      </div>
+    </div>
+
+    <div class="grid rv-grid">
+      <section class="span-8 rv-list" aria-labelledby="rv-h">
+        <h2 class="sr-only" id="rv-h">Warnings</h2>
+        <div class="seg rv-tabs" role="tablist" aria-label="Warning state" id="tabs">
+          <button type="button" role="tab" id="tab-DRAFT" aria-selected="true" aria-controls="cards" data-state="DRAFT">Drafts <span class="n" id="n-DRAFT">·</span></button>
+          <button type="button" role="tab" id="tab-SIGNED" aria-selected="false" aria-controls="cards" data-state="SIGNED">Signed <span class="n" id="n-SIGNED">·</span></button>
+          <button type="button" role="tab" id="tab-REJECTED" aria-selected="false" aria-controls="cards" data-state="REJECTED">Rejected <span class="n" id="n-REJECTED">·</span></button>
+          <button type="button" role="tab" id="tab-EXPIRED" aria-selected="false" aria-controls="cards" data-state="EXPIRED">Expired <span class="n" id="n-EXPIRED">·</span></button>
+        </div>
+        <div id="cards" role="tabpanel" aria-labelledby="tab-DRAFT" aria-live="polite"><div class="loading">Reading the queue…</div></div>
+      </section>
+
+      <aside class="span-4 rv-side" aria-labelledby="rv-who">
+        <section class="panel reviewer">
+          <div class="ph"><h2 id="rv-who">Reviewer</h2><span class="meta">needed to sign or reject</span></div>
+          <form id="who" autocomplete="off" onsubmit="return false">
+            <div class="field"><label for="passcode">Passcode</label><input id="passcode" name="passcode" type="password" autocomplete="off" spellcheck="false" aria-describedby="pass-help"></div>
+            <p class="help" id="pass-help">Judges: the passcode is in the submission form. It stays in this tab and is sent only with a signature or a rejection.</p>
+            <div class="field"><label for="note">Note <span class="opt">(optional, kept with the decision)</span></label><textarea id="note" name="note" maxlength="280" placeholder="e.g. checked the evidence frame; stage rise is real"></textarea></div>
+          </form>
+        </section>
+        <section class="panel howto">
+          <div class="ph"><h2>What happens</h2></div>
+          <ol class="howto-l">
+            <li><b>Sign</b>: the API checks the passcode (403 if wrong) and that the warning is still a draft (409 if not), then calls <code>SendTaskSuccess</code>. The paused execution resumes, marks it SIGNED and publishes it to <code>public/warnings.json</code>.</li>
+            <li><b>Reject</b>: <code>SendTaskFailure</code>; the execution marks it REJECTED with your note.</li>
+            <li><b>Nobody acts</b>: after six hours the task token times out and the draft is EXPIRED.</li>
+          </ol>
+        </section>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap cols">
+    <div class="b"><a class="mark" href="/"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a><p>A stream gauge made of a camera, and the good sense to refuse.</p></div>
+    <div class="c">
+      <div><h2>Threshold</h2><p>The River Dart threshold is the NRFA QMED for station 46003 (231.2 m³/s), a flood index. It is not the Environment Agency's operational trigger.</p></div>
+      <div><h2>The code</h2><p><a href="https://github.com/RaYYeR220/thalweg/blob/main/services/api/reviews.py" rel="noopener">reviews.py</a> and the <a href="https://github.com/RaYYeR220/thalweg/blob/main/statemachine/gauging.asl.json" rel="noopener">state machine</a>.</p></div>
+      <div><h2>The app</h2><ul><li><a href="/station/">Live station</a></li><li><a href="/review/">Review queue</a></li><li><a href="/benchmark/">Benchmark</a></li><li><a href="/performance/">Performance</a></li></ul></div>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/review.js"></script>
+</body>
+</html>

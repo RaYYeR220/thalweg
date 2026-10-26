@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>River Dart at Austins Bridge · Thalweg station</title>
+<meta name="description" content="The live Thalweg station on the River Dart, replaying Storm Callum (12 Oct 2018): hydrograph, published gaugings, rating curve, nowcast, evidence and every agent run.">
+<meta name="theme-color" content="#14100b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..500,0..100&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="/" aria-label="Thalweg, home"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/station/" aria-current="page">Station</a>
+      <a href="/station/#runs">Runs</a>
+      <a href="/review/">Review</a>
+      <a href="/benchmark/">Benchmark</a>
+      <a href="/performance/">Performance</a>
+      <a class="ext" href="https://github.com/RaYYeR220/thalweg" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tex">
+  <div class="wrap page">
+    <p class="replay" role="note"><b>REPLAY</b><span>Storm Callum, 12 Oct 2018, replayed from archived footage. Times are 2018 clip times, not a live feed. The station gauges the next archived clip every 15 minutes.</span></p>
+
+    <div class="head">
+      <div class="t">
+        <p class="chap">Station · dart</p>
+        <h1 class="display">River Dart at <em>Austins Bridge</em></h1>
+        <p class="lede" id="st-lede">Devon, UK. A fixed bank camera records ten-second clips of the river; Thalweg turns each one into a discharge, or refuses to.</p>
+        <p class="st-notes" id="st-notes"></p>
+      </div>
+      <aside class="panel flat st-aside" aria-label="Station facts">
+        <dl class="kv" id="st-facts">
+          <dt>warning</dt><dd>QMED 231.2 m³/s</dd>
+          <dt>source</dt><dd>UK National River Flow Archive, station 46003 (median annual maximum flood)</dd>
+        </dl>
+      </aside>
+    </div>
+
+    <div class="stats st-stats" id="st-stats" aria-live="polite"><div class="skel" style="width:60%;height:64px"></div></div>
+
+    <div class="grid st-grid">
+      <section class="panel span-8" id="hydro-panel" aria-labelledby="hydro-h">
+        <div class="ph"><h2 id="hydro-h">Hydrograph</h2><div class="seg" id="episodes" role="group" aria-label="Time window"></div></div>
+        <div class="chart" id="hydro"><div class="loading">Loading the stage series and gaugings…</div></div>
+        <div class="legend" id="hydro-legend">
+          <span style="color:var(--fg)"><i class="dot"></i>published gauging, 95 % bar</span>
+          <span style="color:var(--fg-2)"><i></i>stage</span>
+          <span style="color:var(--ice)"><i class="band" style="background:currentColor"></i>3 h nowcast ±1.96σ</span>
+          <span style="color:var(--ice)"><i class="dash"></i>warning threshold</span>
+          <span><i class="dot" style="background:var(--pub)"></i><i class="dot" style="background:var(--hold)"></i><i class="dot" style="background:var(--esc)"></i>agent decisions</span>
+        </div>
+        <p class="note-sm" id="hydro-note"></p>
+      </section>
+
+      <div class="span-4 st-side">
+        <section class="panel" id="warn-panel" aria-labelledby="warn-h">
+          <div class="ph"><h2 id="warn-h">Warning state</h2><span class="meta" id="warn-meta"></span></div>
+          <div id="warn"><div class="loading">Checking the review queue…</div></div>
+        </section>
+        <section class="panel run-cta" id="run-panel" aria-labelledby="run-h">
+          <div class="ph"><h2 id="run-h">Run the agent yourself</h2></div>
+          <p class="prose">Starts a real Step Functions execution on the Graviton4 worker running COOL's OpenCV 5, with the LLM brain, on the latest replay clip. It takes about a minute, and you watch every step. Capped at 40 runs a day.</p>
+          <p class="clipline mono" id="run-clip"></p>
+          <button class="btn primary" id="run-btn" type="button" disabled>Run the agent on the latest clip</button>
+          <div id="run-msg" aria-live="polite"></div>
+        </section>
+      </div>
+
+      <section class="panel span-5" id="rating-panel" aria-labelledby="rating-h">
+        <div class="ph"><h2 id="rating-h">Rating curve</h2><span class="meta">stage against discharge</span></div>
+        <div class="chart" id="rating"><div class="loading">Loading…</div></div>
+        <p class="note-sm" id="rating-note"></p>
+      </section>
+
+      <section class="panel span-7" id="evidence-panel" aria-labelledby="ev-h">
+        <div class="ph"><h2 id="ev-h">Latest evidence</h2><span class="meta" id="ev-meta"></span></div>
+        <div id="evidence"><div class="loading">Loading…</div></div>
+      </section>
+
+      <section class="panel span-12" id="runs" aria-labelledby="runs-h">
+        <div class="ph"><h2 id="runs-h">Runs</h2><span class="meta" id="runs-meta">newest first · every decision the agent made, including the refusals</span></div>
+        <div id="runs-list"><div class="loading">Loading runs…</div></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap cols">
+    <div class="b"><a class="mark" href="/"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a><p>A stream gauge made of a camera, and the good sense to refuse.</p></div>
+    <div class="c">
+      <div><h2>River Dart, Storm Callum</h2><p>Perks (2024), <a href="https://doi.org/10.25405/data.ncl.19762027" rel="noopener">doi:10.25405/data.ncl.19762027</a>, CC BY 4.0. Flow statistics from the UK National River Flow Archive, station 46003.</p></div>
+      <div><h2>Honest limits</h2><p>Stage comes from the station's level sensor, not the image. The threshold is the NRFA QMED flood index, not an Environment Agency trigger.</p></div>
+      <div><h2>The app</h2><ul><li><a href="/station/">Live station</a></li><li><a href="/review/">Review queue</a></li><li><a href="/benchmark/">Benchmark</a></li><li><a href="/performance/">Performance</a></li></ul></div>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/station.js"></script>
+</body>
+</html>

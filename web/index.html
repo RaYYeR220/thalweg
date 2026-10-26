@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thalweg · every river camera, a gauging station</title>
+<meta name="description" content="Thalweg reads river discharge from camera video with OpenCV 5. A policy-gated agent decides whether a gauging can be published, and a flood warning waits for a hydrologist's signature.">
+<meta name="theme-color" content="#14100b">
+<meta property="og:title" content="Thalweg · every river camera, a gauging station">
+<meta property="og:description" content="River discharge from camera video with OpenCV 5, a policy-gated agent that refuses when the evidence doesn't hold, and flood warnings only a person can sign.">
+<meta property="og:image" content="https://jp89re6ozf.execute-api.us-east-1.amazonaws.com/assets/img/le5a.jpg">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..500,0..100&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="/assets/img/le5a.jpg">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="shot" aria-hidden="true">
+    <img class="a" src="/assets/img/le5a.jpg" alt="" fetchpriority="high">
+    <img class="b" src="/assets/img/le5b.jpg" alt="">
+  </div>
+  <div class="pool" aria-hidden="true"></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="rule" aria-hidden="true"></div>
+  <header class="site over">
+    <div class="wrap bar">
+      <a class="mark" href="/" aria-label="Thalweg, home"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a>
+      <nav class="primary" aria-label="Primary">
+        <a href="/station/">Station</a>
+        <a href="/station/#runs">Runs</a>
+        <a href="/review/">Review</a>
+        <a href="/benchmark/">Benchmark</a>
+        <a href="/performance/">Performance</a>
+        <a class="ext" href="https://github.com/RaYYeR220/thalweg" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+  <p class="plate"><b>FIG. 0 · FINSALBEKKEN, NORWAY</b>Five seconds of a river camera, 150 frames registered and averaged with OpenCV. The silk is moving water; the stones held still.</p>
+  <div class="copy">
+    <h1 id="hero-title"><span class="ln"><span>Every river camera,</span></span><span class="ln"><span>a gauging station.</span></span></h1>
+    <div class="side">
+      <p>Thalweg reads discharge from the video a river camera already records. OpenCV 5 measures the surface three ways, a policy-gated agent decides whether the number can go out, and a flood warning waits for a hydrologist's signature.</p>
+      <a class="cta" href="/station/">Open the live station <svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+    </div>
+  </div>
+  <div class="exposure" aria-hidden="true"><span>0 s</span><span class="line"><i style="left:25%"></i><i style="left:50%"></i><i style="left:75%"></i></span><span>5 s · exposure</span></div>
+</section>
+
+<section class="s tex" aria-label="Overview">
+  <div class="wrap ov" data-reveal>
+    <p class="overture">Most rivers that flood have a camera somewhere near them, and no gauge. Thalweg turns that camera into one, checks itself three ways, and <em>says plainly when it can't.</em></p>
+    <aside><b>0<small>wrong publications</small></b>in the refusal suite: night, glare, a frozen feed, still water, a moved camera, a flooded section. Every run, both brains.</aside>
+  </div>
+</section>
+
+<section class="s" id="method" aria-labelledby="ch1">
+  <div class="wrap">
+    <div data-reveal>
+      <p class="chap">Chapter one · how it measures</p>
+      <h2 class="big" id="ch1">From a shaky clip to <em>cubic metres per second.</em></h2>
+      <p class="intro">Four steps, each with its evidence. Every figure in this chapter comes from one development run on video 8 of the Video Globe Challenge, a Norwegian brook: 300 frames, ten seconds.</p>
+    </div>
+
+    <div class="spread" data-reveal>
+      <div class="t">
+        <span class="roman" aria-hidden="true">i.</span>
+        <h3>Hold the banks still.</h3>
+        <p>ALIKED keypoints are matched with LightGlue on the banks only, never on the water, and each keyframe is registered to the reference view, so camera shake can't become velocity. On this clip the frozen build rejected the feature model and treated the camera as static. It was hand-held and drifts. That miss is the clearest open issue in our report.</p>
+        <dl class="margin"><dt>keyframes</dt><dd>13</dd><dt>residual p95</dt><dd>1.20 px</dd><dt>min inlier ratio</dt><dd>0.51</dd><dt>verdict</dt><dd>static (frozen build)</dd></dl>
+      </div>
+      <figure>
+        <div class="img"><svg id="figStab" viewBox="0 0 1920 1080" role="img" aria-label="Frame 0 of the clip with the two bank regions hatched"></svg></div>
+        <figcaption><b>FIG. 1</b>Frame 0 of the clip. Only the hatched banks are allowed to vote on how the camera moved.</figcaption>
+      </figure>
+    </div>
+
+    <div class="spread flip" data-reveal>
+      <div class="t">
+        <span class="roman" aria-hidden="true">ii.</span>
+        <h3>Flatten the surface at today's water level.</h3>
+        <p>Surveyed ground reference points fix the camera model. Each pixel is projected onto the water plane at the measured stage, so a distance on the image becomes a distance on the river. When the river rises, the plane rises with it.</p>
+        <dl class="margin"><dt>model</dt><dd>planar, 4 GRPs</dd><dt>level</dt><dd>0.00 m</dd><dt>resolution</dt><dd>8 mm per pixel</dd></dl>
+      </div>
+      <figure>
+        <div class="two">
+          <div class="img"><svg id="figObl" viewBox="0 0 1920 1080" role="img" aria-label="Oblique camera frame with the four ground reference points circled"></svg></div>
+          <div class="img"><svg id="figOrtho" viewBox="0 0 525 575" role="img" aria-label="The same frame orthorectified onto the water plane with a half-metre grid"></svg></div>
+        </div>
+        <figcaption><b>FIG. 2</b>The camera's view and the same frame laid flat on the water, half-metre grid, north up. The dashed outline is where velocity was measured.</figcaption>
+      </figure>
+    </div>
+
+    <div class="spread" data-reveal>
+      <div class="t">
+        <span class="roman" aria-hidden="true">iii.</span>
+        <h3>Measure it three ways that fail differently.</h3>
+        <p>Window correlation, streak angles in space-time images, and dense optical flow. A visible riverbed fools correlation but not streaks; glare fools both in different ways. The agent compares them before it trusts any of them.</p>
+      </div>
+      <figure>
+        <div class="three">
+          <div><div class="img"><svg id="figL" viewBox="70 30 400 420" role="img" aria-label="LSPIV velocity vectors on the orthorectified water"></svg></div><h4>LSPIV</h4><div class="v">0.968<small>m/s p50</small></div><p>914 of 1146 vectors</p></div>
+          <div><div class="img"><svg id="figS" viewBox="0 0 201 210" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Space-time image with fitted streak lines"></svg></div><h4>STIV</h4><div class="v">0.972<small>m/s p50</small></div><p>55 of 60 lines</p></div>
+          <div><div class="img"><svg id="figD" viewBox="70 30 400 420" role="img" aria-label="Dense DIS optical-flow vectors on the orthorectified water"></svg></div><h4>DIS optical flow</h4><div class="v">0.959<small>m/s p50</small></div><p>997 of 1109 vectors</p></div>
+        </div>
+        <figcaption><b>FIG. 3</b>Three independent readings of the same ten seconds. Their median surface speeds sit within 1.4 % of each other.</figcaption>
+      </figure>
+    </div>
+
+    <div class="spread flip" data-reveal>
+      <div class="t">
+        <span class="roman" aria-hidden="true">iv.</span>
+        <h3>Integrate across the surveyed section.</h3>
+        <p>Surface velocity, times a coefficient for the slower water below, across the surveyed bed at the measured level. The uncertainty is carried with the number, never dropped.</p>
+        <dl class="margin"><dt>wetted area</dt><dd>1.017 m²</dd><dt>width</dt><dd>3.41 m</dd><dt>α</dt><dd>0.85</dd><dt>95 % budget</dt><dd>α 5.9 · level 3.4 · velocity 1.2 %</dd></dl>
+      </div>
+      <figure>
+        <div class="img" style="padding:18px 12px 8px"><svg id="figSec" role="img" aria-label="Cross-section of the river bed with the surface velocity measured along it"></svg></div>
+        <figcaption><b>FIG. 4</b>The section at X = 2.20 m: bed from 16 survey points, LSPIV velocity along it (line) and one STIV reading per line (circles).</figcaption>
+        <div class="qline"><div class="qbig">0.776<small>m³/s</small></div><p class="qnote">published · <b>95 % [0.711, 0.840]</b> · mean of agreeing LSPIV and STIV<br>reference <b>0.636 m³/s</b>, so <b>+22 %</b>. Two methods agreeing on a drifting frame is still wrong; see step i.</p></div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="s tex" id="refusals" aria-labelledby="ch2">
+  <div class="wrap">
+    <div data-reveal>
+      <p class="chap">Chapter two · the agent refuses</p>
+      <h2 class="big" id="ch2">It would rather <em>say nothing</em> than say it wrong.</h2>
+      <p class="intro">The agent picks methods and parameters, but it can't publish on its own say-so. Every action passes a policy gate written in code. A gauging goes out only when the evidence in the run supports the basis the agent claims.</p>
+    </div>
+    <div class="ledger" data-reveal>
+      <div class="entry"><span class="kind k-pub">Publish</span><div><code>methods_agree</code><div class="ev">LSPIV 0.724 · STIV 0.828 m³/s · spread 13.5 % of a 15 % tolerance</div></div><p>Two independent methods agree, so the mean of the agreeing pair is published with its uncertainty.</p></div>
+      <div class="entry"><span class="kind k-hold">Hold</span><div><code>image_quality: no_moving_tracers, glare</code><div class="ev">glare_frac 1.00 · recapture requested</div></div><p>The surface can't be seen. The station asks for another clip instead of guessing.</p></div>
+      <div class="entry"><span class="kind k-esc">Escalate</span><div><code>camera_moved</code><div class="ev">shift p95 33.5 px from the surveyed reference · 394 inliers</div></div><p>The view no longer matches the survey. GRP pixels must be re-confirmed by a person before any gauging.</p></div>
+      <div class="entry"><span class="kind k-esc">Escalate</span><div><code>perception_failed:orthorectify:planar_grp_level_mismatch</code><div class="ev">reported level 1.50 m · plane surveyed at 0.00 m</div></div><p>The water level is off the surveyed plane, so the projection would be fiction.</p></div>
+      <div class="entry"><span class="kind k-hold">Hold</span><div><code>fail_closed:timeout</code><div class="ev">Step Functions FailClosed</div></div><p>Any error or timeout before a decision is saved ends in HOLD. Never a guessed number.</p></div>
+      <p class="vocab">The gate's other words for no: <span>methods_disagree</span> · <span>basis_false:bed_not_visible</span> · <span>basis_false:surface_not_seeded</span> · <span>coverage_low</span> · <span>valid_vectors_low</span> · <span>confidence_low</span> · <span>geometry_unverified</span> · <span>stabilization_residual_high</span> · <span>frozen_frames</span> · <span>bad_args:missing:reason</span></p>
+    </div>
+
+    <div class="doc" data-reveal>
+      <div class="t">
+        <span class="roman" aria-hidden="true">v.</span>
+        <h3>A warning needs a signature.</h3>
+        <p>After each published gauging the station refits its rating curve and runs a stage nowcast. If the chance of crossing the flood threshold within three hours is at least one half, it drafts a warning and the workflow stops on a task token. Only a reviewer with the passcode can issue it; the agent has no tool for it. Unsigned drafts expire after six hours.</p>
+        <div class="states" aria-label="Warning states"><span class="on">DRAFT</span><span>SIGNED</span><span>REJECTED</span><span>EXPIRED</span></div>
+      </div>
+      <div class="paper">
+        <div class="hd"><span>River Dart at Austins Bridge · 12 Oct 2018, 12:00</span><span class="st">DRAFT · NOT ISSUED</span></div>
+        <blockquote>River Dart at Austins Bridge: river level 5000.12 m and rising 30 cm/h. Flow is forecast to reach the warning threshold of 231 m³/s (stage 5000.23 m) in about 0.4 h. Threshold source: NRFA 46003 Dart at Austins Bridge, QMED 231.2 m³/s (median annual maximum flood).</blockquote>
+        <dl><dt>p(cross)</dt><dt>ETA</dt><dt>threshold</dt><dt>expires</dt><dd>0.963</dd><dd>12:25</dd><dd>231.2 m³/s</dd><dd>18:00</dd></dl>
+        <div class="sigline"><span class="lab">Signed</span><span class="ln"></span><span class="ex">reviewer passcode<br>required</span></div>
+        <p class="specimen">Specimen: Thalweg's nowcast and warning code replayed on the published Storm Callum stage series at noon. Live drafts wait in the <a href="/review/">review queue</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="bench" aria-labelledby="ch3">
+  <div class="wrap">
+    <div data-reveal>
+      <p class="chap">Chapter three · benchmark</p>
+      <h2 class="big" id="ch3">Blind, <em>against the hydrologists.</em></h2>
+      <p class="intro">The eight videos of the Video Globe Challenge 2020, from a 0.6 m³/s Norwegian brook to a 960 m³/s Australian river. Each was gauged by 15 to 23 hydrologists with their own tools. We developed on videos 1 and 8, froze the agent, then scored videos 2 to 7 once per brain. <a href="/benchmark/">Every answer, plotted.</a></p>
+    </div>
+    <div class="tiles" data-reveal>
+      <div class="tile"><img src="/assets/img/vgc2.jpg" alt="Drone frame of the West Normanby river" loading="lazy" width="400" height="300"><div class="n"><h3>West Normanby</h3><span class="no">no. 2</span></div><p>Australia, drone<br>reference 108 m³/s · 17 hydrologists</p><div class="res"><span>autopilot</span><b>+17.9 %</b><em>12/18</em><span>LLM</span><b>+25.7 %</b><em>14/18</em></div></div>
+      <div class="tile"><img src="/assets/img/vgc3.jpg" alt="Bank camera frame of Le Séran" loading="lazy" width="400" height="300"><div class="n"><h3>Le Séran</h3><span class="no">no. 3</span></div><p>France, 3D bank camera<br>reference 55.2 m³/s · 18 hydrologists</p><div class="res"><span>autopilot</span><b>−7.0 %</b><em>5/19</em><span>LLM</span><b>−1.6 %</b><em>1/19</em></div></div>
+      <div class="tile"><img src="/assets/img/vgc4.jpg" alt="Drone frame of the Russell River" loading="lazy" width="400" height="300"><div class="n"><h3>Russell River</h3><span class="no">no. 4</span></div><p>Australia, drone<br>reference 139 m³/s · 22 hydrologists</p><div class="res"><span class="x">escalated by both brains: the methods disagreed and nothing justified picking one</span></div></div>
+      <div class="tile"><img src="/assets/img/vgc5.jpg" alt="Hand-held frame of Storåne" loading="lazy" width="400" height="300"><div class="n"><h3>Storåne</h3><span class="no">no. 5</span></div><p>Norway, hand-held<br>reference 19.7 m³/s · 23 hydrologists</p><div class="res"><span>autopilot</span><b>+23.1 %</b><em>22/24</em><span>LLM</span><b>+27.8 %</b><em>24/24</em></div></div>
+      <div class="tile"><img src="/assets/img/vgc6.jpg" alt="Bank camera frame of Le Groin" loading="lazy" width="400" height="300"><div class="n"><h3>Le Groin</h3><span class="no">no. 6</span></div><p>France, 3D bank camera<br>reference 53.7 m³/s · 17 hydrologists</p><div class="res"><span>autopilot</span><b>+3.2 %</b><em>5/18</em><span>LLM</span><b>+3.2 %</b><em>5/18</em></div></div>
+      <div class="tile"><img src="/assets/img/vgc7.jpg" alt="Drone frame of the Herbert River" loading="lazy" width="400" height="300"><div class="n"><h3>Herbert River</h3><span class="no">no. 7</span></div><p>Australia, drone<br>reference 963 m³/s · 15 hydrologists</p><div class="res"><span>autopilot</span><b>−14.3 %</b><em>13/16</em><span>LLM</span><b>−3.0 %</b><em>9/16</em></div></div>
+      <div class="tile dev"><img src="/assets/img/vgc1.jpg" alt="Ground camera frame of La Vence" loading="lazy" width="400" height="300"><div class="n"><h3>La Vence</h3><span class="no">no. 1</span></div><p>France, ground camera<br>reference 1.26 m³/s · 15 hydrologists</p><p class="dv">development video, not scored blind</p></div>
+      <div class="tile dev"><img src="/assets/img/vgc8.jpg" alt="Hand-held frame of Finsalbekken" loading="lazy" width="400" height="300"><div class="n"><h3>Finsalbekken</h3><span class="no">no. 8</span></div><p>Norway, hand-held<br>reference 0.636 m³/s · 23 hydrologists</p><p class="dv">development video, not scored blind</p></div>
+    </div>
+    <p class="specimen" data-reveal>Signed error of the published discharge, and rank among the hydrologists plus our answer (1 is best). Frozen build, scored once.</p>
+    <div class="sums" data-reveal>
+      <div><b>13.1 %</b>mean absolute error of the frozen autopilot, 5 of 6 held-out videos published</div>
+      <div><b>3 of 6</b>held-out videos where the autopilot beat the median hydrologist</div>
+      <div><b>1st of 19</b>the LLM agent on video 3, at −1.6 %</div>
+      <div><b>0</b>wrong publications in the refusal suite, in every run</div>
+    </div>
+    <div class="colophon" data-reveal>
+      <span class="k">COOL</span>
+      <p>On Graviton4, COOL's OpenCV build was no faster than the stock OpenCV 5 wheel for our workload: 38.9 s against 37.7 s per clip. Graviton4 itself is the saving: with the stock wheel, about 15 % per gauging against x86. <a href="/performance/">The measurements</a>.</p>
+      <div class="v">
+        <table>
+          <thead><tr><th scope="col">median of 5</th><th scope="col">s / clip</th><th scope="col">$ / 1000</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">c8g · COOL</th><td>38.9</td><td>0.97</td></tr>
+            <tr><th scope="row">c8g · pip OpenCV 5</th><td>37.7</td><td>0.84</td></tr>
+            <tr><th scope="row">c7i x86 · pip</th><td>39.7</td><td>0.98</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap cols">
+    <div class="b"><a class="mark" href="/"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a><p>A stream gauge made of a camera, and the good sense to refuse.</p></div>
+    <div class="c">
+      <div><h2>Video Globe Challenge 2020</h2><p>Bodart, Le Coz, Jodeau, Hauet (2023), <a href="https://doi.org/10.57745/KVNIHX" rel="noopener">doi:10.57745/KVNIHX</a>, etalab-2.0. Videos by EDF, DREAL Auvergne-Rhône-Alpes, NVE and DNRME Queensland.</p></div>
+      <div><h2>River Dart, Storm Callum</h2><p>Perks (2024), <a href="https://doi.org/10.25405/data.ncl.19762027" rel="noopener">doi:10.25405/data.ncl.19762027</a>, CC BY 4.0. Flow statistics from the UK National River Flow Archive, station 46003.</p></div>
+      <div><h2>Built with</h2><p>OpenCV 5 (ALIKED, LightGlue, USAC, solvePnP, DIS) on AWS Graviton4 with COOL, Step Functions and DynamoDB. MIT licensed.</p></div>
+      <div><h2>The app</h2><ul><li><a href="/station/">Live station</a></li><li><a href="/review/">Review queue</a></li><li><a href="/benchmark/">Benchmark</a></li><li><a href="/performance/">Performance</a></li></ul></div>
+      <div><h2>Read</h2><ul><li><a href="https://github.com/RaYYeR220/thalweg/blob/main/docs/report.md" rel="noopener">Technical report</a></li><li><a href="https://github.com/RaYYeR220/thalweg/blob/main/CLAIMS.md" rel="noopener">Claims and evidence</a></li><li><a href="https://github.com/RaYYeR220/thalweg/blob/main/JUDGES.md" rel="noopener">Five-minute review</a></li><li><a href="https://github.com/RaYYeR220/thalweg" rel="noopener">Source on GitHub</a></li></ul></div>
+      <div><h2>Colophon</h2><p>Set in Fraunces, Figtree and IBM Plex Mono. Images are frames of the Video Globe Challenge clips, graded warm.</p></div>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/landing.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Performance · COOL on Graviton4 · Thalweg</title>
+<meta name="description" content="One complete Thalweg gauging timed on COOL's OpenCV build and the stock OpenCV 5 wheel on Graviton4, and on x86: seconds per clip, cost per 1000 gaugings, per-operation timings and the build proof.">
+<meta name="theme-color" content="#14100b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..500,0..100&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="/" aria-label="Thalweg, home"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/station/">Station</a>
+      <a href="/station/#runs">Runs</a>
+      <a href="/review/">Review</a>
+      <a href="/benchmark/">Benchmark</a>
+      <a href="/performance/" aria-current="page">Performance</a>
+      <a class="ext" href="https://github.com/RaYYeR220/thalweg" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tex">
+  <div class="wrap page">
+    <div class="head">
+      <div class="t">
+        <p class="chap">Performance · COOL on Graviton4</p>
+        <h1 class="display">An honest <em>negative result.</em></h1>
+        <p class="lede">One complete gauging of an 8-second clip (VGC video 1, deterministic agent), five times on each build: COOL's OpenCV 5.1 on Graviton4, the stock OpenCV 5 wheel on the same Graviton4 instance, and the same wheel on x86. All three reach the same decision; the two Arm builds agree on the discharge to four decimals.</p>
+      </div>
+    </div>
+
+    <div class="pf-find" id="findings">
+      <article class="finding">
+        <p class="chap">Finding one</p>
+        <h2>COOL ≈ the stock wheel.</h2>
+        <p class="big" id="f1">38.9 s <span>against</span> 37.7 s</p>
+        <p>On this workload COOL is not faster than <code>opencv-python-headless</code> on the same c8g.large. The aarch64 wheel already ships KleidiCV, in a newer version than the COOL build, and our time goes into ensemble correlation, ALIKED/LightGlue inference and numpy, not the colour, resize and contour kernels COOL targets.</p>
+      </article>
+      <article class="finding">
+        <p class="chap">Finding two</p>
+        <h2>Graviton4 is the saving.</h2>
+        <p class="big" id="f2">$0.84 <span>against</span> $0.98</p>
+        <p id="f2t">Per 1000 gaugings with the same wheel, Graviton4 costs about 15 % less than x86 (c7i.large). COOL's AMI adds a software fee, which brings its cost to $0.97, close to x86.</p>
+      </article>
+      <article class="finding">
+        <p class="chap">What runs in production</p>
+        <h2>The worker runs COOL.</h2>
+        <p class="big">c8g.large</p>
+        <p>The production worker uses COOL's build, and each benchmark file records which <code>cv2</code> ran, its build HAL, the instance type and the AMI product code; they are reproduced below. The obvious next step is our own kernels: LSPIV and STIV are Python loops around OpenCV calls and are the two largest stages.</p>
+      </article>
+    </div>
+
+    <div class="grid pf-grid">
+      <section class="panel span-7" aria-labelledby="sec-h">
+        <div class="ph"><h2 id="sec-h">Seconds per clip</h2><span class="meta">median of 5 · split by stage</span></div>
+        <div id="bars-s"><div class="loading">Loading performance.json…</div></div>
+        <div class="legend" id="stage-legend"></div>
+      </section>
+      <section class="panel span-5" aria-labelledby="usd-h">
+        <div class="ph"><h2 id="usd-h">Cost per 1000 gaugings</h2><span class="meta">on-demand price · modeled</span></div>
+        <div id="bars-usd"></div>
+        <p class="note-sm">Instance price per hour (plus COOL's software fee on its AMI) times the measured seconds per clip. It leaves out storage, requests and the LLM.</p>
+      </section>
+
+      <section class="panel span-12" aria-labelledby="ops-h">
+        <div class="ph"><h2 id="ops-h">Per operation</h2><span class="meta">ms, median · fastest build in ice</span></div>
+        <div id="ops"></div>
+      </section>
+
+      <section class="span-12 sec-tight" aria-labelledby="proof-h">
+        <h2 class="sec-h" id="proof-h">Which OpenCV <em>actually ran.</em></h2>
+        <p class="sec-sub">Read from inside each benchmark process: <code>cv2.__file__</code>, <code>cv2.getBuildInformation()</code> and the instance metadata service. Both Graviton4 builds ran on the same COOL AMI instance; the stock wheel lives in a separate virtualenv, which the path shows.</p>
+        <div class="proofs" id="proofs"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap cols">
+    <div class="b"><a class="mark" href="/"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a><p>A stream gauge made of a camera, and the good sense to refuse.</p></div>
+    <div class="c">
+      <div><h2>Reproduce</h2><p><a href="https://github.com/RaYYeR220/thalweg/tree/main/bench" rel="noopener">bench/run_bench.py</a> and <a href="https://github.com/RaYYeR220/thalweg/tree/main/bench/results" rel="noopener">bench/results/</a>, served live at <a href="/artifacts/public/performance.json">/artifacts/public/performance.json</a>.</p></div>
+      <div><h2>Built with</h2><p>OpenCV 5 on AWS Graviton4 (c8g.large) with COOL, the Cloud-Optimized OpenCV build, from the AWS Marketplace.</p></div>
+      <div><h2>The app</h2><ul><li><a href="/station/">Live station</a></li><li><a href="/review/">Review queue</a></li><li><a href="/benchmark/">Benchmark</a></li><li><a href="/performance/">Performance</a></li></ul></div>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/performance.js"></script>
+</body>
+</html>

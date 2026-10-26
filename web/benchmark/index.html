@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark · Thalweg against 15–23 hydrologists</title>
+<meta name="description" content="Thalweg on the eight videos of the Video Globe Challenge 2020, scored blind against the answers of 15 to 23 hydrologists, plus the refusal suite.">
+<meta name="theme-color" content="#14100b">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..600,0..100;1,9..144,300..500,0..100&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<header class="site">
+  <div class="wrap bar">
+    <a class="mark" href="/" aria-label="Thalweg, home"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a>
+    <nav class="primary" aria-label="Primary">
+      <a href="/station/">Station</a>
+      <a href="/station/#runs">Runs</a>
+      <a href="/review/">Review</a>
+      <a href="/benchmark/" aria-current="page">Benchmark</a>
+      <a href="/performance/">Performance</a>
+      <a class="ext" href="https://github.com/RaYYeR220/thalweg" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="tex">
+  <div class="wrap page">
+    <div class="head">
+      <div class="t">
+        <p class="chap">Benchmark · Video Globe Challenge 2020</p>
+        <h1 class="display">Blind, <em>against the hydrologists.</em></h1>
+        <p class="lede">Eight real videos from France, Norway and Australia, each gauged by 15 to 23 hydrologists with their own tools (Bodart et al. 2023). We developed on videos 1 and 8, froze the agent, the policy and every parameter, then scored videos 2 to 7 once per brain. The scorer reads the reference discharges; the pipeline never does.</p>
+      </div>
+      <aside class="bm-switch">
+        <p class="chap">Results shown</p>
+        <div class="seg" id="ver" role="group" aria-label="Which results">
+          <button type="button" aria-pressed="true" data-ver="frozen">Frozen · blind</button>
+          <button type="button" aria-pressed="false" data-ver="v11">v1.1 · not blind</button>
+        </div>
+        <p class="bm-vnote" id="ver-note">The frozen build, tagged <code>eval-freeze</code> before any held-out video was scored.</p>
+      </aside>
+    </div>
+
+    <div id="ver-banner"></div>
+    <div class="bm-sum" id="summary"><div class="skel" style="height:120px"></div></div>
+
+    <section class="sec" aria-labelledby="vids-h">
+      <h2 class="sec-h" id="vids-h">Every answer, <em>per video.</em></h2>
+      <p class="sec-sub">Each dot is one hydrologist's discharge, as a signed error against the reference. The shaded band is the reference's own uncertainty. Rank counts the hydrologists plus our answer, by absolute error; 1 is best.</p>
+      <div class="legend bm-legend" aria-hidden="true">
+        <span><svg width="14" height="14"><circle cx="7" cy="7" r="4" fill="rgba(201,191,174,.7)"/></svg>a hydrologist</span>
+        <span><svg width="16" height="16"><path d="M8 1.5 14.5 8 8 14.5 1.5 8Z" fill="#9fe3e6"/></svg>autopilot</span>
+        <span><svg width="16" height="16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="#f6f2ea" stroke-width="2"/></svg>LLM agent</span>
+        <span><svg width="16" height="16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="#e0a95b" stroke-width="1.5" stroke-dasharray="2 2"/></svg>escalated, not published</span>
+        <span><i class="band" style="background:rgba(159,227,230,.35)"></i>reference uncertainty</span>
+      </div>
+      <div id="videos"><div class="loading">Loading benchmark.json…</div></div>
+      <h3 class="bm-sub">Development videos <span>tuned on, not blind</span></h3>
+      <div id="devvideos"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="ref-h">
+      <h2 class="sec-h" id="ref-h">The refusal suite: <em>zero wrong publications.</em></h2>
+      <p class="sec-sub">Real clips from videos 1 and 8, corrupted in known ways, each with the decision the agent must reach. A wrong PUBLISH on a case that must be refused is the failure that matters. The frozen runs missed three expected decisions, all by refusing too hard; v1.1 fixed them.</p>
+      <div class="panel" id="refusal"><div class="loading">Loading…</div></div>
+    </section>
+
+    <section class="sec bm-proto" aria-labelledby="proto-h">
+      <h2 class="sec-h" id="proto-h">Protocol</h2>
+      <div class="grid">
+        <div class="span-7 prose" id="protocol">
+          <ol class="proto-l">
+            <li>Videos 1 and 8 were used for development.</li>
+            <li>Station configs for videos 2 to 7 were built from survey inputs only (GRPs, bathymetry, water level and site notes), without opening any results file.</li>
+            <li>The agent, the policy and the parameters were frozen: <a href="https://github.com/RaYYeR220/thalweg/tree/eval-freeze" rel="noopener"><code>git tag eval-freeze</code></a>.</li>
+            <li>Videos 2 to 7 were scored once per brain. Only <code>eval/</code> reads the answer key.</li>
+            <li>Every run, of any version, is appended to <a href="https://github.com/RaYYeR220/thalweg/blob/main/eval/runs.jsonl" rel="noopener"><code>eval/runs.jsonl</code></a>.</li>
+            <li>Runs tagged v1.1 came after fixes prompted by the refusal suite. They are not blind, and are reported next to the frozen runs, never in place of them.</li>
+          </ol>
+        </div>
+        <div class="span-5">
+          <dl class="kv proto-kv" id="proto-kv">
+            <dt>dataset</dt><dd>Bodart, Le Coz, Jodeau, Hauet (2023), <a href="https://doi.org/10.57745/KVNIHX" rel="noopener">doi:10.57745/KVNIHX</a>, etalab-2.0</dd>
+            <dt>LLM brain</dt><dd>Claude Sonnet 5.5, tool calling with image input</dd>
+            <dt>results</dt><dd><a href="https://github.com/RaYYeR220/thalweg/blob/main/eval/results/benchmark.json" rel="noopener">eval/results/benchmark.json</a>, served live at <a href="/artifacts/public/benchmark.json">/artifacts/public/benchmark.json</a></dd>
+            <dt>method</dt><dd><a href="https://github.com/RaYYeR220/thalweg/blob/main/eval/README.md" rel="noopener">eval/README.md</a></dd>
+            <dt>not claimed</dt><dd>That Thalweg beats expert hydrologists in general. Six held-out videos are enough to compare on the same footage, not for a general accuracy claim.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap cols">
+    <div class="b"><a class="mark" href="/"><svg width="24" height="18" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 2 L9 16 Q13 19 17 16 L25 2" fill="none" stroke="#ede6da" stroke-width="1.6"/><circle cx="13" cy="16.4" r="2.3" fill="#9fe3e6"/></svg>Thalweg</a><p>A stream gauge made of a camera, and the good sense to refuse.</p></div>
+    <div class="c">
+      <div><h2>Video Globe Challenge 2020</h2><p>Videos supplied by EDF, DREAL Auvergne-Rhône-Alpes, NVE and DNRME Queensland. Le Coz, Hauet, Despax (2021), EGU21-2116.</p></div>
+      <div><h2>Where it falls short</h2><p>Hand-held footage with an unstated GRP frame (video 8), wind against the surface coefficient (video 5), and the static-texture diagnostic on drone footage (videos 2 and 7). See the <a href="https://github.com/RaYYeR220/thalweg/blob/main/docs/report.md" rel="noopener">report</a>, §8.3.</p></div>
+      <div><h2>The app</h2><ul><li><a href="/station/">Live station</a></li><li><a href="/review/">Review queue</a></li><li><a href="/benchmark/">Benchmark</a></li><li><a href="/performance/">Performance</a></li></ul></div>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/assets/benchmark.js"></script>
+</body>
+</html>
