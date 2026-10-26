@@ -43,8 +43,11 @@ def cmd_manifest(a):
 
 
 def _latest_run(clip_key: str) -> dict | None:
-    with urllib.request.urlopen(f"{API}/runs?station=dart&limit=20", timeout=20) as r:
-        runs = json.loads(r.read()).get("runs", [])
+    try:
+        with urllib.request.urlopen(f"{API}/runs?station=dart&limit=20", timeout=30) as r:
+            runs = json.loads(r.read()).get("runs", [])
+    except (OSError, ValueError):
+        return None  # transient network error: poll again
     for run in runs:
         if run.get("clip_key") == clip_key:
             return run
