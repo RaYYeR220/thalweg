@@ -84,7 +84,7 @@ Vectors pass a score threshold, a speed bound, a direction gate and the normalis
 
 - **Rating curve.** Q = a(h − h₀)ᵇ, fitted by bounded least squares to the station's own published gaugings and refitted after each one. A new gauging far from the curve (relative residual > 3σ) is a sign of a shifted control or a bad measurement.
 - **Nowcast.** A constant-velocity Kalman filter runs on the stage series. It resets after gaps longer than 4 h; daylight-only footage leaves night gaps. A constant-acceleration model was tried and rejected: its 6-hour variance turned every threshold into a coin flip.
-- **Warning draft.** A warning is drafted when P(stage > threshold stage at +3 h) ≥ 0.5, or the stage is already above it. The threshold for the River Dart is the NRFA QMED for station 46003 (231.2 m³/s), mapped to a stage through the rating curve. On the Storm Callum stage series this rule would have drafted a warning at 10:30 on 12 October 2018, about 1.5 h before the stage passed the QMED level.
+- **Warning draft.** A warning is drafted when P(stage > threshold stage at +3 h) ≥ 0.5, or the stage is already above it. The threshold for the River Dart is the NRFA QMED for station 46003 (231.2 m³/s), mapped to a stage through the rating curve. On the live replay the rule drafted a warning after the 11:22 gauging on 12 October 2018: stage 4999.84 m, rising 63 cm/h, threshold stage 5000.64 m on the station's own rating, ETA 1.3 h. The river crested 25 cm below that level.
 
 ## 7. AWS deployment
 
@@ -172,7 +172,7 @@ The River Dart station replays real footage from Austins Bridge (Perks 2024, CC 
 - **Storm rising limb, 06:52–09:22 on 12 October:** 7 published gaugings from 5.2 to 17.3 m³/s. Six of them are within ±9% of the KLT-IV analysis.
 - **High flow, 10:37–14:52:** 59, 99 and 81 m³/s, which is 24–35% below KLT-IV. Part of the near half of the section is outside the camera view and is filled from the measured panels. We have not resolved which of the two analyses is closer to the true discharge.
 - **All 19:** median absolute difference from KLT-IV 21%, and 9 of 19 within 20%.
-- **The warning:** after the 11:22 gauging (stage 4999.84 m, rising 63 cm/h), the station's own rating curve put the QMED threshold of 231 m³/s at stage 5000.64 m. The nowcast gave 1.3 h to reach it, and the station drafted a warning that now waits in the review queue. At 12:52 the stage passed the bank tops of the surveyed section; the agent escalated instead of extrapolating.
+- **The warning:** after the 11:22 gauging (stage 4999.84 m, rising 63 cm/h), the station's own rating curve put the QMED threshold of 231 m³/s at stage 5000.64 m. The nowcast gave 1.3 h to reach it, and the station drafted a warning that now waits in the review queue. At 12:52 the stage passed the bank tops of the surveyed section; the agent escalated instead of extrapolating. The stage then crested at 5000.39 m, 25 cm short of that threshold: by the station's own rating, Storm Callum stayed just under QMED. The KLT-IV analysis peaks at 222 m³/s, also just under. A straight-line nowcast cannot see a crest coming, and that is why the draft goes to a person.
 - **The decision that drafted it:** LSPIV and STIV disagreed, so the LLM brain ran dense optical flow as a third opinion and published the agreeing pair (DIS 95.0, STIV 104.0 m³/s).
 
 ## 9. Limitations

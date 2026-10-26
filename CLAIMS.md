@@ -17,10 +17,11 @@ Every public statement about Thalweg, tagged by how it can be checked.
 | Blind VGC2020 results (frozen autopilot and LLM) | REPRODUCIBLE | `git tag eval-freeze`, `eval/results/vgc-*/`, `eval/runs.jsonl` |
 | v1.1 results | REPRODUCIBLE, **not blind** | `eval/results/*-v1.1/` |
 | Refusal suite: no wrong publications | REPRODUCIBLE | `eval/results/refusal-*/summary.json` |
+| River Dart gaugings vs the published KLT-IV analysis: 6 of 7 rising-limb gaugings within ±9%; high flows 24–35% lower | REPRODUCIBLE | The station page and the gaugings API vs Perks (2024) `cal_val_stage_discharge_combined.csv` |
 | The worker runs COOL's OpenCV on Graviton4 | VERIFIED-LIVE + REPRODUCIBLE | `bench/results/c8g-large-cool.json` (`cv2.__file__`, build HAL lines, IMDS instance type and AMI); worker logs |
 | COOL vs stock OpenCV vs x86 timings and $/1000 gaugings | REPRODUCIBLE | `bench/run_bench.py`, `bench/results/` (5 repeats, median) |
 | Cost per 1000 gaugings | MODELED | On-demand instance price plus COOL software fee, times measured seconds per clip. It excludes storage, requests and the LLM. |
-| The Storm Callum warning would have been drafted about 1.5 h before the stage passed the QMED level | MODELED | The nowcast rule replayed on the published stage series. The rating curve maps QMED to a stage, so this depends on that curve. |
+| On the Storm Callum replay the station drafted a warning at 11:22, forecasting the QMED stage (5000.64 m on its own rating) in 1.3 h; the river crested 25 cm below it | VERIFIED-LIVE + MODELED | The review queue and the 11:22 run's trace (`physics`). The threshold stage depends on the station's fitted rating curve. |
 | The live station gauges Storm Callum every 10 minutes | VERIFIED-LIVE | The station page and the runs list. It is a replay of 2018 footage. |
 
 ## Not claimed
