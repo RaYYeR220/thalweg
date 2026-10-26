@@ -32,3 +32,6 @@ NOTES.md
 *-internal/
 eval/artifacts/
 docs/report.html
+
+# account-specific CDK lookups (VPC ids); regenerated on synth
+infra/cdk.context.json

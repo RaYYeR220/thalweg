@@ -136,7 +136,7 @@ export class FlowStack extends Stack {
 
     this.replaySchedule = new scheduler.Schedule(this, 'ReplaySchedule', {
       scheduleName: NAMES.replaySchedule,
-      description: 'Keeps the River Dart station gauging: one archived clip every 15 minutes.',
+      description: 'Keeps the River Dart station gauging: one archived clip every 10 minutes.',
       schedule: scheduler.ScheduleExpression.rate(Duration.minutes(10)),
       target: new schedulerTargets.LambdaInvoke(replay, { retryAttempts: 0 }),
       // Switched on (-c replay=enabled) once the Dart archive and its manifest are uploaded.
