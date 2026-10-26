@@ -46,7 +46,15 @@ class FrameStack:
 
     @property
     def dt_s(self) -> float:
-        return float(np.median(np.diff(self.t_s))) if len(self.t_s) > 1 else float("nan")
+        """Mean frame interval from the real timestamps.
+
+        Velocimetry treats consecutive frames as evenly spaced. For variable-frame-rate footage
+        (many IP cameras) the mean interval keeps the total elapsed time right; the median of
+        irregular intervals can be off by a third.
+        """
+        if len(self.t_s) < 2:
+            return float("nan")
+        return float((self.t_s[-1] - self.t_s[0]) / (len(self.t_s) - 1))
 
 
 def probe(video: str | Path) -> dict:
@@ -109,8 +117,9 @@ def read_frames(video: str | Path, start_s: float = 0.0, dur_s: float | None = N
             warnings.append("timestamps_unavailable_using_nominal_fps")
         else:
             nominal = step / fps
-            if abs(np.median(dt) - nominal) / nominal > FPS_MISMATCH_TOL:
-                warnings.append(f"fps_mismatch: container {fps:.3f} fps, timestamps {step / np.median(dt):.3f} fps")
+            mean_dt = float(np.mean(dt))
+            if abs(mean_dt - nominal) / nominal > FPS_MISMATCH_TOL:
+                warnings.append(f"fps_mismatch: container {fps:.3f} fps, timestamps {step / mean_dt:.3f} fps")
             if np.std(dt) / np.mean(dt) > 0.05:
                 warnings.append("variable_frame_rate")
     h, w = frames[0].shape[:2]
