@@ -5,7 +5,7 @@
    - the hydrograph (published gaugings over the stage series), the rating curve and the forecast band;
    - the latest evidence frame, with velocity vectors over the orthorectified river.
 
-2. **Open any run** from the station's run list.
+2. **Open any run** from the station's run list (annotated examples: [docs/agentic-evidence.md](docs/agentic-evidence.md)).
    The trace shows each step: the OpenCV 5 tool, its arguments, the agent's stated reason, the policy verdict (denials appear in red), the evidence image, and the final decision. Look for the step where the diagnostics change the plan. For example, `static_ratio` above 1.2 makes the agent prefer STIV and keep LSPIV only as a cross-check.
 
 3. **Run the agent yourself.** On the station page, press **Run agent on this clip** (no account needed).

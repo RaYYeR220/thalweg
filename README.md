@@ -41,7 +41,7 @@ The mandatory perception steps always run first. A brain then chooses the next t
 - An LLM timeout, a malformed response, an exhausted daily budget or running out of steps or time leads to **HOLD**. A tool error goes back to the brain as evidence; the brain can retry with other parameters or stop. A failed mandatory perception step ends the run. Nothing ever produces a guessed number.
 - There is no tool that issues a flood warning. After a published gauging, the station refits its rating curve (Q = a(h − h₀)ᵇ) and runs a constant-velocity Kalman nowcast on the stage. If the probability of crossing the warning threshold within 3 h is at least 0.5, it **drafts** a warning. A Step Functions `waitForTaskToken` holds it until a hydrologist signs or rejects it in the review queue (6 h expiry).
 
-Every run leaves a trace: each tool call, its arguments and stated reason, the policy verdict, the evidence images and the decision. The trace shows the OpenCV output changing the next action.
+Every run leaves a trace: each tool call, its arguments and stated reason, the policy verdict, the evidence images and the decision. The trace shows the OpenCV output changing the next action; annotated examples are in [docs/agentic-evidence.md](docs/agentic-evidence.md).
 
 ## Results
 
