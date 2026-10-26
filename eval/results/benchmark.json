@@ -1801,6 +1801,790 @@
      "run_id": "r-20261025232451-c71f38"
     }
    ]
+  },
+  "vgc-autopilot-v1.2": {
+   "brain": "autopilot",
+   "label": "v1.2 (channel-axis guard, not blind)",
+   "summary": {
+    "test_videos": 6,
+    "published": 5,
+    "escalated": 1,
+    "held": 0,
+    "mae_published_pct": 9.51,
+    "mae_all_estimates_pct": 10.81,
+    "within_ref_uncertainty": 3,
+    "beats_median_expert": 3,
+    "mean_beats_share": 0.498,
+    "cost_usd": 0.0
+   },
+   "rows": [
+    {
+     "video": "vgc1",
+     "split": "dev",
+     "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "q_published": 1.3224,
+     "q_estimate": 1.3224,
+     "q_ref": 1.26,
+     "u_ref": 0.124,
+     "published": {
+      "err_pct": 4.95,
+      "within_ref_u": true,
+      "expert_rank": 2,
+      "n_experts": 15,
+      "beats_share": 0.933
+     },
+     "estimate": {
+      "err_pct": 4.95,
+      "within_ref_u": true,
+      "expert_rank": 2,
+      "n_experts": 15,
+      "beats_share": 0.933
+     },
+     "expert_median_err_pct": 23.02,
+     "estimates": {
+      "lspiv": {
+       "q": 0.9986,
+       "q_lo": 0.9322,
+       "q_hi": 1.065,
+       "coverage": 1.0
+      },
+      "stiv": {
+       "q": 1.3224,
+       "q_lo": 1.2037,
+       "q_hi": 1.4412,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 117.5,
+     "run_id": "r-20261025234903-5ada57"
+    },
+    {
+     "video": "vgc8",
+     "split": "dev",
+     "site": "Finsalbekken \u00e0 Ridabu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 1.1111,
+     "q_estimate": 1.1111,
+     "q_ref": 0.636,
+     "u_ref": 0.05,
+     "published": {
+      "err_pct": 74.7,
+      "within_ref_u": false,
+      "expert_rank": 24,
+      "n_experts": 23,
+      "beats_share": 0.0
+     },
+     "estimate": {
+      "err_pct": 74.7,
+      "within_ref_u": false,
+      "expert_rank": 24,
+      "n_experts": 23,
+      "beats_share": 0.0
+     },
+     "expert_median_err_pct": 9.43,
+     "estimates": {
+      "lspiv": {
+       "q": 1.0948,
+       "q_lo": 1.0195,
+       "q_hi": 1.1701,
+       "coverage": 0.998
+      },
+      "stiv": {
+       "q": 1.1274,
+       "q_lo": 1.0472,
+       "q_hi": 1.2076,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 127.8,
+     "run_id": "r-20261025235103-a59d84"
+    },
+    {
+     "video": "vgc2",
+     "split": "test",
+     "site": "West Normanby (drone)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 113.4966,
+     "q_estimate": 113.4966,
+     "q_ref": 107.945,
+     "u_ref": 0.055,
+     "published": {
+      "err_pct": 5.14,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 17,
+      "beats_share": 0.882
+     },
+     "estimate": {
+      "err_pct": 5.14,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 17,
+      "beats_share": 0.882
+     },
+     "expert_median_err_pct": 16.17,
+     "estimates": {
+      "lspiv": {
+       "q": 119.3113,
+       "q_lo": 112.027,
+       "q_hi": 126.5957,
+       "coverage": 0.996
+      },
+      "stiv": {
+       "q": 107.6818,
+       "q_lo": 100.5467,
+       "q_hi": 114.8169,
+       "coverage": 0.976
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 139.9,
+     "run_id": "r-20261025235314-e9b896"
+    },
+    {
+     "video": "vgc3",
+     "split": "test",
+     "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 48.9195,
+     "q_estimate": 48.9195,
+     "q_ref": 55.16,
+     "u_ref": 0.058,
+     "published": {
+      "err_pct": -11.31,
+      "within_ref_u": false,
+      "expert_rank": 7,
+      "n_experts": 18,
+      "beats_share": 0.667
+     },
+     "estimate": {
+      "err_pct": -11.31,
+      "within_ref_u": false,
+      "expert_rank": 7,
+      "n_experts": 18,
+      "beats_share": 0.667
+     },
+     "expert_median_err_pct": 24.51,
+     "estimates": {
+      "lspiv": {
+       "q": 46.5964,
+       "q_lo": 43.8265,
+       "q_hi": 49.3664,
+       "coverage": 0.995
+      },
+      "stiv": {
+       "q": 51.2426,
+       "q_lo": 47.5321,
+       "q_hi": 54.9531,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 281.5,
+     "run_id": "r-20261025235538-fb067a"
+    },
+    {
+     "video": "vgc4",
+     "split": "test",
+     "site": "Russell River (drone)",
+     "decision": "ESCALATE",
+     "method": null,
+     "basis": null,
+     "reasons": [
+      "the evidence did not satisfy the publication policy"
+     ],
+     "q_published": null,
+     "q_estimate": 163.0622,
+     "q_ref": 139.0,
+     "u_ref": 0.15,
+     "published": {
+      "err_pct": null,
+      "within_ref_u": null,
+      "expert_rank": null
+     },
+     "estimate": {
+      "err_pct": 17.31,
+      "within_ref_u": false,
+      "expert_rank": 16,
+      "n_experts": 22,
+      "beats_share": 0.318
+     },
+     "expert_median_err_pct": 11.95,
+     "estimates": {
+      "lspiv": {
+       "q": 163.0622,
+       "q_lo": 148.9296,
+       "q_hi": 177.1948,
+       "coverage": 0.668
+      },
+      "stiv": {
+       "q": 158.2204,
+       "q_lo": 140.9368,
+       "q_hi": 175.5039,
+       "coverage": 0.537
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 344.9,
+     "run_id": "r-20261026000022-8b7169"
+    },
+    {
+     "video": "vgc5",
+     "split": "test",
+     "site": "Le Stor\u00e5ne \u00e0 Ruud",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 24.3753,
+     "q_estimate": 24.3753,
+     "q_ref": 19.7,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": 23.73,
+      "within_ref_u": false,
+      "expert_rank": 22,
+      "n_experts": 23,
+      "beats_share": 0.087
+     },
+     "estimate": {
+      "err_pct": 23.73,
+      "within_ref_u": false,
+      "expert_rank": 22,
+      "n_experts": 23,
+      "beats_share": 0.087
+     },
+     "expert_median_err_pct": 13.39,
+     "estimates": {
+      "lspiv": {
+       "q": 23.4735,
+       "q_lo": 22.2397,
+       "q_hi": 24.7073,
+       "coverage": 0.993
+      },
+      "stiv": {
+       "q": 25.2771,
+       "q_lo": 23.8142,
+       "q_hi": 26.7401,
+       "coverage": 0.941
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 292.7,
+     "run_id": "r-20261026000613-73f041"
+    },
+    {
+     "video": "vgc6",
+     "split": "test",
+     "site": "Le Groin \u00e0 Artemare (01)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 55.2641,
+     "q_estimate": 55.2641,
+     "q_ref": 53.74,
+     "u_ref": 0.0928,
+     "published": {
+      "err_pct": 2.84,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "estimate": {
+      "err_pct": 2.84,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "expert_median_err_pct": 17.7,
+     "estimates": {
+      "lspiv": {
+       "q": 55.0421,
+       "q_lo": 51.7251,
+       "q_hi": 58.359,
+       "coverage": 0.995
+      },
+      "stiv": {
+       "q": 55.4861,
+       "q_lo": 52.0823,
+       "q_hi": 58.8898,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 176.2,
+     "run_id": "r-20261026001109-09e4b4"
+    },
+    {
+     "video": "vgc7",
+     "split": "test",
+     "site": "Herbert River (drone)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "q_published": 1006.4955,
+     "q_estimate": 1006.4955,
+     "q_ref": 962.8,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": 4.54,
+      "within_ref_u": true,
+      "expert_rank": 12,
+      "n_experts": 15,
+      "beats_share": 0.267
+     },
+     "estimate": {
+      "err_pct": 4.54,
+      "within_ref_u": true,
+      "expert_rank": 12,
+      "n_experts": 15,
+      "beats_share": 0.267
+     },
+     "expert_median_err_pct": 2.16,
+     "estimates": {
+      "lspiv": {
+       "q": 7.2151,
+       "q_lo": 6.5209,
+       "q_hi": 7.9093,
+       "coverage": 0.958
+      },
+      "stiv": {
+       "q": 1006.4955,
+       "q_lo": 666.6257,
+       "q_hi": 1346.3653,
+       "coverage": 0.843
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 128.5,
+     "run_id": "r-20261026001408-ceaea4"
+    }
+   ]
+  },
+  "vgc-autopilot-v1.3": {
+   "brain": "autopilot",
+   "label": "v1.3 (mean frame interval, publication gate, not blind)",
+   "summary": {
+    "test_videos": 6,
+    "published": 5,
+    "escalated": 1,
+    "held": 0,
+    "mae_published_pct": 9.85,
+    "mae_all_estimates_pct": 11.09,
+    "within_ref_uncertainty": 3,
+    "beats_median_expert": 3,
+    "mean_beats_share": 0.498,
+    "cost_usd": 0.0
+   },
+   "rows": [
+    {
+     "video": "vgc1",
+     "split": "dev",
+     "site": "La Vence \u00e0 Pont de Vence (St-Egr\u00e8ve)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "q_published": 1.3224,
+     "q_estimate": 1.3224,
+     "q_ref": 1.26,
+     "u_ref": 0.124,
+     "published": {
+      "err_pct": 4.95,
+      "within_ref_u": true,
+      "expert_rank": 2,
+      "n_experts": 15,
+      "beats_share": 0.933
+     },
+     "estimate": {
+      "err_pct": 4.95,
+      "within_ref_u": true,
+      "expert_rank": 2,
+      "n_experts": 15,
+      "beats_share": 0.933
+     },
+     "expert_median_err_pct": 23.02,
+     "estimates": {
+      "lspiv": {
+       "q": 0.9986,
+       "q_lo": 0.9322,
+       "q_hi": 1.065,
+       "coverage": 1.0
+      },
+      "stiv": {
+       "q": 1.3224,
+       "q_lo": 1.2037,
+       "q_hi": 1.4412,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 119.3,
+     "run_id": "r-20261026010445-c92ea3"
+    },
+    {
+     "video": "vgc8",
+     "split": "dev",
+     "site": "Finsalbekken \u00e0 Ridabu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 1.109,
+     "q_estimate": 1.109,
+     "q_ref": 0.636,
+     "u_ref": 0.05,
+     "published": {
+      "err_pct": 74.37,
+      "within_ref_u": false,
+      "expert_rank": 24,
+      "n_experts": 23,
+      "beats_share": 0.0
+     },
+     "estimate": {
+      "err_pct": 74.37,
+      "within_ref_u": false,
+      "expert_rank": 24,
+      "n_experts": 23,
+      "beats_share": 0.0
+     },
+     "expert_median_err_pct": 9.43,
+     "estimates": {
+      "lspiv": {
+       "q": 1.0927,
+       "q_lo": 1.0176,
+       "q_hi": 1.1679,
+       "coverage": 0.998
+      },
+      "stiv": {
+       "q": 1.1253,
+       "q_lo": 1.0452,
+       "q_hi": 1.2054,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 114.6,
+     "run_id": "r-20261026010706-79ebe3"
+    },
+    {
+     "video": "vgc2",
+     "split": "test",
+     "site": "West Normanby (drone)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 113.4966,
+     "q_estimate": 113.4966,
+     "q_ref": 107.945,
+     "u_ref": 0.055,
+     "published": {
+      "err_pct": 5.14,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 17,
+      "beats_share": 0.882
+     },
+     "estimate": {
+      "err_pct": 5.14,
+      "within_ref_u": true,
+      "expert_rank": 3,
+      "n_experts": 17,
+      "beats_share": 0.882
+     },
+     "expert_median_err_pct": 16.17,
+     "estimates": {
+      "lspiv": {
+       "q": 119.3113,
+       "q_lo": 112.027,
+       "q_hi": 126.5957,
+       "coverage": 0.996
+      },
+      "stiv": {
+       "q": 107.6818,
+       "q_lo": 100.5467,
+       "q_hi": 114.8169,
+       "coverage": 0.976
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 135.7,
+     "run_id": "r-20261026010904-fa2865"
+    },
+    {
+     "video": "vgc3",
+     "split": "test",
+     "site": "Le S\u00e9ran \u00e0 Belmont-Luth\u00e9zieu",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 48.0026,
+     "q_estimate": 48.0026,
+     "q_ref": 55.16,
+     "u_ref": 0.058,
+     "published": {
+      "err_pct": -12.98,
+      "within_ref_u": false,
+      "expert_rank": 7,
+      "n_experts": 18,
+      "beats_share": 0.667
+     },
+     "estimate": {
+      "err_pct": -12.98,
+      "within_ref_u": false,
+      "expert_rank": 7,
+      "n_experts": 18,
+      "beats_share": 0.667
+     },
+     "expert_median_err_pct": 24.51,
+     "estimates": {
+      "lspiv": {
+       "q": 46.5351,
+       "q_lo": 43.7688,
+       "q_hi": 49.3014,
+       "coverage": 0.995
+      },
+      "stiv": {
+       "q": 49.4701,
+       "q_lo": 46.524,
+       "q_hi": 52.4163,
+       "coverage": 0.994
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 171.2,
+     "run_id": "r-20261026011123-8e3ee0"
+    },
+    {
+     "video": "vgc4",
+     "split": "test",
+     "site": "Russell River (drone)",
+     "decision": "ESCALATE",
+     "method": null,
+     "basis": null,
+     "reasons": [
+      "the evidence did not satisfy the publication policy"
+     ],
+     "q_published": null,
+     "q_estimate": 163.0622,
+     "q_ref": 139.0,
+     "u_ref": 0.15,
+     "published": {
+      "err_pct": null,
+      "within_ref_u": null,
+      "expert_rank": null
+     },
+     "estimate": {
+      "err_pct": 17.31,
+      "within_ref_u": false,
+      "expert_rank": 16,
+      "n_experts": 22,
+      "beats_share": 0.318
+     },
+     "expert_median_err_pct": 11.95,
+     "estimates": {
+      "lspiv": {
+       "q": 163.0622,
+       "q_lo": 148.9296,
+       "q_hi": 177.1948,
+       "coverage": 0.668
+      },
+      "stiv": {
+       "q": 158.2204,
+       "q_lo": 140.9368,
+       "q_hi": 175.5039,
+       "coverage": 0.537
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 49.9,
+     "run_id": "r-20261026011416-d79250"
+    },
+    {
+     "video": "vgc5",
+     "split": "test",
+     "site": "Le Stor\u00e5ne \u00e0 Ruud",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 24.3753,
+     "q_estimate": 24.3753,
+     "q_ref": 19.7,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": 23.73,
+      "within_ref_u": false,
+      "expert_rank": 22,
+      "n_experts": 23,
+      "beats_share": 0.087
+     },
+     "estimate": {
+      "err_pct": 23.73,
+      "within_ref_u": false,
+      "expert_rank": 22,
+      "n_experts": 23,
+      "beats_share": 0.087
+     },
+     "expert_median_err_pct": 13.39,
+     "estimates": {
+      "lspiv": {
+       "q": 23.4735,
+       "q_lo": 22.2397,
+       "q_hi": 24.7073,
+       "coverage": 0.993
+      },
+      "stiv": {
+       "q": 25.2771,
+       "q_lo": 23.8142,
+       "q_hi": 26.7401,
+       "coverage": 0.941
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 51.9,
+     "run_id": "r-20261026011507-9fc5eb"
+    },
+    {
+     "video": "vgc6",
+     "split": "test",
+     "site": "Le Groin \u00e0 Artemare (01)",
+     "decision": "PUBLISH",
+     "method": "mean_of_agreeing",
+     "basis": "methods_agree",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "q_published": 55.2649,
+     "q_estimate": 55.2649,
+     "q_ref": 53.74,
+     "u_ref": 0.0928,
+     "published": {
+      "err_pct": 2.84,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "estimate": {
+      "err_pct": 2.84,
+      "within_ref_u": true,
+      "expert_rank": 5,
+      "n_experts": 17,
+      "beats_share": 0.765
+     },
+     "expert_median_err_pct": 17.7,
+     "estimates": {
+      "lspiv": {
+       "q": 55.0429,
+       "q_lo": 51.7259,
+       "q_hi": 58.3599,
+       "coverage": 0.995
+      },
+      "stiv": {
+       "q": 55.4869,
+       "q_lo": 52.0831,
+       "q_hi": 58.8907,
+       "coverage": 1.0
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 49.5,
+     "run_id": "r-20261026011559-5cc06c"
+    },
+    {
+     "video": "vgc7",
+     "split": "test",
+     "site": "Herbert River (drone)",
+     "decision": "PUBLISH",
+     "method": "stiv",
+     "basis": "bed_visible_prefers_stiv",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "q_published": 1006.4955,
+     "q_estimate": 1006.4955,
+     "q_ref": 962.8,
+     "u_ref": 0.053,
+     "published": {
+      "err_pct": 4.54,
+      "within_ref_u": true,
+      "expert_rank": 12,
+      "n_experts": 15,
+      "beats_share": 0.267
+     },
+     "estimate": {
+      "err_pct": 4.54,
+      "within_ref_u": true,
+      "expert_rank": 12,
+      "n_experts": 15,
+      "beats_share": 0.267
+     },
+     "expert_median_err_pct": 2.16,
+     "estimates": {
+      "lspiv": {
+       "q": 7.2151,
+       "q_lo": 6.5209,
+       "q_hi": 7.9093,
+       "coverage": 0.958
+      },
+      "stiv": {
+       "q": 1006.4955,
+       "q_lo": 666.6257,
+       "q_hi": 1346.3653,
+       "coverage": 0.843
+      }
+     },
+     "cost_usd": 0.0,
+     "seconds": 35.1,
+     "run_id": "r-20261026011649-54a66f"
+    }
+   ]
   }
  },
  "refusal": {
@@ -2294,6 +3078,254 @@
      "decision": "ESCALATE",
      "reasons": [
       "perception_failed:orthorectify:planar_grp_level_mismatch"
+     ],
+     "correct": true,
+     "q": null
+    }
+   ]
+  },
+  "refusal-autopilot-v1.2": {
+   "cases": 9,
+   "correct": 9,
+   "wrong_publishes": 0,
+   "rows": [
+    {
+     "case": "clean_vgc1",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "correct": true,
+     "q": 1.3002
+    },
+    {
+     "case": "clean_vgc8",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "correct": true,
+     "q": 1.0979
+    },
+    {
+     "case": "handheld_shake_vgc8",
+     "transform": "shake",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "correct": true,
+     "q": 1.1163
+    },
+    {
+     "case": "night_vgc1",
+     "transform": "night",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers, too_dark"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "glare_vgc8",
+     "transform": "glare",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers, glare"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "frozen_feed_vgc1",
+     "transform": "frozen",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "still_water_vgc8",
+     "transform": "still",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "camera_moved_vgc1",
+     "transform": "moved",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "level_above_banks_vgc8",
+     "transform": "level",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "perception_failed:orthorectify:level_out_of_range"
+     ],
+     "correct": true,
+     "q": null
+    }
+   ]
+  },
+  "refusal-autopilot-v1.3": {
+   "cases": 9,
+   "correct": 9,
+   "wrong_publishes": 0,
+   "rows": [
+    {
+     "case": "clean_vgc1",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+     ],
+     "correct": true,
+     "q": 1.3002
+    },
+    {
+     "case": "clean_vgc8",
+     "transform": "none",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "correct": true,
+     "q": 1.0979
+    },
+    {
+     "case": "handheld_shake_vgc8",
+     "transform": "shake",
+     "expected": [
+      "PUBLISH"
+     ],
+     "decision": "PUBLISH",
+     "reasons": [
+      "LSPIV and STIV agree within tolerance"
+     ],
+     "correct": true,
+     "q": 1.1163
+    },
+    {
+     "case": "night_vgc1",
+     "transform": "night",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers, too_dark"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "glare_vgc8",
+     "transform": "glare",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers, glare"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "frozen_feed_vgc1",
+     "transform": "frozen",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "still_water_vgc8",
+     "transform": "still",
+     "expected": [
+      "HOLD"
+     ],
+     "decision": "HOLD",
+     "reasons": [
+      "image quality blocks velocimetry: no_moving_tracers"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "camera_moved_vgc1",
+     "transform": "moved",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+     ],
+     "correct": true,
+     "q": null
+    },
+    {
+     "case": "level_above_banks_vgc8",
+     "transform": "level",
+     "expected": [
+      "ESCALATE"
+     ],
+     "decision": "ESCALATE",
+     "reasons": [
+      "perception_failed:orthorectify:level_out_of_range"
      ],
      "correct": true,
      "q": null

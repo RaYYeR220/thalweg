@@ -1,0 +1,115 @@
+{
+ "run_id": "r-20261026002444-bc0b1a",
+ "station_id": "vgc1",
+ "clip": "camera_moved_vgc1.mp4",
+ "brain": "autopilot",
+ "model": null,
+ "decision": {
+  "kind": "ESCALATE",
+  "reasons": [
+   "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+  ],
+  "method": null,
+  "basis": null,
+  "q": null,
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 25.0,
+    "frames": 201,
+    "duration_s": 8.04,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 9
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 201,
+    "dt_s": 0.04,
+    "duration_s": 8.0,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1034
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": true,
+    "verified": true,
+    "shift_px_p95": 33.41,
+    "inliers": 374,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      0.99999,
+      4e-05,
+      -28.08524
+     ],
+     [
+      -4e-05,
+      0.99999,
+      18.08826
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2174
+  }
+ ],
+ "timings": {
+  "load": 0.673,
+  "pose": 2.151
+ },
+ "cost_usd": 0.0,
+ "started": "2026-10-26T00:24:44.108252+00:00",
+ "ended": "2026-10-26T00:24:47.326475+00:00",
+ "notes": [],
+ "estimates": {}
+}

@@ -1,0 +1,155 @@
+{
+ "run_id": "r-20261026012032-9a0a88",
+ "station_id": "vgc8",
+ "clip": "level_above_banks_vgc8.mp4",
+ "brain": "autopilot",
+ "model": null,
+ "decision": {
+  "kind": "ESCALATE",
+  "reasons": [
+   "perception_failed:orthorectify:level_out_of_range"
+  ],
+  "method": null,
+  "basis": null,
+  "q": null,
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30.01,
+    "frames": 240,
+    "duration_s": 7.997334221926025,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 9
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 240,
+    "dt_s": 0.03332,
+    "duration_s": 7.96,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1372
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": true,
+    "moved": false,
+    "verified": true,
+    "shift_px_p95": 0.02,
+    "inliers": 237,
+    "method": "aliked+lightglue",
+    "H": [
+     [
+      1.00001,
+      -1e-05,
+      0.01125
+     ],
+     [
+      1e-05,
+      1.00001,
+      -0.01433
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ]
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1861
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue+lk",
+    "residual_px_p95": 1.003,
+    "motion_px_p95": 434.344,
+    "inlier_ratio_min": 0.183,
+    "keyframes": 11,
+    "notes": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 10743
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": false,
+   "summary": null,
+   "evidence": [],
+   "error": "level_out_of_range",
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 0.857,
+  "pose": 1.848,
+  "stabilize": 10.743
+ },
+ "cost_usd": 0.0,
+ "started": "2026-10-26T01:20:32.743868+00:00",
+ "ended": "2026-10-26T01:20:46.730508+00:00",
+ "notes": [],
+ "estimates": {}
+}

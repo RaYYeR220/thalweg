@@ -1,0 +1,503 @@
+{
+ "run_id": "r-20261026011123-8e3ee0",
+ "station_id": "vgc3",
+ "clip": "Video_VGC3_Cote-223cm.mp4",
+ "brain": "autopilot",
+ "model": null,
+ "decision": {
+  "kind": "PUBLISH",
+  "reasons": [
+   "LSPIV and STIV agree within tolerance"
+  ],
+  "method": "mean_of_agreeing",
+  "basis": "methods_agree",
+  "q": {
+   "q": 48.0026,
+   "q_lo": 45.1464,
+   "q_hi": 50.8588,
+   "area": 30.0435,
+   "wetted_width": 15.7802,
+   "coverage": 0.9952,
+   "alpha": 0.85,
+   "level": 2.23,
+   "method": "lspiv+stiv",
+   "v_mean": 1.5489,
+   "uncertainty": {
+    "alpha": 0.0588,
+    "velocity": 0.0067,
+    "interpolation": 0.001,
+    "level": 0.0053,
+    "total_95": 0.0594
+   },
+   "published": true
+  },
+  "recapture_spec": null,
+  "evidence": []
+ },
+ "steps": [
+  {
+   "i": 0,
+   "actor": "system",
+   "tool": "probe_clip",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "ok": true,
+    "width": 1280,
+    "height": 720,
+    "fps": 29.964453932100156,
+    "frames": 340,
+    "duration_s": 11.346777777777778,
+    "matches_station_size": true
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 57
+  },
+  {
+   "i": 1,
+   "actor": "system",
+   "tool": "load_frames",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "frames": 300,
+    "dt_s": 0.03338,
+    "duration_s": 9.98,
+    "warnings": [],
+    "frozen_frac": 0.0
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 2002
+  },
+  {
+   "i": 2,
+   "actor": "system",
+   "tool": "check_camera_pose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "checked": false,
+    "reason": "no_reference_frame"
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 3,
+   "actor": "system",
+   "tool": "stabilize",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "aliked+lightglue+lk",
+    "residual_px_p95": 0.965,
+    "motion_px_p95": 30.793,
+    "inlier_ratio_min": 0.506,
+    "keyframes": 13,
+    "notes": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 43801
+  },
+  {
+   "i": 4,
+   "actor": "system",
+   "tool": "orthorectify",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "3d",
+    "reproj_rmse_px": 4.984,
+    "reproj_rmse_rel_diag": 0.00339,
+    "reproj_max_px": 8.804,
+    "res_m": 0.03,
+    "ortho_shape": [
+     667,
+     400
+    ],
+    "water_px": 170852,
+    "evidence": [
+     "ortho.jpg",
+     "frame_overlay.jpg"
+    ]
+   },
+   "evidence": [
+    "ortho.jpg",
+    "frame_overlay.jpg"
+   ],
+   "error": null,
+   "t_ms": 223
+  },
+  {
+   "i": 5,
+   "actor": "system",
+   "tool": "diagnose",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "moving_energy": 2.9842,
+    "static_texture": 8.3868,
+    "static_ratio": 2.8104,
+    "tracer_density": 2.0616,
+    "glare_frac": 0.0,
+    "dark_frac": 0.0001,
+    "blur_var": 205.327,
+    "contrast": 105.0,
+    "water_px": 170852,
+    "frames": 300,
+    "flags": [
+     "bed_visible"
+    ]
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 613
+  },
+  {
+   "i": 6,
+   "actor": "system",
+   "tool": "coarse_motion",
+   "args": {},
+   "reason": "mandatory perception step",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "speed_p50_px": 2.5041,
+    "speed_p90_px": 4.5371,
+    "direction_deg": 7.8199,
+    "coherence": 0.646,
+    "speed_p50_ms": 2.2508,
+    "speed_p90_ms": 4.078,
+    "suggested": {
+     "pair_step": 1,
+     "ia_px": 21,
+     "search_px": 11,
+     "shift_px": [
+      3.1,
+      -0.4
+     ],
+     "step_px": 10,
+     "vmax_ms": 8.0,
+     "flow_deg": 7.8,
+     "stiv_window": 16,
+     "stiv_line_m": null
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 687
+  },
+  {
+   "i": 7,
+   "actor": "autopilot",
+   "tool": "run_lspiv",
+   "args": {
+    "reason": "standard method with assistant-suggested windows"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "lspiv",
+    "vectors": 1595,
+    "valid": 1451,
+    "valid_frac": 0.91,
+    "speed_p50": 2.035,
+    "speed_p90": 2.53,
+    "score_mean": 0.724,
+    "direction_deg": 10.9,
+    "rejected": {
+     "search_edge": 0,
+     "low_score": 107,
+     "median_test": 37
+    },
+    "params": {
+     "ia_px": 21,
+     "search_px": 11,
+     "step_px": 10,
+     "pair_step": 1,
+     "dt_s": 0.033377257525083616,
+     "shift_px": [
+      3,
+      0
+     ],
+     "background": "highpass:3",
+     "pairs": 150,
+     "res_m": 0.03
+    },
+    "evidence": [
+     "field_lspiv.jpg"
+    ]
+   },
+   "evidence": [
+    "field_lspiv.jpg"
+   ],
+   "error": null,
+   "t_ms": 11471
+  },
+  {
+   "i": 8,
+   "actor": "autopilot",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "lspiv",
+    "reason": "discharge from LSPIV"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 46.5351,
+    "q_lo": 43.7688,
+    "q_hi": 49.3014,
+    "area": 30.0435,
+    "wetted_width": 15.7802,
+    "coverage": 0.9952,
+    "alpha": 0.85,
+    "level": 2.23,
+    "method": "lspiv",
+    "v_mean": 1.5489,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0067,
+     "interpolation": 0.001,
+     "level": 0.0053,
+     "total_95": 0.0594
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 10
+  },
+  {
+   "i": 9,
+   "actor": "autopilot",
+   "tool": "run_stiv",
+   "args": {
+    "reason": "independent second method for a cross-check"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "method": "stiv",
+    "vectors": 60,
+    "valid": 57,
+    "valid_frac": 0.95,
+    "speed_p50": 1.995,
+    "speed_p90": 2.48,
+    "score_mean": 0.888,
+    "direction_deg": 7.8,
+    "rejected": {
+     "low_score": 1,
+     "too_fast": 2
+    },
+    "params": {
+     "lines": 60,
+     "dt_s": 0.033377257525083616,
+     "vmax_ms": 8.0,
+     "background": "highpass:3",
+     "res_m": 0.03,
+     "line_m": 7.0,
+     "window": 16
+    },
+    "evidence": [
+     "field_stiv.jpg",
+     "sti_mid.jpg"
+    ]
+   },
+   "evidence": [
+    "field_stiv.jpg",
+    "sti_mid.jpg"
+   ],
+   "error": null,
+   "t_ms": 113373
+  },
+  {
+   "i": 10,
+   "actor": "autopilot",
+   "tool": "compute_discharge",
+   "args": {
+    "method": "stiv",
+    "reason": "discharge from STIV"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "q": 49.4701,
+    "q_lo": 46.524,
+    "q_hi": 52.4163,
+    "area": 30.0435,
+    "wetted_width": 15.7802,
+    "coverage": 0.9941,
+    "alpha": 0.85,
+    "level": 2.23,
+    "method": "stiv",
+    "v_mean": 1.6466,
+    "uncertainty": {
+     "alpha": 0.0588,
+     "velocity": 0.0076,
+     "interpolation": 0.0012,
+     "level": 0.0053,
+     "total_95": 0.0596
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 1
+  },
+  {
+   "i": 11,
+   "actor": "autopilot",
+   "tool": "compare_methods",
+   "args": {
+    "reason": "cross-check"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "methods": {
+     "lspiv": 46.5351,
+     "stiv": 49.4701
+    },
+    "spread": 0.061,
+    "pairwise": {
+     "lspiv~stiv": 0.061
+    }
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  },
+  {
+   "i": 12,
+   "actor": "autopilot",
+   "tool": "publish_gauging",
+   "args": {
+    "method": "mean_of_agreeing",
+    "basis": "methods_agree",
+    "reason": "LSPIV and STIV agree within tolerance"
+   },
+   "reason": "",
+   "verdict": {
+    "allowed": true,
+    "reasons": []
+   },
+   "ok": true,
+   "summary": {
+    "kind": "PUBLISH",
+    "reasons": [
+     "LSPIV and STIV agree within tolerance"
+    ],
+    "method": "mean_of_agreeing",
+    "basis": "methods_agree",
+    "q": {
+     "q": 48.0026,
+     "q_lo": 45.1464,
+     "q_hi": 50.8588,
+     "area": 30.0435,
+     "wetted_width": 15.7802,
+     "coverage": 0.9952,
+     "alpha": 0.85,
+     "level": 2.23,
+     "method": "lspiv+stiv",
+     "v_mean": 1.5489,
+     "uncertainty": {
+      "alpha": 0.0588,
+      "velocity": 0.0067,
+      "interpolation": 0.001,
+      "level": 0.0053,
+      "total_95": 0.0594
+     },
+     "published": true
+    },
+    "recapture_spec": null,
+    "evidence": []
+   },
+   "evidence": [],
+   "error": null,
+   "t_ms": 0
+  }
+ ],
+ "timings": {
+  "load": 1.424,
+  "stabilize": 43.802,
+  "orthorectify": 0.214,
+  "diagnose": 0.613,
+  "coarse_motion": 0.688,
+  "lspiv": 11.442,
+  "stiv": 113.026
+ },
+ "cost_usd": 0.0,
+ "started": "2026-10-26T01:11:23.629707+00:00",
+ "ended": "2026-10-26T01:14:15.871692+00:00",
+ "notes": [],
+ "estimates": {
+  "lspiv": {
+   "q": 46.5351,
+   "q_lo": 43.7688,
+   "q_hi": 49.3014,
+   "coverage": 0.995
+  },
+  "stiv": {
+   "q": 49.4701,
+   "q_lo": 46.524,
+   "q_hi": 52.4163,
+   "coverage": 0.994
+  }
+ }
+}

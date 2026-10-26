@@ -1,0 +1,178 @@
+{
+ "cases": 9,
+ "correct": 9,
+ "wrong_publishes": 0,
+ "rows": [
+  {
+   "case": "clean_vgc1",
+   "transform": "none",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "riverbed visible through clear water: correlation is pinned low, space-time streaks are not"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.3002,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:18:07.552175+00:00"
+  },
+  {
+   "case": "clean_vgc8",
+   "transform": "none",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "LSPIV and STIV agree within tolerance"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.0979,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:18:50.298877+00:00"
+  },
+  {
+   "case": "handheld_shake_vgc8",
+   "transform": "shake",
+   "expected": [
+    "PUBLISH"
+   ],
+   "decision": "PUBLISH",
+   "reasons": [
+    "LSPIV and STIV agree within tolerance"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": 1.1163,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:19:33.160155+00:00"
+  },
+  {
+   "case": "night_vgc1",
+   "transform": "night",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "image quality blocks velocimetry: no_moving_tracers, too_dark"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:19:47.335325+00:00"
+  },
+  {
+   "case": "glare_vgc8",
+   "transform": "glare",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "image quality blocks velocimetry: no_moving_tracers, glare"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:20:04.791212+00:00"
+  },
+  {
+   "case": "frozen_feed_vgc1",
+   "transform": "frozen",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "image quality blocks velocimetry: no_moving_tracers"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:20:16.713738+00:00"
+  },
+  {
+   "case": "still_water_vgc8",
+   "transform": "still",
+   "expected": [
+    "HOLD"
+   ],
+   "decision": "HOLD",
+   "reasons": [
+    "image quality blocks velocimetry: no_moving_tracers"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:20:29.367672+00:00"
+  },
+  {
+   "case": "camera_moved_vgc1",
+   "transform": "moved",
+   "expected": [
+    "ESCALATE"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "camera_moved: the view no longer matches the surveyed reference frame; GRP pixels must be re-confirmed before any gauging"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:20:32.735235+00:00"
+  },
+  {
+   "case": "level_above_banks_vgc8",
+   "transform": "level",
+   "expected": [
+    "ESCALATE"
+   ],
+   "decision": "ESCALATE",
+   "reasons": [
+    "perception_failed:orthorectify:level_out_of_range"
+   ],
+   "correct": true,
+   "wrong_publish": false,
+   "q": null,
+   "brain": "autopilot",
+   "model": null,
+   "tag": "refusal-autopilot-v1.3",
+   "cost_usd": 0.0,
+   "time": "2026-10-26T01:20:46.838821+00:00"
+  }
+ ]
+}
