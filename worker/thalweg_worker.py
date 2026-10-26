@@ -105,11 +105,16 @@ def station_physics(station, clip, decision) -> tuple[dict | None, dict]:
         except Exception as e:  # noqa: BLE001
             info["rating_error"] = str(e)[:120]
     kf = StageKalman()
+    # The nowcast is made at the clip's own time, from the stage observed up to it. Replays and
+    # backfills arrive out of order, so later observations must not leak into an earlier "now".
+    now = clip.t.replace(tzinfo=None) if clip.t.tzinfo else clip.t
     for t, h in levels:
-        kf.update(t, h)
+        tt = t.replace(tzinfo=None) if t.tzinfo else t
+        if tt <= now:
+            kf.update(tt, h)
     info["stage_rate_m_per_h"] = round(kf.rate_m_per_h, 4)
     # Nowcast band for the station page: 3 h ahead in 15-minute steps.
-    info["forecast"] = [{"t": (clip.t + timedelta(seconds=dt)).isoformat(), "h": round(m, 4), "sd": round(sd, 4)}
+    info["forecast"] = [{"t": (now + timedelta(seconds=dt)).isoformat(), "h": round(m, 4), "sd": round(sd, 4)}
                         for dt in range(0, 3 * 3600 + 1, 900) for m, sd in [kf.forecast(float(dt))]]
     from thalweg.hydro.warning import threshold_stage
     h_thr, q_thr = threshold_stage(station, rating)
@@ -117,7 +122,7 @@ def station_physics(station, clip, decision) -> tuple[dict | None, dict]:
                          "q": None if q_thr is None else round(float(q_thr), 2), "source": station.thresholds.source}
     draft = None
     if decision.kind == "PUBLISH" and not item.get("open_warning"):
-        w = assess_warning(station, kf, rating, clip.t, float(decision.q["q"]))
+        w = assess_warning(station, kf, rating, now, float(decision.q["q"]))
         if w is not None:
             draft = w.to_dict()
     return draft, info
