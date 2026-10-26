@@ -29,6 +29,7 @@ class PolicyLimits:
     glare_max: float = 0.25
     dark_max: float = 0.5
     frozen_max: float = 0.2
+    uncertainty_max: float = 0.5  # total 95 % relative uncertainty of a published discharge
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -116,6 +117,11 @@ class Policy:
             if r is None:
                 why.append(f"no_discharge:{m}")
                 continue
+            if not np.isfinite(r.q) or r.q <= 0:
+                why.append(f"discharge_not_positive:{m}:{r.q:.3f}")
+            unc = (r.uncertainty or {}).get("total_95", 1.0)
+            if unc > L.uncertainty_max:
+                why.append(f"uncertainty_high:{m}:{unc:.2f}")
             if r.coverage < L.coverage_min:
                 why.append(f"coverage_low:{m}:{r.coverage:.2f}")
             if f is not None and len(f):

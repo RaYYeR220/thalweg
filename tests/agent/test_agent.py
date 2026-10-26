@@ -135,3 +135,25 @@ def test_policy_rejections(channel):
     assert "bad_args:missing:reason" in pol.check(ToolCall("run_stiv", {}), ctx, []).reasons
     assert pol.check(ToolCall("issue_flood_warning", {}), ctx, []).reasons == ["unknown_tool:issue_flood_warning"]
     assert pol.check(ToolCall("run_stiv", {"reason": "r"}), ctx, [], decided=True).reasons == ["already_decided"]
+
+
+def test_policy_refuses_negative_or_too_uncertain_discharge(channel):
+    from thalweg.hydro.discharge import DischargeResult
+    from thalweg.vision.field import VectorField
+    import numpy as np
+    st, clip, d = channel
+    ctx = Context(station=st, clip=clip, sink=ArtifactSink(d / "neg"))
+    from thalweg.vision.geometry import CameraModel
+    ctx.cam = CameraModel.scaled(RES, st.image_size)
+    from thalweg.vision.diagnose import Diagnostics
+    ctx.diag = Diagnostics(5.0, 0.5, 0.1, 10.0, 0.0, 0.0, 100.0, 50.0, 1000, 100)
+    f = VectorField(np.zeros(10), np.zeros(10), np.ones(10), np.zeros(10), np.ones(10), np.ones(10, bool), "lspiv")
+    ctx.fields["lspiv"] = f
+    ctx.results["lspiv"] = DischargeResult(q=-0.2, q_lo=-0.3, q_hi=-0.1, area=1, wetted_width=2, coverage=1.0,
+                                           alpha=0.85, level=0, method="lspiv", v_mean=-0.2,
+                                           uncertainty={"total_95": 1.4})
+    v = Policy().check(ToolCall("publish_gauging", {"method": "lspiv", "basis": "seeded_surface_prefers_lspiv",
+                                                    "reason": "r"}), ctx, [])
+    assert not v.allowed
+    assert any(r.startswith("discharge_not_positive") for r in v.reasons)
+    assert any(r.startswith("uncertainty_high") for r in v.reasons)
