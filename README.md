@@ -6,7 +6,7 @@
 - **Benchmark:** blind, against 15–23 human hydrologists on the 8 real videos of the Video Globe Challenge 2020 → [`eval/`](eval/)
 - **Runs on:** AWS Graviton4 with COOL (Cloud-Optimized OpenCV), Step Functions, DynamoDB, S3, API Gateway
 
-<!--HERO-->
+![Thalweg](docs/hero.jpg)
 
 ## Why
 
