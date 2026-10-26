@@ -8,9 +8,9 @@
 2. **Open any run** from the station's run list (annotated examples: [docs/agentic-evidence.md](docs/agentic-evidence.md)).
    The trace shows each step: the OpenCV 5 tool, its arguments, the agent's stated reason, the policy verdict (denials appear in red), the evidence image, and the final decision. Look for the step where the diagnostics change the plan. For example, `static_ratio` above 1.2 makes the agent prefer STIV and keep LSPIV only as a cross-check.
 
-3. **Run the agent yourself.** On the station page, press **Run agent on this clip** (no account needed).
+3. **Run the agent yourself.** On the station page, press **Run the agent on the latest clip** (no account needed).
    - It starts a real Step Functions execution on the Graviton4 worker (COOL OpenCV), using the LLM brain.
-   - The run page fills in as the steps complete, in about a minute.
+   - The run page fills in as the steps complete; a run takes about 1.5 to 2.5 minutes.
    - Runs are capped at 40 a day.
 
 4. **Sign or reject a flood-warning draft.** Open https://jp89re6ozf.execute-api.us-east-1.amazonaws.com/review/ with the reviewer passcode given in the submission form.
