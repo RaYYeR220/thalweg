@@ -138,6 +138,8 @@ These were fixed in v1.1 (pose "unverified" ≠ "moved"; per-frame stabilization
 ### 8.3 Failure cases we found
 - **Hand-held footage and GRPs (VGC video 8).** The camera drifts several hundred pixels during the clip. v1.1 registers every frame to the first one and measures 1.11 m³/s against a 0.636 reference. The frozen build, which did not stabilize this clip, measured 0.78. The dataset does not say which frame the GRP pixels were picked on. A gauging from a moving camera is only as good as that answer, so the station config should state its reference frame. This is the clearest open issue.
 - **Wind (VGC video 5).** The site note prescribes α = 1.0 because of a strong upstream wind. Both brains used it and overestimated by 23–28%.
+- **Glassy low flow on the River Dart (live station).** On clear, slow summer water the dense-flow probe pointed across the channel: ripples ran toward the bank. STIV lines laid that way measured almost nothing normal to the section, and early runs published 0.1–0.3 m³/s where the published camera analysis for the same clips gives about 3 m³/s. v1.2 keeps the flow direction on the surveyed channel axis when the measurement is more than 45° off it, and records that in the trace.
+- **A negative discharge reached the publication step.** The persistence stage rejected it, and the run failed closed. The gate now refuses non-positive discharge and any published value with a 95% uncertainty above 50%. Neither rule changes a single decision in the benchmark runs.
 - **Drone footage over wide rivers (videos 2 and 7).** The static-texture diagnostic also responds to banks and shallows in the band, not only to a visible riverbed, so STIV was preferred more often than it should be.
 
 ### 8.4 COOL on Graviton4
