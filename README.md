@@ -78,6 +78,17 @@ Real clips corrupted in known ways, each with the decision the agent must reach:
 | refusal-autopilot-v1.1 | 9/9 | 0 |
 | refusal-llm-sonnet-v1.1 | 9/9 | 0 |
 
+### Live station: River Dart, Storm Callum
+
+The River Dart station replays real footage from Austins Bridge (Perks 2024, CC BY 4.0) through the deployed cloud pipeline: S3 → Step Functions → the Graviton4 worker. That covers 36 clips spread over July–December 2018, used to seed the station's own rating curve, and the 36 daylight clips of Storm Callum (11–12 October 2018). There is no reference ADCP gauging during the storm. As an independent cross-check we compare against the published camera analysis of the same clips (KLT-IV, Perks 2024).
+
+- **Published gaugings:** 19 of 72 clips. Most refusals are on glassy summer low flow, where the two methods disagree, and at the peak, where the river left the surveyed section.
+- **Storm rising limb, 06:52–09:22 on 12 October:** 7 published gaugings from 5.2 to 17.3 m³/s. Six of them are within ±9% of the KLT-IV analysis.
+- **High flow, 10:37–14:52:** 59, 99 and 81 m³/s, which is 24–35% below KLT-IV. Part of the near half of the section is outside the camera view and is filled from the measured panels. We have not resolved which of the two analyses is closer to the true discharge.
+- **All 19:** median absolute difference from KLT-IV 21%, and 9 of 19 within 20%.
+- **The warning:** after the 11:22 gauging (stage 4999.84 m, rising 63 cm/h), the station's own rating curve put the QMED threshold of 231 m³/s at stage 5000.64 m. The nowcast gave 1.3 h to reach it, and the station drafted a warning that now waits in the review queue. At 12:52 the stage passed the bank tops of the surveyed section; the agent escalated instead of extrapolating.
+- **The decision that drafted it:** LSPIV and STIV disagreed, so the LLM brain ran dense optical flow as a third opinion and published the agreeing pair (DIS 95.0, STIV 104.0 m³/s).
+
 ### Performance: COOL on Graviton4
 
 | Build | s per clip (median of 5) | clips / hour | $ / 1000 gaugings |
